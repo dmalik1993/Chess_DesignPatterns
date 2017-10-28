@@ -10,45 +10,39 @@ import chess.Cell;
  */
 public class Queen extends Piece {
 
-	// Constructors
 	public Queen(String i, String p, int c) {
 		setId(i);
 		setPath(p);
 		setColor(c);
 	}
 
-	public boolean isMovementAllowedHorizontalVertical(int horizontalAxis,
-			int verticalAxis, Cell[][] state) {
+	public boolean isMovementAllowedHorizontalVertical(int horizontalAxis, int verticalAxis, Cell[][] state) {
 
 		if (state[horizontalAxis][verticalAxis].getpiece() == null)
-			possiblemoves.add(state[horizontalAxis][verticalAxis]);
-		else if (state[horizontalAxis][verticalAxis].getpiece().getcolor() == this
-				.getcolor())
+			possibleMoves.add(state[horizontalAxis][verticalAxis]);
+		else if (state[horizontalAxis][verticalAxis].getpiece().getcolor() == this.getcolor())
 			return false;
 		else {
-			possiblemoves.add(state[horizontalAxis][verticalAxis]);
+			possibleMoves.add(state[horizontalAxis][verticalAxis]);
 			return false;
 		}
 		return true;
 	}
 
-	public boolean isMovementAllowedDiagonal(int horizontalAxis,
-			int verticalAxis, Cell[][] state) {
-		
-			if (state[horizontalAxis][verticalAxis].getpiece() == null)
-				possiblemoves.add(state[horizontalAxis][verticalAxis]);
-			else if (state[horizontalAxis][verticalAxis].getpiece().getcolor() == this
-					.getcolor())
-				return false;
-			else {
-				possiblemoves.add(state[horizontalAxis][verticalAxis]);
-				return false;
-			}
-			return true;
+	public boolean isMovementAllowedDiagonal(int horizontalAxis, int verticalAxis, Cell[][] state) {
+
+		if (state[horizontalAxis][verticalAxis].getpiece() == null)
+			possibleMoves.add(state[horizontalAxis][verticalAxis]);
+		else if (state[horizontalAxis][verticalAxis].getpiece().getcolor() == this.getcolor())
+			return false;
+		else {
+			possibleMoves.add(state[horizontalAxis][verticalAxis]);
+			return false;
+		}
+		return true;
 	}
 
-	public void moveVerticalUp(int horizontalAxis, int verticalAxis,
-			Cell[][] state) {
+	public void moveVerticalUp(int horizontalAxis, int verticalAxis, Cell[][] state) {
 		int tempX = horizontalAxis;
 		while (tempX >= 0) {
 			if (!isMovementAllowedHorizontalVertical(tempX, verticalAxis, state)) {
@@ -58,8 +52,7 @@ public class Queen extends Piece {
 		}
 	}
 
-	public void moveVerticalDown(int horizontalAxis, int verticalAxis,
-			Cell[][] state) {
+	public void moveVerticalDown(int horizontalAxis, int verticalAxis, Cell[][] state) {
 		int tempX = horizontalAxis;
 		while (tempX < 8) {
 			if (!isMovementAllowedHorizontalVertical(tempX, verticalAxis, state)) {
@@ -69,12 +62,11 @@ public class Queen extends Piece {
 		}
 	}
 
-	// Move Function Defined
-	public List<Cell> move(Cell[][] state, int x, int y) {
+	public List<Cell> getPossibleMoves(Cell[][] state, int x, int y) {
 		// Queen has most number of possible moves
 		// Queen can move any number of steps in all 8 direction
 		// The possible moves of queen is a combination of Rook and Bishop
-		possiblemoves.clear();
+		possibleMoves.clear();
 
 		moveVerticalUp(x - 1, y, state);
 		moveVerticalDown(x + 1, y, state);
@@ -85,11 +77,10 @@ public class Queen extends Piece {
 		moveLeftDiagonalUp(x - 1, y - 1, state);
 		moveRightDiagonalDown(x + 1, y + 1, state);
 
-		return possiblemoves;
+		return possibleMoves;
 	}
 
-	private void moveRightDiagonalDown(int horizontalAxis, int verticalAxis,
-			Cell[][] state) {
+	private void moveRightDiagonalDown(int horizontalAxis, int verticalAxis, Cell[][] state) {
 		int tempX = horizontalAxis;
 		int tempY = verticalAxis;
 		while (tempX < 8 && tempY < 8) {
@@ -102,8 +93,7 @@ public class Queen extends Piece {
 
 	}
 
-	private void moveLeftDiagonalUp(int horizontalAxis, int verticalAxis,
-			Cell[][] state) {
+	private void moveLeftDiagonalUp(int horizontalAxis, int verticalAxis, Cell[][] state) {
 		int tempX = horizontalAxis;
 		int tempY = verticalAxis;
 		while (tempX >= 0 && tempY >= 0) {
@@ -116,8 +106,7 @@ public class Queen extends Piece {
 
 	}
 
-	private void moveRightDiagonalUp(int horizontalAxis, int verticalAxis,
-			Cell[][] state) {
+	private void moveRightDiagonalUp(int horizontalAxis, int verticalAxis, Cell[][] state) {
 		int tempX = horizontalAxis;
 		int tempY = verticalAxis;
 		while (tempX >= 0 && tempY < 8) {
@@ -130,8 +119,7 @@ public class Queen extends Piece {
 
 	}
 
-	private void moveLeftDiagonalDown(int horizontalAxis, int verticalAxis,
-			Cell[][] state) {
+	private void moveLeftDiagonalDown(int horizontalAxis, int verticalAxis, Cell[][] state) {
 		int tempX = horizontalAxis;
 		int tempY = verticalAxis;
 		while (tempX < 8 && tempY >= 0) {
@@ -144,25 +132,21 @@ public class Queen extends Piece {
 
 	}
 
-	private void moveHorizontalRight(int horizontalAxis, int verticalAxis,
-			Cell[][] state) {
+	private void moveHorizontalRight(int horizontalAxis, int verticalAxis, Cell[][] state) {
 		int tempY = verticalAxis;
 		while (tempY < 8) {
-			if (!isMovementAllowedHorizontalVertical(horizontalAxis, tempY,
-					state)) {
+			if (!isMovementAllowedHorizontalVertical(horizontalAxis, tempY, state)) {
 				break;
 			}
 			tempY++;
 		}
 	}
 
-	private void moveHorizontalLeft(int horizontalAxis, int verticalAxis,
-			Cell[][] state) {
+	private void moveHorizontalLeft(int horizontalAxis, int verticalAxis, Cell[][] state) {
 		int tempY = verticalAxis;
 
 		while (tempY >= 0) {
-			if (!isMovementAllowedHorizontalVertical(horizontalAxis, tempY,
-					state)) {
+			if (!isMovementAllowedHorizontalVertical(horizontalAxis, tempY, state)) {
 				break;
 			}
 			tempY--;

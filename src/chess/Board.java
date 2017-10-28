@@ -79,7 +79,7 @@ public class Board {
 	public Board(Board oldBoard) {
 		initializePieces();
 		initializeBoard();
-		
+
 		for (int i = 0; i < Board.ROWS; i++)
 			for (int j = 0; j < Board.COLUMNS; j++) {
 				try {

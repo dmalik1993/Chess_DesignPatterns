@@ -158,7 +158,6 @@ public class Main extends JFrame {
 				try {
 					image = ImageIO.read(this.getClass().getResource("clash.jpg"));
 				} catch (IOException ex) {
-					System.out.println("not found");
 				}
 
 				g.drawImage(image, 0, 0, null);
@@ -268,11 +267,11 @@ public class Main extends JFrame {
 	}
 
 	private String[] getPlayerNames() {
-		ArrayList<Player> playersList = Player.fetch_players();
+		ArrayList<Player> playersList = Player.fetchPlayersData();
 		Iterator<Player> witr = playersList.iterator();
 		ArrayList<String> playerNames = new ArrayList<String>();
 		while (witr.hasNext())
-			playerNames.add(witr.next().name());
+			playerNames.add(witr.next().getName());
 
 		return playerNames.toArray(new String[playerNames.size()]);
 	}
@@ -280,7 +279,7 @@ public class Main extends JFrame {
 	public void changeTurn() {
 		King king = chessBoardState.getKing(currentTurn);
 		Cell kingsCell = chessBoardState.getCell(king);
-		if (kingsCell.ischeck()) {
+		if (kingsCell.isCheck()) {
 			currentTurn ^= 1;
 			endGame();
 		}
@@ -290,14 +289,14 @@ public class Main extends JFrame {
 		}
 
 		if (previousCell != null) {
-			previousCell.deselect();
+			previousCell.removeSelection();
 			previousCell = null;
 		}
 
 		currentTurn ^= 1;
 		if (!end && timer != null) {
-			timer.reset();
-			timer.start();
+			timer.resetTimer();
+			timer.startTimer();
 			playerViewPanel.remove(turnLabel);
 			if (move == WHITE_PLAYER)
 				move = BLACK_PLAYER;
@@ -312,13 +311,13 @@ public class Main extends JFrame {
 	private void clearDestinationList(List<Cell> destList) {
 		ListIterator<Cell> it = destList.listIterator();
 		while (it.hasNext())
-			it.next().removepossibledestination();
+			it.next().removeValidDestination();
 	}
 
 	private void highlightDestinations(List<Cell> destList) {
 		ListIterator<Cell> destListIterator = destList.listIterator();
 		while (destListIterator.hasNext())
-			destListIterator.next().setpossibledestination();
+			destListIterator.next().setAsValidDestination();
 	}
 
 	private boolean isCheckAfetrMove(Cell source, Cell target) {
@@ -372,7 +371,7 @@ public class Main extends JFrame {
 			for (int j = 0; j < Board.COLUMNS; j++) {
 				if (chessBoardState.getPiece(i, j) != null && chessBoardState.getPiece(i, j).getcolor() == color) {
 					possibleMovesForKing.clear();
-					possibleMovesForKing = chessBoardState.getPiece(i, j).move(chessBoardState.getChessBoard(), i, j);
+					possibleMovesForKing = chessBoardState.getPiece(i, j).getPossibleMoves(chessBoardState.getChessBoard(), i, j);
 					possibleMovesForKing = allowedCheckMoves(possibleMovesForKing, chessBoardState.getCell(i, j),
 							color);
 					if (possibleMovesForKing.size() != 0)
@@ -419,7 +418,7 @@ public class Main extends JFrame {
 	@SuppressWarnings("deprecation")
 	private void stopTimer() {
 		timeDisplayPanle.disable();
-		timer.countdownTimer.stop();
+		timer.countDownTimer.stop();
 	}
 
 	private void declareWinner() {
@@ -427,13 +426,13 @@ public class Main extends JFrame {
 		if (previousCell != null)
 			previousCell.removePiece();
 		if (currentTurn == 0) {
-			whitePlayer.updateGamesWon();
-			whitePlayer.Update_Player();
-			winner = whitePlayer.name();
+			getWhitePlayer().updateGamesWon();
+			getWhitePlayer().updatePlayersData();
+			winner = getWhitePlayer().getName();
 		} else {
-			blackPlayer.updateGamesWon();
-			blackPlayer.Update_Player();
-			winner = blackPlayer.name();
+			getBlackPlayer().updateGamesWon();
+			getBlackPlayer().updatePlayersData();
+			winner = getBlackPlayer().getName();
 		}
 
 		JOptionPane.showMessageDialog(boardPanel, "Checkmate!!!\n" + winner + " wins");
@@ -447,12 +446,12 @@ public class Main extends JFrame {
 				currentCell.select();
 				previousCell = currentCell;
 				possibleDestinations.clear();
-				possibleDestinations = currentCell.getpiece().move(chessBoardState.getChessBoard(), currentCell.x,
-						currentCell.y);
+				possibleDestinations = currentCell.getpiece().getPossibleMoves(chessBoardState.getChessBoard(),
+						currentCell.getXIndex(), currentCell.getYIndex());
 				if (currentCell.getpiece() instanceof King)
 					possibleDestinations = filterAllowedMoves(possibleDestinations, currentCell);
 				else {
-					if (chessBoardState.getCell(chessBoardState.getKing(currentTurn)).ischeck())
+					if (chessBoardState.getCell(chessBoardState.getKing(currentTurn)).isCheck())
 						possibleDestinations = new ArrayList<Cell>(
 								filterAllowedMoves(possibleDestinations, currentCell));
 					else if (possibleDestinations.isEmpty() == false
@@ -462,60 +461,61 @@ public class Main extends JFrame {
 				highlightDestinations(possibleDestinations);
 			}
 		} else {
-			if (currentCell.x == previousCell.x && currentCell.y == previousCell.y) {
-				currentCell.deselect();
+			if (currentCell.getXIndex() == previousCell.getXIndex()
+					&& currentCell.getYIndex() == previousCell.getYIndex()) {
+				currentCell.removeSelection();
 				clearDestinationList(possibleDestinations);
 				possibleDestinations.clear();
 				previousCell = null;
 			} else if (currentCell.getpiece() == null
 					|| previousCell.getpiece().getcolor() != currentCell.getpiece().getcolor()) {
-				if (currentCell.ispossibledestination()) {
+				if (currentCell.isValidDestination()) {
 					if (currentCell.getpiece() != null)
 						currentCell.removePiece();
 					currentCell.setPiece(previousCell.getpiece());
-					if (previousCell.ischeck())
-						previousCell.removecheck();
+					if (previousCell.isCheck())
+						previousCell.removeCheck();
 					previousCell.removePiece();
 
 					// Setting check to other king'cell
 					if (chessBoardState.getKing(currentTurn ^ 1).isindanger(chessBoardState.getChessBoard())) {
-						chessBoardState.getCell(chessBoardState.getKing(currentTurn ^ 1)).setcheck();
+						chessBoardState.getCell(chessBoardState.getKing(currentTurn ^ 1)).setCheck();
 						if (isCheckMate(chessBoardState.getKing(currentTurn ^ 1).getcolor())) {
-							previousCell.deselect();
+							previousCell.removeSelection();
 							if (previousCell.getpiece() != null)
 								previousCell.removePiece();
 							endGame();
 						}
 					}
 					if (chessBoardState.getKing(currentTurn).isindanger(chessBoardState.getChessBoard()) == false)
-						chessBoardState.getCell(chessBoardState.getKing(currentTurn)).removecheck();
+						chessBoardState.getCell(chessBoardState.getKing(currentTurn)).removeCheck();
 					if (currentCell.getpiece() instanceof King) {
 						chessBoardState.updateKing(currentTurn, currentCell);
 					}
 					changeTurn();
 					if (!end) {
-						timer.reset();
-						timer.start();
+						timer.resetTimer();
+						timer.startTimer();
 					}
 				}
 				if (previousCell != null) {
-					previousCell.deselect();
+					previousCell.removeSelection();
 					previousCell = null;
 				}
 				clearDestinationList(possibleDestinations);
 				possibleDestinations.clear();
 			} else if (previousCell.getpiece().getcolor() == currentCell.getpiece().getcolor()) {
-				previousCell.deselect();
+				previousCell.removeSelection();
 				clearDestinationList(possibleDestinations);
 				possibleDestinations.clear();
 				currentCell.select();
 				previousCell = currentCell;
-				possibleDestinations = currentCell.getpiece().move(chessBoardState.getChessBoard(), currentCell.x,
-						currentCell.y);
+				possibleDestinations = currentCell.getpiece().getPossibleMoves(chessBoardState.getChessBoard(),
+						currentCell.getXIndex(), currentCell.getYIndex());
 				if (currentCell.getpiece() instanceof King)
 					possibleDestinations = filterAllowedMoves(possibleDestinations, currentCell);
 				else {
-					if (chessBoardState.getCell(chessBoardState.getKing(currentTurn)).ischeck())
+					if (chessBoardState.getCell(chessBoardState.getKing(currentTurn)).isCheck())
 						possibleDestinations = new ArrayList<Cell>(
 								filterAllowedMoves(possibleDestinations, currentCell));
 					else if (possibleDestinations.isEmpty() == false
@@ -531,12 +531,36 @@ public class Main extends JFrame {
 		}
 	}
 
+	private Player getWhitePlayer() {
+		return whitePlayer;
+	}
+
+	private void setWhitePlayer(Player whitePlayer) {
+		this.whitePlayer = whitePlayer;
+	}
+
+	private Player getBlackPlayer() {
+		return blackPlayer;
+	}
+
+	private void setBlackPlayer(Player blackPlayer) {
+		this.blackPlayer = blackPlayer;
+	}
+
+	private Player getSelectedPlayer() {
+		return selectedPlayer;
+	}
+
+	private void setSelectedPlayer(Player selectedPlayer) {
+		this.selectedPlayer = selectedPlayer;
+	}
+
 	class StartButtonListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 
-			if (whitePlayer == null || blackPlayer == null) {
+			if (getWhitePlayer() == null || getBlackPlayer() == null) {
 				JOptionPane.showMessageDialog(controlPanel, "Fill in the details");
 				return;
 			}
@@ -553,7 +577,7 @@ public class Main extends JFrame {
 
 			timeDisplayPanle.remove(startButton);
 			timeDisplayPanle.add(timeLabel);
-			timer.start();
+			timer.startTimer();
 		}
 
 		private void addNewTurnLabel() {
@@ -580,11 +604,11 @@ public class Main extends JFrame {
 		}
 
 		private void updatePlayersRecord() {
-			whitePlayer.updateGamesPlayed();
-			whitePlayer.Update_Player();
+			getWhitePlayer().updateGamesPlayed();
+			getWhitePlayer().updatePlayersData();
 
-			blackPlayer.updateGamesPlayed();
-			blackPlayer.Update_Player();
+			getBlackPlayer().updateGamesPlayed();
+			getBlackPlayer().updatePlayersData();
 		}
 	}
 
@@ -604,13 +628,13 @@ public class Main extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			selectedPlayer = null;
+			setSelectedPlayer(null);
 
 			JComboBox<String> currentPlayerNamesComboBox = (color == 0) ? whitePlayerCombo : blackPlayerCombo;
 			JComboBox<String> otherPlayerNamesComboBox = (color == 0) ? blackPlayerCombo : whitePlayerCombo;
 
-			ArrayList<Player> otherPlayersList = Player.fetch_players();
-			ArrayList<Player> currentPlayersList = Player.fetch_players();
+			ArrayList<Player> otherPlayersList = Player.fetchPlayersData();
+			ArrayList<Player> currentPlayersList = Player.fetchPlayersData();
 			if (otherPlayersList.isEmpty())
 				return;
 
@@ -625,35 +649,35 @@ public class Main extends JFrame {
 			Iterator<Player> otherPlayerIterator = otherPlayersList.iterator();
 			while (currentPlayerIterator.hasNext()) {
 				Player player = currentPlayerIterator.next();
-				if (player.name().equals(playerName)) {
-					selectedPlayer = player;
+				if (player.getName().equals(playerName)) {
+					setSelectedPlayer(player);
 					break;
 				}
 			}
 
 			while (otherPlayerIterator.hasNext()) {
 				Player p = otherPlayerIterator.next();
-				if (p.name().equals(playerName)) {
+				if (p.getName().equals(playerName)) {
 					otherPlayersList.remove(p);
 					break;
 				}
 			}
 
-			if (selectedPlayer == null)
+			if (getSelectedPlayer() == null)
 				return;
 
 			if (color == 0)
-				whitePlayer = selectedPlayer;
+				setWhitePlayer(getSelectedPlayer());
 			else
-				blackPlayer = selectedPlayer;
+				setBlackPlayer(getSelectedPlayer());
 
 			otherPlayerNamesComboBox.removeAllItems();
 			for (Player s : otherPlayersList)
-				otherPlayerNamesComboBox.addItem(s.name());
+				otherPlayerNamesComboBox.addItem(s.getName());
 
-			playerDetails.add(new JLabel(" " + selectedPlayer.name()));
-			playerDetails.add(new JLabel(" " + selectedPlayer.gamesplayed()));
-			playerDetails.add(new JLabel(" " + selectedPlayer.gameswon()));
+			playerDetails.add(new JLabel(" " + getSelectedPlayer().getName()));
+			playerDetails.add(new JLabel(" " + getSelectedPlayer().gamesPlayed()));
+			playerDetails.add(new JLabel(" " + getSelectedPlayer().gamesWon()));
 
 			playerPanel.revalidate();
 			playerPanel.repaint();
@@ -677,7 +701,7 @@ public class Main extends JFrame {
 
 		private void addNewPlayer() {
 			JPanel playerPanel = (color == 0) ? whitePlayerPanel : blackPlayerPanel;
-			ArrayList<Player> playersList = Player.fetch_players();
+			ArrayList<Player> playersList = Player.fetchPlayersData();
 			Iterator<Player> playersListIterator = playersList.iterator();
 
 			String playerName = JOptionPane.showInputDialog(playerPanel, "Enter your name");
@@ -687,18 +711,18 @@ public class Main extends JFrame {
 			}
 
 			while (playersListIterator.hasNext()) {
-				if (playersListIterator.next().name().equals(playerName)) {
+				if (playersListIterator.next().getName().equals(playerName)) {
 					JOptionPane.showMessageDialog(playerPanel, "Player exists");
 					return;
 				}
 			}
 
 			Player newPlayer = new Player(playerName);
-			newPlayer.Update_Player();
+			newPlayer.updatePlayersData();
 			if (color == 0)
-				whitePlayer = newPlayer;
+				setWhitePlayer(newPlayer);
 			else
-				blackPlayer = newPlayer;
+				setBlackPlayer(newPlayer);
 
 			updatePlayerPanel(playerPanel, newPlayer);
 			isSelected = true;
@@ -707,9 +731,9 @@ public class Main extends JFrame {
 		private void updatePlayerPanel(JPanel playerPanel, Player newPlayer) {
 			JPanel panelDetails = (color == 0) ? whitePlayerDetailsPanel : blackPlayerDetailsPnale;
 			panelDetails.removeAll();
-			panelDetails.add(new JLabel(" " + newPlayer.name()));
-			panelDetails.add(new JLabel(" " + newPlayer.gamesplayed()));
-			panelDetails.add(new JLabel(" " + newPlayer.gameswon()));
+			panelDetails.add(new JLabel(" " + newPlayer.getName()));
+			panelDetails.add(new JLabel(" " + newPlayer.gamesPlayed()));
+			panelDetails.add(new JLabel(" " + newPlayer.gamesWon()));
 			playerPanel.revalidate();
 			playerPanel.repaint();
 			playerPanel.add(panelDetails);

@@ -32,7 +32,7 @@ public class BoardState implements MouseListener {
 	private BoardState(BoardState oldBoardState) {
 		chessBoard = new Board(oldBoardState.chessBoard);
 	}
-	
+
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		BoardState newBoardState = new BoardState(this);
@@ -52,47 +52,47 @@ public class BoardState implements MouseListener {
 		else
 			chessBoard.updateBlackKingLocation(x, y);
 	}
-	
+
 	public void updateKing(int color, Cell newCell) {
 		if (color == 0)
-			chessBoard.updateWhiteKingLocation(newCell.x, newCell.y);
+			chessBoard.updateWhiteKingLocation(newCell.getXIndex(), newCell.getYIndex());
 		else
-			chessBoard.updateBlackKingLocation(newCell.x, newCell.y);
+			chessBoard.updateBlackKingLocation(newCell.getXIndex(), newCell.getYIndex());
 	}
-	
-	
+
 	public void updateKing(King piece, Cell newCell) {
-		piece.setx(newCell.x);
-		piece.sety(newCell.y);
+		piece.setx(newCell.getXIndex());
+		piece.sety(newCell.getYIndex());
 	}
-	
+
 	public Cell[][] getChessBoard() {
 		return chessBoard.getBoard();
 	}
-	
+
 	public void setChessBoard(int i, int j, Piece piece) {
 		chessBoard.getCell(i, j).setPiece(piece);
 	}
-	
+
 	public Cell getCell(King piece) {
 		return chessBoard.getCell(piece.getx(), piece.gety());
 	}
 
 	public Cell getCell(Cell cell) {
-		return chessBoard.getCell(cell.x, cell.y);
+		return chessBoard.getCell(cell.getXIndex(), cell.getYIndex());
 	}
 
 	public Cell getCell(int i, int j) {
 		return chessBoard.getCell(i, j);
 	}
-	
+
 	public Piece getPiece(int i, int j) {
 		return chessBoard.getPiece(i, j);
 	}
+
 	public Piece getPiece(Cell cell) {
-		return chessBoard.getPiece(cell.x, cell.y);
+		return chessBoard.getPiece(cell.getXIndex(), cell.getYIndex());
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		mainClassRef.makeMove((Cell) arg0.getSource());
