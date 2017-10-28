@@ -2,6 +2,7 @@ package chess;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.MissingFormatArgumentException;
 
 import javax.swing.JLabel;
 import javax.swing.Timer;
@@ -19,11 +20,13 @@ public class Time
     private JLabel label;
     Timer countdownTimer;
     int Timerem;
-    public Time(JLabel passedLabel)
+    Main mainClassRef;
+    public Time(JLabel passedLabel, Main ref)
     {
        countdownTimer = new Timer(1000, new CountdownTimerListener());
        this.label = passedLabel;
        Timerem=Main.timeRemaining;
+       mainClassRef = ref;
     }
     
     //A function that starts the timer
@@ -56,7 +59,7 @@ public class Time
                label.setText("Time's up!");
                reset();
                start();
-               Main.Mainboard.changechance();
+               mainClassRef.changeTurn();
 		 }
     }
  }

@@ -12,6 +12,7 @@ import pieces.*;
  */
 public class Cell extends JPanel implements Cloneable{
 	
+	
 	//Member Variables
 	private static final long serialVersionUID = 1L;
 	private boolean ispossibledestination;
