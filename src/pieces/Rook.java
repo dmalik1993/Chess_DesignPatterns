@@ -1,6 +1,6 @@
 package pieces;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import chess.Cell;
 
@@ -19,34 +19,24 @@ public class Rook extends Piece{
 	}
 	
 	//Move function defined
-	public ArrayList<Cell> move(Cell state[][],int x,int y)
+	public List<Cell> move(Cell[][] state,int x,int y)
 	{
 		//Rook can move only horizontally or vertically
-		possibleMoves.clear();
+		possiblemoves.clear();
 		int tempx=x-1;
 		while(tempx>=0)
 		{
-			if(state[tempx][y].getpiece()==null)
-				possibleMoves.add(state[tempx][y]);
-			else if(state[tempx][y].getpiece().getcolor()==this.getcolor())
-				break;
-			else
-			{
-				possibleMoves.add(state[tempx][y]);
+			if(!moveHorizontal(tempx, y, state))
+			{ 
 				break;
 			}
-			tempx--;
+						tempx--;
 		}
 		tempx=x+1;
 		while(tempx<8)
 		{
-			if(state[tempx][y].getpiece()==null)
-				possibleMoves.add(state[tempx][y]);
-			else if(state[tempx][y].getpiece().getcolor()==this.getcolor())
-				break;
-			else
-			{
-				possibleMoves.add(state[tempx][y]);
+			if(!moveHorizontal(tempx, y, state))
+			{ 
 				break;
 			}
 			tempx++;
@@ -54,13 +44,8 @@ public class Rook extends Piece{
 		int tempy=y-1;
 		while(tempy>=0)
 		{
-			if(state[x][tempy].getpiece()==null)
-				possibleMoves.add(state[x][tempy]);
-			else if(state[x][tempy].getpiece().getcolor()==this.getcolor())
-				break;
-			else
-			{
-				possibleMoves.add(state[x][tempy]);
+			if(!moveVertical(x, tempy, state))
+			{ 
 				break;
 			}
 			tempy--;
@@ -68,17 +53,42 @@ public class Rook extends Piece{
 		tempy=y+1;
 		while(tempy<8)
 		{
-			if(state[x][tempy].getpiece()==null)
-				possibleMoves.add(state[x][tempy]);
-			else if(state[x][tempy].getpiece().getcolor()==this.getcolor())
-				break;
-			else
-			{
-				possibleMoves.add(state[x][tempy]);
+			if(!moveVertical(x, tempy, state))
+			{ 
 				break;
 			}
 			tempy++;
 		}
-		return possibleMoves;
+		return possiblemoves;
 	}
+	public boolean moveHorizontal(int horizontalAxis, int verticalAxis, Cell[][] state){
+		if(state[horizontalAxis][verticalAxis].getpiece()==null)
+		{
+		possiblemoves.add(state[horizontalAxis][verticalAxis]);
+		
+		}
+		else if(state[horizontalAxis][verticalAxis].getpiece().getcolor()==this.getcolor())
+			return false;
+		else
+		{
+			possiblemoves.add(state[horizontalAxis][verticalAxis]);
+			return false;
+		}
+		return true;	
+	}
+	
+	public boolean moveVertical(int horizontalAxis, int verticalAxis, Cell[][] state){
+		if(state[horizontalAxis][verticalAxis].getpiece()==null)
+		{
+			possiblemoves.add(state[horizontalAxis][verticalAxis]);
+		}
+		else if(state[horizontalAxis][verticalAxis].getpiece().getcolor()==this.getcolor())
+			return false;
+		else
+		{
+			possiblemoves.add(state[horizontalAxis][verticalAxis]);
+			return false;
+		}
+		return true;
+        }
 }

@@ -1,6 +1,6 @@
 package pieces;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import chess.Cell;
 
@@ -8,147 +8,165 @@ import chess.Cell;
  * This is the Queen Class inherited from the abstract Piece class
  *
  */
-public class Queen extends Piece{
-	
-	//Constructors
-	public Queen(String i,String p,int c)
-	{
+public class Queen extends Piece {
+
+	// Constructors
+	public Queen(String i, String p, int c) {
 		setId(i);
 		setPath(p);
 		setColor(c);
 	}
-	
-	//Move Function Defined
-	public ArrayList<Cell> move(Cell state[][],int x,int y)
-	{
-		//Queen has most number of possible moves
-		//Queen can move any number of steps in all 8 direction
-		//The possible moves of queen is a combination of Rook and Bishop
-		possibleMoves.clear();
+
+	public boolean isMovementAllowedHorizontalVertical(int horizontalAxis,
+			int verticalAxis, Cell[][] state) {
+
+		if (state[horizontalAxis][verticalAxis].getpiece() == null)
+			possiblemoves.add(state[horizontalAxis][verticalAxis]);
+		else if (state[horizontalAxis][verticalAxis].getpiece().getcolor() == this
+				.getcolor())
+			return false;
+		else {
+			possiblemoves.add(state[horizontalAxis][verticalAxis]);
+			return false;
+		}
+		return true;
+	}
+
+	public boolean isMovementAllowedDiagonal(int horizontalAxis,
+			int verticalAxis, Cell[][] state) {
 		
-		//Checking possible moves in vertical direction
-		int tempx=x-1;
-		while(tempx>=0)
-		{
-			if(state[tempx][y].getpiece()==null)
-				possibleMoves.add(state[tempx][y]);
-			else if(state[tempx][y].getpiece().getcolor()==this.getcolor())
-				break;
-			else
-			{
-				possibleMoves.add(state[tempx][y]);
+			if (state[horizontalAxis][verticalAxis].getpiece() == null)
+				possiblemoves.add(state[horizontalAxis][verticalAxis]);
+			else if (state[horizontalAxis][verticalAxis].getpiece().getcolor() == this
+					.getcolor())
+				return false;
+			else {
+				possiblemoves.add(state[horizontalAxis][verticalAxis]);
+				return false;
+			}
+			return true;
+	}
+
+	public void moveVerticalUp(int horizontalAxis, int verticalAxis,
+			Cell[][] state) {
+		int tempX = horizontalAxis;
+		while (tempX >= 0) {
+			if (!isMovementAllowedHorizontalVertical(tempX, verticalAxis, state)) {
 				break;
 			}
-			tempx--;
+			tempX--;
 		}
-		
-		tempx=x+1;
-		while(tempx<8)
-		{
-			if(state[tempx][y].getpiece()==null)
-				possibleMoves.add(state[tempx][y]);
-			else if(state[tempx][y].getpiece().getcolor()==this.getcolor())
-				break;
-			else
-			{
-				possibleMoves.add(state[tempx][y]);
+	}
+
+	public void moveVerticalDown(int horizontalAxis, int verticalAxis,
+			Cell[][] state) {
+		int tempX = horizontalAxis;
+		while (tempX < 8) {
+			if (!isMovementAllowedHorizontalVertical(tempX, verticalAxis, state)) {
 				break;
 			}
-			tempx++;
+			tempX++;
 		}
-		
-		
-		//Checking possible moves in horizontal Direction
-		int tempy=y-1;
-		while(tempy>=0)
-		{
-			if(state[x][tempy].getpiece()==null)
-				possibleMoves.add(state[x][tempy]);
-			else if(state[x][tempy].getpiece().getcolor()==this.getcolor())
-				break;
-			else
-			{
-				possibleMoves.add(state[x][tempy]);
+	}
+
+	// Move Function Defined
+	public List<Cell> move(Cell[][] state, int x, int y) {
+		// Queen has most number of possible moves
+		// Queen can move any number of steps in all 8 direction
+		// The possible moves of queen is a combination of Rook and Bishop
+		possiblemoves.clear();
+
+		moveVerticalUp(x - 1, y, state);
+		moveVerticalDown(x + 1, y, state);
+		moveHorizontalLeft(x, y - 1, state);
+		moveHorizontalRight(x, y + 1, state);
+		moveLeftDiagonalDown(x + 1, y - 1, state);
+		moveRightDiagonalUp(x - 1, y + 1, state);
+		moveLeftDiagonalUp(x - 1, y - 1, state);
+		moveRightDiagonalDown(x + 1, y + 1, state);
+
+		return possiblemoves;
+	}
+
+	private void moveRightDiagonalDown(int horizontalAxis, int verticalAxis,
+			Cell[][] state) {
+		int tempX = horizontalAxis;
+		int tempY = verticalAxis;
+		while (tempX < 8 && tempY < 8) {
+			if (!isMovementAllowedDiagonal(tempX, tempY, state)) {
 				break;
 			}
-			tempy--;
+			tempX++;
+			tempY++;
 		}
-		tempy=y+1;
-		while(tempy<8)
-		{
-			if(state[x][tempy].getpiece()==null)
-				possibleMoves.add(state[x][tempy]);
-			else if(state[x][tempy].getpiece().getcolor()==this.getcolor())
-				break;
-			else
-			{
-				possibleMoves.add(state[x][tempy]);
+
+	}
+
+	private void moveLeftDiagonalUp(int horizontalAxis, int verticalAxis,
+			Cell[][] state) {
+		int tempX = horizontalAxis;
+		int tempY = verticalAxis;
+		while (tempX >= 0 && tempY >= 0) {
+			if (!isMovementAllowedDiagonal(tempX, tempY, state)) {
 				break;
 			}
-			tempy++;
+			tempX--;
+			tempY--;
 		}
-		
-		//Checking for possible moves in diagonal direction
-		tempx=x+1;tempy=y-1;
-		while(tempx<8&&tempy>=0)
-		{
-			if(state[tempx][tempy].getpiece()==null)
-				possibleMoves.add(state[tempx][tempy]);
-			else if(state[tempx][tempy].getpiece().getcolor()==this.getcolor())
-				break;
-			else
-			{
-				possibleMoves.add(state[tempx][tempy]);
+
+	}
+
+	private void moveRightDiagonalUp(int horizontalAxis, int verticalAxis,
+			Cell[][] state) {
+		int tempX = horizontalAxis;
+		int tempY = verticalAxis;
+		while (tempX >= 0 && tempY < 8) {
+			if (!isMovementAllowedDiagonal(tempX, tempY, state)) {
 				break;
 			}
-			tempx++;
-			tempy--;
+			tempX--;
+			tempY++;
 		}
-		tempx=x-1;tempy=y+1;
-		while(tempx>=0&&tempy<8)
-		{
-			if(state[tempx][tempy].getpiece()==null)
-				possibleMoves.add(state[tempx][tempy]);
-			else if(state[tempx][tempy].getpiece().getcolor()==this.getcolor())
-				break;
-			else
-			{
-				possibleMoves.add(state[tempx][tempy]);
+
+	}
+
+	private void moveLeftDiagonalDown(int horizontalAxis, int verticalAxis,
+			Cell[][] state) {
+		int tempX = horizontalAxis;
+		int tempY = verticalAxis;
+		while (tempX < 8 && tempY >= 0) {
+			if (!isMovementAllowedDiagonal(tempX, tempY, state)) {
 				break;
 			}
-			tempx--;
-			tempy++;
+			tempX++;
+			tempY--;
 		}
-		tempx=x-1;tempy=y-1;
-		while(tempx>=0&&tempy>=0)
-		{
-			if(state[tempx][tempy].getpiece()==null)
-				possibleMoves.add(state[tempx][tempy]);
-			else if(state[tempx][tempy].getpiece().getcolor()==this.getcolor())
-				break;
-			else
-			{
-				possibleMoves.add(state[tempx][tempy]);
+
+	}
+
+	private void moveHorizontalRight(int horizontalAxis, int verticalAxis,
+			Cell[][] state) {
+		int tempY = verticalAxis;
+		while (tempY < 8) {
+			if (!isMovementAllowedHorizontalVertical(horizontalAxis, tempY,
+					state)) {
 				break;
 			}
-			tempx--;
-			tempy--;
+			tempY++;
 		}
-		tempx=x+1;tempy=y+1;
-		while(tempx<8&&tempy<8)
-		{
-			if(state[tempx][tempy].getpiece()==null)
-				possibleMoves.add(state[tempx][tempy]);
-			else if(state[tempx][tempy].getpiece().getcolor()==this.getcolor())
-				break;
-			else
-			{
-				possibleMoves.add(state[tempx][tempy]);
+	}
+
+	private void moveHorizontalLeft(int horizontalAxis, int verticalAxis,
+			Cell[][] state) {
+		int tempY = verticalAxis;
+
+		while (tempY >= 0) {
+			if (!isMovementAllowedHorizontalVertical(horizontalAxis, tempY,
+					state)) {
 				break;
 			}
-			tempx++;
-			tempy++;
+			tempY--;
 		}
-		return possibleMoves;
+
 	}
 }

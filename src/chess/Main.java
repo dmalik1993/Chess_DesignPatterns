@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ListIterator;
 
 import javax.imageio.ImageIO;
@@ -59,7 +60,7 @@ public class Main extends JFrame {
 	private int currentTurn = 0;
 
 	private BoardState chessBoardState;
-	private ArrayList<Cell> possibleDestinations = new ArrayList<Cell>();
+	private List<Cell> possibleDestinations = new ArrayList<Cell>();
 
 	private Player whitePlayer, blackPlayer, selectedPlayer;
 
@@ -292,7 +293,7 @@ public class Main extends JFrame {
 			previousCell.deselect();
 			previousCell = null;
 		}
-		
+
 		currentTurn ^= 1;
 		if (!end && timer != null) {
 			timer.reset();
@@ -308,13 +309,13 @@ public class Main extends JFrame {
 		}
 	}
 
-	private void clearDestinationList(ArrayList<Cell> destList) {
+	private void clearDestinationList(List<Cell> destList) {
 		ListIterator<Cell> it = destList.listIterator();
 		while (it.hasNext())
 			it.next().removepossibledestination();
 	}
 
-	private void highlightDestinations(ArrayList<Cell> destList) {
+	private void highlightDestinations(List<Cell> destList) {
 		ListIterator<Cell> destListIterator = destList.listIterator();
 		while (destListIterator.hasNext())
 			destListIterator.next().setpossibledestination();
@@ -347,12 +348,12 @@ public class Main extends JFrame {
 			return false;
 	}
 
-	private ArrayList<Cell> filterAllowedMoves(ArrayList<Cell> possibleMovesList, final Cell source) {
+	private List<Cell> filterAllowedMoves(List<Cell> possibleMovesList, final Cell source) {
 		return allowedCheckMoves(possibleMovesList, source, currentTurn);
 	}
 
-	private ArrayList<Cell> allowedCheckMoves(ArrayList<Cell> possibleMovesList, final Cell source, final int turn) {
-		ArrayList<Cell> allowedMoves = new ArrayList<Cell>();
+	private List<Cell> allowedCheckMoves(List<Cell> possibleMovesList, final Cell source, final int turn) {
+		List<Cell> allowedMoves = new ArrayList<Cell>();
 		ListIterator<Cell> possibleMovesIterator = possibleMovesList.listIterator();
 
 		while (possibleMovesIterator.hasNext()) {
@@ -366,7 +367,7 @@ public class Main extends JFrame {
 	}
 
 	public boolean isCheckMate(int color) {
-		ArrayList<Cell> possibleMovesForKing = new ArrayList<Cell>();
+		List<Cell> possibleMovesForKing = new ArrayList<Cell>();
 		for (int i = 0; i < Board.ROWS; i++) {
 			for (int j = 0; j < Board.COLUMNS; j++) {
 				if (chessBoardState.getPiece(i, j) != null && chessBoardState.getPiece(i, j).getcolor() == color) {
@@ -415,6 +416,7 @@ public class Main extends JFrame {
 		setResizable(false);
 	}
 
+	@SuppressWarnings("deprecation")
 	private void stopTimer() {
 		timeDisplayPanle.disable();
 		timer.countdownTimer.stop();
