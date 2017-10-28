@@ -13,9 +13,9 @@ public class Board {
 	public static final int ROWS = 8;
 	public static final int COLUMNS = 8;
 
-	private Rook whiteRook01, whiteRook02, blackRook01, blackRook02;
-	private Knight whiteKinght01, whiteKnight02, blackKnight01, blackKnight02;
-	private Bishop whiteBishop01, whiteBishop02, blackBishop01, blackBishop02;
+	private transient Rook whiteRook01, whiteRook02, blackRook01, blackRook02;
+	private transient Knight whiteKinght01, whiteKnight02, blackKnight01, blackKnight02;
+	private transient Bishop whiteBishop01, whiteBishop02, blackBishop01, blackBishop02;
 	private Pawn whitePawn[], blackPawn[];
 	private Queen whiteQueen, blackQueen;
 	private King whiteKing, blackKing;
@@ -92,7 +92,7 @@ public class Board {
 		copyPieces(oldBoard);
 	}
 
-	private void copyPieces(Board copyFrom) {
+	private void copyPieces(final Board copyFrom) {
 		whiteRook01 = copyFrom.whiteRook01;
 		whiteRook02 = copyFrom.whiteRook02;
 		blackRook01 = copyFrom.blackRook01;
