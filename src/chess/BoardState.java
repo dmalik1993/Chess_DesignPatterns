@@ -95,7 +95,7 @@ public class BoardState implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		mainClassRef.makeMove((Cell) arg0.getSource());
+		mainClassRef.performAction((Cell) arg0.getSource());
 	}
 
 	@Override

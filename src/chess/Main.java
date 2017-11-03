@@ -216,12 +216,12 @@ public class Main extends JFrame {
 		blackPlayerComboPanel.add(newBlackPlayerButton);
 		blackPlayerPanel.add(blackPlayerComboPanel, BorderLayout.NORTH);
 
-		JPanel blackstats = new JPanel(new GridLayout(3, 3));
-		blackstats.add(new JLabel("Name   :"));
-		blackstats.add(new JLabel("Played :"));
-		blackstats.add(new JLabel("Won    :"));
+		JPanel blackPlayerStats = new JPanel(new GridLayout(3, 3));
+		blackPlayerStats.add(new JLabel("Name   :"));
+		blackPlayerStats.add(new JLabel("Played :"));
+		blackPlayerStats.add(new JLabel("Won    :"));
 
-		blackPlayerPanel.add(blackstats, BorderLayout.WEST);
+		blackPlayerPanel.add(blackPlayerStats, BorderLayout.WEST);
 	}
 
 	private void createWhitePlayerPanel() {
@@ -233,10 +233,10 @@ public class Main extends JFrame {
 				TitledBorder.CENTER, new Font("times new roman", Font.BOLD, 18), Color.RED));
 		whitePlayerPanel.setLayout(new BorderLayout());
 
-		JPanel whitestats = new JPanel(new GridLayout(3, 3));
-		whitestats.add(new JLabel("Name   :"));
-		whitestats.add(new JLabel("Played :"));
-		whitestats.add(new JLabel("Won    :"));
+		JPanel whitePlayerStats = new JPanel(new GridLayout(3, 3));
+		whitePlayerStats.add(new JLabel("Name   :"));
+		whitePlayerStats.add(new JLabel("Played :"));
+		whitePlayerStats.add(new JLabel("Won    :"));
 
 		whitePlayerCombo = new JComboBox<String>(getPlayerNames());
 
@@ -252,7 +252,7 @@ public class Main extends JFrame {
 		whitePlayerPanel.add(whitePlayerComboPanel, BorderLayout.NORTH);
 		whitePlayerComboPanel.add(whitePlayerSelectButton);
 		whitePlayerComboPanel.add(newWhitePlayerButton);
-		whitePlayerPanel.add(whitestats, BorderLayout.WEST);
+		whitePlayerPanel.add(whitePlayerStats, BorderLayout.WEST);
 	}
 
 	private void initializeTimer() {
@@ -371,7 +371,8 @@ public class Main extends JFrame {
 			for (int j = 0; j < Board.COLUMNS; j++) {
 				if (chessBoardState.getPiece(i, j) != null && chessBoardState.getPiece(i, j).getcolor() == color) {
 					possibleMovesForKing.clear();
-					possibleMovesForKing = chessBoardState.getPiece(i, j).getPossibleMoves(chessBoardState.getChessBoard(), i, j);
+					possibleMovesForKing = chessBoardState.getPiece(i, j)
+							.getPossibleMoves(chessBoardState.getChessBoard(), i, j);
 					possibleMovesForKing = allowedCheckMoves(possibleMovesForKing, chessBoardState.getCell(i, j),
 							color);
 					if (possibleMovesForKing.size() != 0)
@@ -383,13 +384,23 @@ public class Main extends JFrame {
 		return true;
 	}
 
-	@SuppressWarnings("deprecation")
 	private void endGame() {
 		clearDestinationList(possibleDestinations);
 
 		stopTimer();
 		declareWinner();
+		disposeGameLayout();
+		end = true;
 
+		createContentLayout();
+		chessBoardState = new BoardState(boardPanel, this);
+
+		setVisible(true);
+		setResizable(false);
+	}
+
+	@SuppressWarnings("deprecation")
+	private void disposeGameLayout() {
 		whitePlayerPanel.remove(whitePlayerDetailsPanel);
 		blackPlayerPanel.remove(blackPlayerDetailsPnale);
 		timeDisplayPanle.remove(timeLabel);
@@ -406,13 +417,6 @@ public class Main extends JFrame {
 		newBlackPlayerButton.enable();
 		whitePlayerSelectButton.enable();
 		blackPlayerSelectButton.enable();
-		end = true;
-
-		createContentLayout();
-		chessBoardState = new BoardState(boardPanel, this);
-
-		setVisible(true);
-		setResizable(false);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -438,97 +442,103 @@ public class Main extends JFrame {
 		JOptionPane.showMessageDialog(boardPanel, "Checkmate!!!\n" + winner + " wins");
 	}
 
-	public void makeMove(Cell currentCell) {
+	public void performAction(Cell currentCell) {
 		if (previousCell == null) {
-			if (currentCell.getpiece() != null) {
-				if (currentCell.getpiece().getcolor() != currentTurn)
-					return;
-				currentCell.select();
-				previousCell = currentCell;
-				possibleDestinations.clear();
-				possibleDestinations = currentCell.getpiece().getPossibleMoves(chessBoardState.getChessBoard(),
-						currentCell.getXIndex(), currentCell.getYIndex());
-				if (currentCell.getpiece() instanceof King)
-					possibleDestinations = filterAllowedMoves(possibleDestinations, currentCell);
-				else {
-					if (chessBoardState.getCell(chessBoardState.getKing(currentTurn)).isCheck())
-						possibleDestinations = new ArrayList<Cell>(
-								filterAllowedMoves(possibleDestinations, currentCell));
-					else if (possibleDestinations.isEmpty() == false
-							&& isCheckAfetrMove(currentCell, possibleDestinations.get(0)))
-						possibleDestinations.clear();
-				}
-				highlightDestinations(possibleDestinations);
+			if (!showValidMoves(currentCell)) {
+				return;
 			}
 		} else {
-			if (currentCell.getXIndex() == previousCell.getXIndex()
-					&& currentCell.getYIndex() == previousCell.getYIndex()) {
-				currentCell.removeSelection();
-				clearDestinationList(possibleDestinations);
-				possibleDestinations.clear();
-				previousCell = null;
-			} else if (currentCell.getpiece() == null
-					|| previousCell.getpiece().getcolor() != currentCell.getpiece().getcolor()) {
-				if (currentCell.isValidDestination()) {
-					if (currentCell.getpiece() != null)
-						currentCell.removePiece();
-					currentCell.setPiece(previousCell.getpiece());
-					if (previousCell.isCheck())
-						previousCell.removeCheck();
-					previousCell.removePiece();
-
-					// Setting check to other king'cell
-					if (chessBoardState.getKing(currentTurn ^ 1).isindanger(chessBoardState.getChessBoard())) {
-						chessBoardState.getCell(chessBoardState.getKing(currentTurn ^ 1)).setCheck();
-						if (isCheckMate(chessBoardState.getKing(currentTurn ^ 1).getcolor())) {
-							previousCell.removeSelection();
-							if (previousCell.getpiece() != null)
-								previousCell.removePiece();
-							endGame();
-						}
-					}
-					if (chessBoardState.getKing(currentTurn).isindanger(chessBoardState.getChessBoard()) == false)
-						chessBoardState.getCell(chessBoardState.getKing(currentTurn)).removeCheck();
-					if (currentCell.getpiece() instanceof King) {
-						chessBoardState.updateKing(currentTurn, currentCell);
-					}
-					changeTurn();
-					if (!end) {
-						timer.resetTimer();
-						timer.startTimer();
-					}
-				}
-				if (previousCell != null) {
-					previousCell.removeSelection();
-					previousCell = null;
-				}
-				clearDestinationList(possibleDestinations);
-				possibleDestinations.clear();
-			} else if (previousCell.getpiece().getcolor() == currentCell.getpiece().getcolor()) {
-				previousCell.removeSelection();
-				clearDestinationList(possibleDestinations);
-				possibleDestinations.clear();
-				currentCell.select();
-				previousCell = currentCell;
-				possibleDestinations = currentCell.getpiece().getPossibleMoves(chessBoardState.getChessBoard(),
-						currentCell.getXIndex(), currentCell.getYIndex());
-				if (currentCell.getpiece() instanceof King)
-					possibleDestinations = filterAllowedMoves(possibleDestinations, currentCell);
-				else {
-					if (chessBoardState.getCell(chessBoardState.getKing(currentTurn)).isCheck())
-						possibleDestinations = new ArrayList<Cell>(
-								filterAllowedMoves(possibleDestinations, currentCell));
-					else if (possibleDestinations.isEmpty() == false
-							&& isCheckAfetrMove(currentCell, possibleDestinations.get(0)))
-						possibleDestinations.clear();
-				}
-				highlightDestinations(possibleDestinations);
-			}
+			performMove(currentCell);
 		}
 
 		if (currentCell.getpiece() != null && currentCell.getpiece() instanceof King) {
 			chessBoardState.updateKing(((King) currentCell.getpiece()), currentCell);
 		}
+	}
+
+	private void performMove(Cell currentCell) {
+		if (currentCell.getXIndex() == previousCell.getXIndex()
+				&& currentCell.getYIndex() == previousCell.getYIndex()) {
+			deSelectCell(currentCell);
+			previousCell = null;
+		} else if (currentCell.getpiece() == null
+				|| previousCell.getpiece().getcolor() != currentCell.getpiece().getcolor()) {
+			if (currentCell.isValidDestination()) {
+				movePiece(currentCell);
+				tryCheckOtherKing();
+
+				if (chessBoardState.getKing(currentTurn).isindanger(chessBoardState.getChessBoard()) == false) {
+					chessBoardState.getCell(chessBoardState.getKing(currentTurn)).removeCheck();
+				}
+
+				if (currentCell.getpiece() instanceof King) {
+					chessBoardState.updateKing(currentTurn, currentCell);
+				}
+
+				changeTurn();
+			}
+
+			deSelectCell(previousCell);
+			previousCell = null;
+
+		} else if (previousCell.getpiece().getcolor() == currentCell.getpiece().getcolor()) {
+			deSelectCell(previousCell);
+			if (!showValidMoves(currentCell)) {
+				return;
+			}
+		}
+	}
+
+	private void tryCheckOtherKing() {
+		if (chessBoardState.getKing(currentTurn ^ 1).isindanger(chessBoardState.getChessBoard())) {
+			chessBoardState.getCell(chessBoardState.getKing(currentTurn ^ 1)).setCheck();
+			if (isCheckMate(chessBoardState.getKing(currentTurn ^ 1).getcolor())) {
+				previousCell.removeSelection();
+				if (previousCell.getpiece() != null)
+					previousCell.removePiece();
+				endGame();
+			}
+		}
+	}
+
+	private void movePiece(Cell currentCell) {
+		if (currentCell.getpiece() != null)
+			currentCell.removePiece();
+		currentCell.setPiece(previousCell.getpiece());
+		if (previousCell.isCheck())
+			previousCell.removeCheck();
+		previousCell.removePiece();
+	}
+
+	private void deSelectCell(Cell currentCell) {
+		if (currentCell != null) {
+			currentCell.removeSelection();
+		}
+		clearDestinationList(possibleDestinations);
+		possibleDestinations.clear();
+	}
+
+	private boolean showValidMoves(Cell currentCell) {
+		if (currentCell.getpiece() != null) {
+			if (currentCell.getpiece().getcolor() != currentTurn)
+				return false;
+			currentCell.select();
+			previousCell = currentCell;
+			possibleDestinations.clear();
+			possibleDestinations = currentCell.getpiece().getPossibleMoves(chessBoardState.getChessBoard(),
+					currentCell.getXIndex(), currentCell.getYIndex());
+			if (currentCell.getpiece() instanceof King) {
+				possibleDestinations = filterAllowedMoves(possibleDestinations, currentCell);
+			} else {
+				if (chessBoardState.getCell(chessBoardState.getKing(currentTurn)).isCheck())
+					possibleDestinations = new ArrayList<Cell>(filterAllowedMoves(possibleDestinations, currentCell));
+				else if (possibleDestinations.isEmpty() == false
+						&& isCheckAfetrMove(currentCell, possibleDestinations.get(0)))
+					possibleDestinations.clear();
+			}
+			highlightDestinations(possibleDestinations);
+		}
+		return true;
 	}
 
 	private Player getWhitePlayer() {

@@ -8,7 +8,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import pieces.King;
 import pieces.Piece;
 
 /**
@@ -19,61 +18,63 @@ import pieces.Piece;
 public class Cell extends JPanel implements Cloneable {
 
 	private static final long serialVersionUID = 1L;
-	private boolean isValidDestination;
+	private boolean validDestination;
 	private JLabel contentLabel;
 	private Piece piece;
-	private int x;
-	private int y;
-	private boolean isSelected = false;
-	private boolean isChecked = false;
+	private int xCoordinate;
+	private int yCoordinate;
+	private boolean selected;
+	private boolean isChecked;
 
-	// Constructors
-	public Cell(int x, int y, Piece p) {
-		this.setXIndex(x);
-		this.setYIndex(y);
+	public Cell(final int xVlaue, final int yValue, final Piece piece) {
+		super();
+		this.setXIndex(xVlaue);
+		this.setYIndex(yValue);
+		selected = false;
+		isChecked = false;
 
 		setLayout(new BorderLayout());
 
-		if ((x + y) % 2 == 0)
+		if ((xVlaue + yValue) % 2 == 0) {
 			setBackground(new Color(113, 198, 113));
-
-		else
+		} else {
 			setBackground(Color.white);
+		}
 
-		if (p != null)
-			setPiece(p);
+		if (piece != null) {
+			setPiece(piece);
+		}
 	}
 
-	public Cell(Cell cell) throws CloneNotSupportedException {
+	public Cell(final Cell cell) throws CloneNotSupportedException {
+		super();
 		this.setXIndex(cell.getXIndex());
 		this.setYIndex(cell.getYIndex());
+		selected = false;
+		isChecked = false;
 
 		setLayout(new BorderLayout());
-		if ((getXIndex() + getYIndex()) % 2 == 0)
+		if ((getXIndex() + getYIndex()) % 2 == 0) {
 			setBackground(new Color(113, 198, 113));
-		else
+		} else {
 			setBackground(Color.white);
+		}
+
 		if (cell.getpiece() != null) {
 			setPiece(cell.getpiece().getcopy());
-		} else
-			piece = null;
+		}
 	}
 
-	public void setPiece(Piece p) {
-		piece = p;
-		ImageIcon img = new javax.swing.ImageIcon(this.getClass().getResource(p.getPath()));
-		contentLabel = new JLabel(img);
+	public final void setPiece(Piece pieceValue) {
+		piece = pieceValue;
+		ImageIcon icon = new ImageIcon(this.getClass().getResource(pieceValue.getPath()));
+		contentLabel = new JLabel(icon);
 		this.add(contentLabel);
 	}
 
 	public void removePiece() {
-		if (piece instanceof King) {
-			piece = null;
-			this.remove(contentLabel);
-		} else {
-			piece = null;
-			this.remove(contentLabel);
-		}
+		piece = null;
+		this.remove(contentLabel);
 	}
 
 	public Piece getpiece() {
@@ -82,30 +83,30 @@ public class Cell extends JPanel implements Cloneable {
 
 	public void select() {
 		this.setBorder(BorderFactory.createLineBorder(Color.red, 6));
-		this.isSelected = true;
+		this.selected = true;
 	}
 
 	public boolean isSelected() {
-		return this.isSelected;
+		return this.selected;
 	}
 
 	public void removeSelection() {
 		this.setBorder(null);
-		this.isSelected = false;
+		this.selected = false;
 	}
 
 	public void setAsValidDestination() {
 		this.setBorder(BorderFactory.createLineBorder(Color.blue, 4));
-		this.isValidDestination = true;
+		this.validDestination = true;
 	}
 
 	public void removeValidDestination() {
 		this.setBorder(null);
-		this.isValidDestination = false;
+		this.validDestination = false;
 	}
 
 	public boolean isValidDestination() {
-		return this.isValidDestination;
+		return this.validDestination;
 	}
 
 	public void setCheck() {
@@ -115,10 +116,12 @@ public class Cell extends JPanel implements Cloneable {
 
 	public void removeCheck() {
 		this.setBorder(null);
-		if ((getXIndex() + getYIndex()) % 2 == 0)
+		if ((getXIndex() + getYIndex()) % 2 == 0) {
 			setBackground(new Color(113, 198, 113));
-		else
+		} else {
 			setBackground(Color.white);
+		}
+		
 		this.isChecked = false;
 	}
 
@@ -126,19 +129,19 @@ public class Cell extends JPanel implements Cloneable {
 		return isChecked;
 	}
 
-	int getXIndex() {
-		return x;
+	public final int getXIndex() {
+		return xCoordinate;
 	}
 
-	void setXIndex(int x) {
-		this.x = x;
+	void setXIndex(final int value) {
+		this.xCoordinate = value;
 	}
 
-	int getYIndex() {
-		return y;
+	public final int getYIndex() {
+		return yCoordinate;
 	}
 
-	void setYIndex(int y) {
-		this.y = y;
+	void setYIndex(final int value) {
+		this.yCoordinate = value;
 	}
 }
