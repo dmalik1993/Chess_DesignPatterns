@@ -79,7 +79,9 @@ public class Player implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 			try {
-				inputStream.close();
+				if (inputStream != null) {
+					inputStream.close();
+				}
 			} catch (IOException e1) {
 			}
 
@@ -110,7 +112,7 @@ public class Player implements Serializable {
 			if (outputFile.exists() == false)
 				outputFile.createNewFile();
 			if (inputFile.exists() == false) {
-				outputStream = new ObjectOutputStream(new java.io.FileOutputStream(outputFile, true));
+				outputStream = new ObjectOutputStream(new FileOutputStream(outputFile, true));
 				outputStream.writeObject(this);
 			} else {
 				inputStream = new ObjectInputStream(new FileInputStream(inputFile));

@@ -22,10 +22,10 @@ public class BoardState implements MouseListener {
 				Cell cell = chessBoard.getCell(i, j);
 				if (cell == null) {
 					System.out.println("Cell: " + i + " - " + j + " is NULL");
+				} else {
+					cell.addMouseListener(this);
+					boardPanel.add(cell);
 				}
-
-				cell.addMouseListener(this);
-				boardPanel.add(cell);
 			}
 	}
 
