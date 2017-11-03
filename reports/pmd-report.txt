@@ -177,89 +177,48 @@ src/chess/BoardState.java:110:	publicMethodCommentRequirement Required
 src/chess/BoardState.java:114:	Document empty method body
 src/chess/BoardState.java:114:	Parameter 'arg0' is not assigned and could be declared final
 src/chess/BoardState.java:114:	publicMethodCommentRequirement Required
-src/chess/Cell.java:19:	Avoid short class names like Cell
-src/chess/Cell.java:22:	Avoid excessively long variable names like isValidDestination
-src/chess/Cell.java:22:	Field isValidDestination has the same name as a method
+src/chess/Cell.java:18:	Avoid short class names like Cell
+src/chess/Cell.java:21:	Found non-transient, non-static member. Please mark as transient or provide accessors.
+src/chess/Cell.java:21:	fieldCommentRequirement Required
 src/chess/Cell.java:22:	Found non-transient, non-static member. Please mark as transient or provide accessors.
 src/chess/Cell.java:22:	fieldCommentRequirement Required
 src/chess/Cell.java:23:	Found non-transient, non-static member. Please mark as transient or provide accessors.
 src/chess/Cell.java:23:	fieldCommentRequirement Required
 src/chess/Cell.java:24:	Found non-transient, non-static member. Please mark as transient or provide accessors.
 src/chess/Cell.java:24:	fieldCommentRequirement Required
-src/chess/Cell.java:25:	Avoid variables with short names like x
 src/chess/Cell.java:25:	Found non-transient, non-static member. Please mark as transient or provide accessors.
 src/chess/Cell.java:25:	fieldCommentRequirement Required
-src/chess/Cell.java:26:	Avoid variables with short names like y
 src/chess/Cell.java:26:	Found non-transient, non-static member. Please mark as transient or provide accessors.
 src/chess/Cell.java:26:	fieldCommentRequirement Required
-src/chess/Cell.java:27:	Avoid using redundant field initializer for 'isSelected'
-src/chess/Cell.java:27:	Field isSelected has the same name as a method
 src/chess/Cell.java:27:	Found non-transient, non-static member. Please mark as transient or provide accessors.
 src/chess/Cell.java:27:	fieldCommentRequirement Required
-src/chess/Cell.java:28:	Avoid using redundant field initializer for 'isChecked'
-src/chess/Cell.java:28:	Found non-transient, non-static member. Please mark as transient or provide accessors.
-src/chess/Cell.java:28:	fieldCommentRequirement Required
-src/chess/Cell.java:31:	Avoid variables with short names like p
-src/chess/Cell.java:31:	Avoid variables with short names like x
-src/chess/Cell.java:31:	Avoid variables with short names like y
-src/chess/Cell.java:31:	It is a good practice to call super() in a constructor
-src/chess/Cell.java:31:	Parameter 'p' is not assigned and could be declared final
-src/chess/Cell.java:31:	Parameter 'x' is not assigned and could be declared final
-src/chess/Cell.java:31:	Parameter 'y' is not assigned and could be declared final
-src/chess/Cell.java:31:	publicMethodCommentRequirement Required
-src/chess/Cell.java:38:	Avoid using if...else statements without curly braces
-src/chess/Cell.java:41:	Avoid using if...else statements without curly braces
-src/chess/Cell.java:43:	Avoid using if statements without curly braces
-src/chess/Cell.java:44:	Overridable method 'setPiece' called during object construction
-src/chess/Cell.java:47:	It is a good practice to call super() in a constructor
-src/chess/Cell.java:47:	Parameter 'cell' is not assigned and could be declared final
-src/chess/Cell.java:47:	publicMethodCommentRequirement Required
-src/chess/Cell.java:52:	Overridable method 'getXIndex' called during object construction
-src/chess/Cell.java:52:	Overridable method 'getYIndex' called during object construction
-src/chess/Cell.java:53:	Avoid using if...else statements without curly braces
-src/chess/Cell.java:55:	Avoid using if...else statements without curly braces
-src/chess/Cell.java:56:	Avoid if (x != y) ..; else ..;
-src/chess/Cell.java:57:	Overridable method 'setPiece' called during object construction
-src/chess/Cell.java:59:	Assigning an Object to null is a code smell.  Consider refactoring.
-src/chess/Cell.java:59:	Avoid using if...else statements without curly braces
-src/chess/Cell.java:62:	Avoid variables with short names like p
-src/chess/Cell.java:62:	Parameter 'p' is not assigned and could be declared final
-src/chess/Cell.java:62:	publicMethodCommentRequirement Required
-src/chess/Cell.java:64:	Local variable 'img' could be declared final
-src/chess/Cell.java:64:	Unnecessary use of fully qualified name 'javax.swing.ImageIcon' due to existing import 'javax.swing.ImageIcon'
-src/chess/Cell.java:69:	publicMethodCommentRequirement Required
-src/chess/Cell.java:71:	Assigning an Object to null is a code smell.  Consider refactoring.
-src/chess/Cell.java:74:	Assigning an Object to null is a code smell.  Consider refactoring.
-src/chess/Cell.java:79:	publicMethodCommentRequirement Required
-src/chess/Cell.java:83:	publicMethodCommentRequirement Required
-src/chess/Cell.java:88:	publicMethodCommentRequirement Required
-src/chess/Cell.java:92:	publicMethodCommentRequirement Required
-src/chess/Cell.java:97:	publicMethodCommentRequirement Required
-src/chess/Cell.java:102:	publicMethodCommentRequirement Required
-src/chess/Cell.java:107:	publicMethodCommentRequirement Required
-src/chess/Cell.java:111:	publicMethodCommentRequirement Required
-src/chess/Cell.java:116:	publicMethodCommentRequirement Required
-src/chess/Cell.java:119:	Avoid using if...else statements without curly braces
-src/chess/Cell.java:121:	Avoid using if...else statements without curly braces
-src/chess/Cell.java:125:	publicMethodCommentRequirement Required
-src/chess/Cell.java:129:	To avoid mistakes add a comment at the beginning of the getXIndex method if you want a default access modifier
-src/chess/Cell.java:129:	Use explicit scoping instead of the default package private level
-src/chess/Cell.java:133:	Avoid variables with short names like x
-src/chess/Cell.java:133:	Parameter 'x' is not assigned and could be declared final
-src/chess/Cell.java:133:	To avoid mistakes add a comment at the beginning of the setXIndex method if you want a default access modifier
-src/chess/Cell.java:133:	Use explicit scoping instead of the default package private level
-src/chess/Cell.java:137:	To avoid mistakes add a comment at the beginning of the getYIndex method if you want a default access modifier
-src/chess/Cell.java:137:	Use explicit scoping instead of the default package private level
-src/chess/Cell.java:141:	Avoid variables with short names like y
-src/chess/Cell.java:141:	Parameter 'y' is not assigned and could be declared final
-src/chess/Cell.java:141:	To avoid mistakes add a comment at the beginning of the setYIndex method if you want a default access modifier
-src/chess/Cell.java:141:	Use explicit scoping instead of the default package private level
+src/chess/Cell.java:29:	publicMethodCommentRequirement Required
+src/chess/Cell.java:49:	publicMethodCommentRequirement Required
+src/chess/Cell.java:68:	Parameter 'pieceValue' is not assigned and could be declared final
+src/chess/Cell.java:68:	publicMethodCommentRequirement Required
+src/chess/Cell.java:70:	Local variable 'icon' could be declared final
+src/chess/Cell.java:75:	publicMethodCommentRequirement Required
+src/chess/Cell.java:76:	Assigning an Object to null is a code smell.  Consider refactoring.
+src/chess/Cell.java:80:	publicMethodCommentRequirement Required
+src/chess/Cell.java:84:	publicMethodCommentRequirement Required
+src/chess/Cell.java:89:	publicMethodCommentRequirement Required
+src/chess/Cell.java:93:	publicMethodCommentRequirement Required
+src/chess/Cell.java:98:	publicMethodCommentRequirement Required
+src/chess/Cell.java:103:	publicMethodCommentRequirement Required
+src/chess/Cell.java:108:	publicMethodCommentRequirement Required
+src/chess/Cell.java:112:	publicMethodCommentRequirement Required
+src/chess/Cell.java:117:	publicMethodCommentRequirement Required
+src/chess/Cell.java:128:	publicMethodCommentRequirement Required
+src/chess/Cell.java:132:	publicMethodCommentRequirement Required
+src/chess/Cell.java:136:	To avoid mistakes add a comment at the beginning of the setXIndex method if you want a default access modifier
+src/chess/Cell.java:136:	Use explicit scoping instead of the default package private level
+src/chess/Cell.java:140:	publicMethodCommentRequirement Required
+src/chess/Cell.java:144:	To avoid mistakes add a comment at the beginning of the setYIndex method if you want a default access modifier
+src/chess/Cell.java:144:	Use explicit scoping instead of the default package private level
 src/chess/Main.java:1:	A high number of imports can indicate a high degree of coupling within an object.
-src/chess/Main.java:1:	Possible God class (WMC=112, ATFD=120, TCC=0.06156156156156156)
+src/chess/Main.java:1:	Possible God class (WMC=115, ATFD=113, TCC=0.06976744186046512)
 src/chess/Main.java:50:	Avoid short class names like Main
-src/chess/Main.java:50:	The class 'Main' has a Cyclomatic Complexity of 3 (Highest = 29).
-src/chess/Main.java:50:	The class 'Main' has a Modified Cyclomatic Complexity of 3 (Highest = 24).
-src/chess/Main.java:50:	The class 'Main' has a Standard Cyclomatic Complexity of 3 (Highest = 24).
+src/chess/Main.java:50:	The class 'Main' has a Cyclomatic Complexity of 2 (Highest = 10).
 src/chess/Main.java:50:	This class has too many methods, consider refactoring it.
 src/chess/Main.java:50:	Too many fields
 src/chess/Main.java:51:	fieldCommentRequirement Required
@@ -360,8 +319,8 @@ src/chess/Main.java:159:	Potential violation of Law of Demeter (method chain cal
 src/chess/Main.java:160:	Avoid empty catch blocks
 src/chess/Main.java:163:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
 src/chess/Main.java:173:	Local variable 'setTime' could be declared final
-src/chess/Main.java:219:	Local variable 'blackstats' could be declared final
-src/chess/Main.java:236:	Local variable 'whitestats' could be declared final
+src/chess/Main.java:219:	Local variable 'blackPlayerStats' could be declared final
+src/chess/Main.java:236:	Local variable 'whitePlayerStats' could be declared final
 src/chess/Main.java:270:	Local variable 'playersList' could be declared final
 src/chess/Main.java:271:	Local variable 'witr' could be declared final
 src/chess/Main.java:271:	Potential violation of Law of Demeter (object not created locally)
@@ -420,301 +379,295 @@ src/chess/Main.java:359:	Local variable 'target' could be declared final
 src/chess/Main.java:368:	Parameter 'color' is not assigned and could be declared final
 src/chess/Main.java:368:	publicMethodCommentRequirement Required
 src/chess/Main.java:369:	Avoid excessively long variable names like possibleMovesForKing
-src/chess/Main.java:369:	Found 'DU'-anomaly for variable 'possibleMovesForKing' (lines '369'-'384').
+src/chess/Main.java:369:	Found 'DU'-anomaly for variable 'possibleMovesForKing' (lines '369'-'385').
 src/chess/Main.java:372:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:374:	Found 'DD'-anomaly for variable 'possibleMovesForKing' (lines '374'-'375').
+src/chess/Main.java:374:	Found 'DD'-anomaly for variable 'possibleMovesForKing' (lines '374'-'376').
 src/chess/Main.java:374:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:377:	Avoid using if statements without curly braces
-src/chess/Main.java:377:	Potential violation of Law of Demeter (object not created locally)
-src/chess/Main.java:377:	Substitute calls to size() == 0 (or size() != 0, size() > 0, size() < 1) with calls to isEmpty()
-src/chess/Main.java:378:	A method should have only one exit point, and that should be the last statement in the method
-src/chess/Main.java:421:	Potential violation of Law of Demeter (static property access)
-src/chess/Main.java:425:	Found 'DD'-anomaly for variable 'winner' (lines '425'-'431').
-src/chess/Main.java:425:	Found 'DD'-anomaly for variable 'winner' (lines '425'-'435').
-src/chess/Main.java:426:	Avoid using if statements without curly braces
-src/chess/Main.java:429:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:430:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:431:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:378:	Avoid using if statements without curly braces
+src/chess/Main.java:378:	Potential violation of Law of Demeter (object not created locally)
+src/chess/Main.java:378:	Substitute calls to size() == 0 (or size() != 0, size() > 0, size() < 1) with calls to isEmpty()
+src/chess/Main.java:379:	A method should have only one exit point, and that should be the last statement in the method
+src/chess/Main.java:425:	Potential violation of Law of Demeter (static property access)
+src/chess/Main.java:429:	Found 'DD'-anomaly for variable 'winner' (lines '429'-'435').
+src/chess/Main.java:429:	Found 'DD'-anomaly for variable 'winner' (lines '429'-'439').
+src/chess/Main.java:430:	Avoid using if statements without curly braces
 src/chess/Main.java:433:	Potential violation of Law of Demeter (method chain calls)
 src/chess/Main.java:434:	Potential violation of Law of Demeter (method chain calls)
 src/chess/Main.java:435:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:441:	Parameter 'currentCell' is not assigned and could be declared final
-src/chess/Main.java:441:	The method 'makeMove' has a Cyclomatic Complexity of 29.
-src/chess/Main.java:441:	The method 'makeMove' has a Modified Cyclomatic Complexity of 24.
-src/chess/Main.java:441:	The method 'makeMove' has a Standard Cyclomatic Complexity of 24.
-src/chess/Main.java:441:	The method makeMove() has an NPath complexity of 834
-src/chess/Main.java:441:	publicMethodCommentRequirement Required
-src/chess/Main.java:444:	Avoid using if statements without curly braces
-src/chess/Main.java:444:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:449:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:452:	Avoid using if...else statements without curly braces
-src/chess/Main.java:454:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:455:	Avoid using if...else statements without curly braces
-src/chess/Main.java:457:	Avoid unnecessary comparisons in boolean expressions
-src/chess/Main.java:457:	Avoid using if statements without curly braces
-src/chess/Main.java:469:	Assigning an Object to null is a code smell.  Consider refactoring.
+src/chess/Main.java:437:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:438:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:439:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:445:	Parameter 'currentCell' is not assigned and could be declared final
+src/chess/Main.java:445:	publicMethodCommentRequirement Required
+src/chess/Main.java:459:	Parameter 'currentCell' is not assigned and could be declared final
+src/chess/Main.java:459:	The method 'performMove' has a Cyclomatic Complexity of 10.
+src/chess/Main.java:463:	Assigning an Object to null is a code smell.  Consider refactoring.
+src/chess/Main.java:465:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:465:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:470:	Avoid unnecessary comparisons in boolean expressions
+src/chess/Main.java:470:	Potential violation of Law of Demeter (method chain calls)
 src/chess/Main.java:471:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:471:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:473:	Avoid using if statements without curly braces
-src/chess/Main.java:476:	Avoid using if statements without curly braces
-src/chess/Main.java:481:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:482:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:483:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:483:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:485:	Avoid using if statements without curly braces
-src/chess/Main.java:490:	Avoid unnecessary comparisons in boolean expressions
-src/chess/Main.java:490:	Avoid using if statements without curly braces
-src/chess/Main.java:490:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:491:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:503:	Assigning an Object to null is a code smell.  Consider refactoring.
-src/chess/Main.java:507:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:507:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:513:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:516:	Avoid using if...else statements without curly braces
-src/chess/Main.java:518:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:519:	Avoid using if...else statements without curly braces
-src/chess/Main.java:521:	Avoid unnecessary comparisons in boolean expressions
-src/chess/Main.java:521:	Avoid using if statements without curly braces
-src/chess/Main.java:538:	Parameter 'whitePlayer' is not assigned and could be declared final
-src/chess/Main.java:546:	Parameter 'blackPlayer' is not assigned and could be declared final
-src/chess/Main.java:554:	Parameter 'selectedPlayer' is not assigned and could be declared final
-src/chess/Main.java:558:	Each class should declare at least one constructor
-src/chess/Main.java:558:	To avoid mistakes add a comment at the beginning of the StartButtonListener nested class if you want a default access modifier
-src/chess/Main.java:558:	headerCommentRequirement Required
-src/chess/Main.java:561:	Parameter 'arg0' is not assigned and could be declared final
-src/chess/Main.java:561:	publicMethodCommentRequirement Required
-src/chess/Main.java:563:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:563:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:564:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:571:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:571:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:572:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:572:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:482:	Assigning an Object to null is a code smell.  Consider refactoring.
+src/chess/Main.java:484:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:484:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:493:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:494:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:495:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:495:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:497:	Avoid using if statements without curly braces
+src/chess/Main.java:504:	Parameter 'currentCell' is not assigned and could be declared final
+src/chess/Main.java:505:	Avoid using if statements without curly braces
+src/chess/Main.java:508:	Avoid using if statements without curly braces
+src/chess/Main.java:513:	Parameter 'currentCell' is not assigned and could be declared final
+src/chess/Main.java:521:	Parameter 'currentCell' is not assigned and could be declared final
+src/chess/Main.java:523:	Avoid using if statements without curly braces
+src/chess/Main.java:523:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:524:	A method should have only one exit point, and that should be the last statement in the method
+src/chess/Main.java:528:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:533:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:534:	Avoid using if...else statements without curly braces
+src/chess/Main.java:535:	Avoid unnecessary comparisons in boolean expressions
+src/chess/Main.java:535:	Avoid using if statements without curly braces
+src/chess/Main.java:548:	Parameter 'whitePlayer' is not assigned and could be declared final
+src/chess/Main.java:556:	Parameter 'blackPlayer' is not assigned and could be declared final
+src/chess/Main.java:564:	Parameter 'selectedPlayer' is not assigned and could be declared final
+src/chess/Main.java:568:	Each class should declare at least one constructor
+src/chess/Main.java:568:	To avoid mistakes add a comment at the beginning of the StartButtonListener nested class if you want a default access modifier
+src/chess/Main.java:568:	headerCommentRequirement Required
+src/chess/Main.java:571:	Parameter 'arg0' is not assigned and could be declared final
+src/chess/Main.java:571:	publicMethodCommentRequirement Required
 src/chess/Main.java:573:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
 src/chess/Main.java:573:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:578:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:578:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:579:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:579:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:580:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:584:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:584:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:585:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:586:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:587:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:587:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:591:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:592:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:593:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:574:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:581:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:581:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:582:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:582:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:583:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:583:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:588:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:588:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:589:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:589:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:590:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
 src/chess/Main.java:594:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
 src/chess/Main.java:594:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:599:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:600:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:595:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:596:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:597:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:597:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:601:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
 src/chess/Main.java:602:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
 src/chess/Main.java:603:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:607:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:607:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:608:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:608:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:604:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:604:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:609:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
 src/chess/Main.java:610:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:610:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:611:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:611:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:615:	Each class should declare at least one constructor
-src/chess/Main.java:615:	To avoid mistakes add a comment at the beginning of the TimeChangeListener nested class if you want a default access modifier
-src/chess/Main.java:615:	headerCommentRequirement Required
-src/chess/Main.java:617:	Parameter 'arg0' is not assigned and could be declared final
-src/chess/Main.java:617:	publicMethodCommentRequirement Required
+src/chess/Main.java:612:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:613:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:617:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:617:	Potential violation of Law of Demeter (method chain calls)
 src/chess/Main.java:618:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:622:	The class 'PlayerSelectionListener' has a Cyclomatic Complexity of 8 (Highest = 14).
-src/chess/Main.java:622:	The class 'PlayerSelectionListener' has a Modified Cyclomatic Complexity of 8 (Highest = 14).
-src/chess/Main.java:622:	The class 'PlayerSelectionListener' has a Standard Cyclomatic Complexity of 8 (Highest = 14).
-src/chess/Main.java:622:	To avoid mistakes add a comment at the beginning of the PlayerSelectionListener nested class if you want a default access modifier
-src/chess/Main.java:622:	headerCommentRequirement Required
-src/chess/Main.java:623:	Found non-transient, non-static member. Please mark as transient or provide accessors.
-src/chess/Main.java:623:	Private field 'color' could be made final; it is only initialized in the declaration or constructor.
-src/chess/Main.java:623:	fieldCommentRequirement Required
-src/chess/Main.java:625:	Avoid variables with short names like i
-src/chess/Main.java:625:	Parameter 'i' is not assigned and could be declared final
-src/chess/Main.java:630:	Found 'UR'-anomaly for variable 's' (lines '630'-'676').
-src/chess/Main.java:630:	Parameter 'arg0' is not assigned and could be declared final
-src/chess/Main.java:630:	The method 'actionPerformed' has a Cyclomatic Complexity of 14.
-src/chess/Main.java:630:	The method 'actionPerformed' has a Modified Cyclomatic Complexity of 14.
-src/chess/Main.java:630:	The method 'actionPerformed' has a Standard Cyclomatic Complexity of 14.
-src/chess/Main.java:630:	The method actionPerformed() has an NPath complexity of 180000
-src/chess/Main.java:630:	publicMethodCommentRequirement Required
-src/chess/Main.java:631:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:633:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:633:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:633:	Avoid declaring a variable if it is unreferenced before a possible exit point.
-src/chess/Main.java:633:	Avoid excessively long variable names like currentPlayerNamesComboBox
-src/chess/Main.java:633:	Found 'DU'-anomaly for variable 'currentPlayerNamesComboBox' (lines '633'-'686').
-src/chess/Main.java:633:	Local variable 'currentPlayerNamesComboBox' could be declared final
-src/chess/Main.java:634:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:634:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:634:	Avoid declaring a variable if it is unreferenced before a possible exit point.
-src/chess/Main.java:634:	Avoid excessively long variable names like otherPlayerNamesComboBox
-src/chess/Main.java:634:	Found 'DU'-anomaly for variable 'otherPlayerNamesComboBox' (lines '634'-'686').
-src/chess/Main.java:634:	Local variable 'otherPlayerNamesComboBox' could be declared final
-src/chess/Main.java:636:	Local variable 'otherPlayersList' could be declared final
-src/chess/Main.java:637:	Avoid declaring a variable if it is unreferenced before a possible exit point.
-src/chess/Main.java:637:	Avoid excessively long variable names like currentPlayersList
-src/chess/Main.java:637:	Found 'DU'-anomaly for variable 'currentPlayersList' (lines '637'-'686').
-src/chess/Main.java:637:	Local variable 'currentPlayersList' could be declared final
-src/chess/Main.java:638:	Avoid using if statements without curly braces
-src/chess/Main.java:638:	Potential violation of Law of Demeter (object not created locally)
-src/chess/Main.java:639:	A method should have only one exit point, and that should be the last statement in the method
+src/chess/Main.java:618:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:620:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:620:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:621:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:621:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:625:	Each class should declare at least one constructor
+src/chess/Main.java:625:	To avoid mistakes add a comment at the beginning of the TimeChangeListener nested class if you want a default access modifier
+src/chess/Main.java:625:	headerCommentRequirement Required
+src/chess/Main.java:627:	Parameter 'arg0' is not assigned and could be declared final
+src/chess/Main.java:627:	publicMethodCommentRequirement Required
+src/chess/Main.java:628:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:632:	The class 'PlayerSelectionListener' has a Cyclomatic Complexity of 8 (Highest = 14).
+src/chess/Main.java:632:	The class 'PlayerSelectionListener' has a Modified Cyclomatic Complexity of 8 (Highest = 14).
+src/chess/Main.java:632:	The class 'PlayerSelectionListener' has a Standard Cyclomatic Complexity of 8 (Highest = 14).
+src/chess/Main.java:632:	To avoid mistakes add a comment at the beginning of the PlayerSelectionListener nested class if you want a default access modifier
+src/chess/Main.java:632:	headerCommentRequirement Required
+src/chess/Main.java:633:	Found non-transient, non-static member. Please mark as transient or provide accessors.
+src/chess/Main.java:633:	Private field 'color' could be made final; it is only initialized in the declaration or constructor.
+src/chess/Main.java:633:	fieldCommentRequirement Required
+src/chess/Main.java:635:	Avoid variables with short names like i
+src/chess/Main.java:635:	Parameter 'i' is not assigned and could be declared final
+src/chess/Main.java:640:	Found 'UR'-anomaly for variable 's' (lines '640'-'686').
+src/chess/Main.java:640:	Parameter 'arg0' is not assigned and could be declared final
+src/chess/Main.java:640:	The method 'actionPerformed' has a Cyclomatic Complexity of 14.
+src/chess/Main.java:640:	The method 'actionPerformed' has a Modified Cyclomatic Complexity of 14.
+src/chess/Main.java:640:	The method 'actionPerformed' has a Standard Cyclomatic Complexity of 14.
+src/chess/Main.java:640:	The method actionPerformed() has an NPath complexity of 180000
+src/chess/Main.java:640:	publicMethodCommentRequirement Required
 src/chess/Main.java:641:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:641:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:641:	Found 'DU'-anomaly for variable 'playerDetails' (lines '641'-'686').
-src/chess/Main.java:641:	Local variable 'playerDetails' could be declared final
-src/chess/Main.java:642:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:642:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:642:	Avoid declaring a variable if it is unreferenced before a possible exit point.
-src/chess/Main.java:642:	Found 'DU'-anomaly for variable 'playerPanel' (lines '642'-'686').
-src/chess/Main.java:642:	Local variable 'playerPanel' could be declared final
+src/chess/Main.java:643:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:643:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:643:	Avoid declaring a variable if it is unreferenced before a possible exit point.
+src/chess/Main.java:643:	Avoid excessively long variable names like currentPlayerNamesComboBox
+src/chess/Main.java:643:	Found 'DU'-anomaly for variable 'currentPlayerNamesComboBox' (lines '643'-'696').
+src/chess/Main.java:643:	Local variable 'currentPlayerNamesComboBox' could be declared final
 src/chess/Main.java:644:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:644:	Avoid unnecessary comparisons in boolean expressions
-src/chess/Main.java:644:	Avoid using if statements without curly braces
-src/chess/Main.java:645:	Potential violation of Law of Demeter (object not created locally)
-src/chess/Main.java:647:	Found 'DU'-anomaly for variable 'playerName' (lines '647'-'686').
-src/chess/Main.java:647:	Local variable 'playerName' could be declared final
-src/chess/Main.java:647:	Potential violation of Law of Demeter (object not created locally)
-src/chess/Main.java:648:	Avoid excessively long variable names like currentPlayerIterator
-src/chess/Main.java:648:	Local variable 'currentPlayerIterator' could be declared final
+src/chess/Main.java:644:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:644:	Avoid declaring a variable if it is unreferenced before a possible exit point.
+src/chess/Main.java:644:	Avoid excessively long variable names like otherPlayerNamesComboBox
+src/chess/Main.java:644:	Found 'DU'-anomaly for variable 'otherPlayerNamesComboBox' (lines '644'-'696').
+src/chess/Main.java:644:	Local variable 'otherPlayerNamesComboBox' could be declared final
+src/chess/Main.java:646:	Local variable 'otherPlayersList' could be declared final
+src/chess/Main.java:647:	Avoid declaring a variable if it is unreferenced before a possible exit point.
+src/chess/Main.java:647:	Avoid excessively long variable names like currentPlayersList
+src/chess/Main.java:647:	Found 'DU'-anomaly for variable 'currentPlayersList' (lines '647'-'696').
+src/chess/Main.java:647:	Local variable 'currentPlayersList' could be declared final
+src/chess/Main.java:648:	Avoid using if statements without curly braces
 src/chess/Main.java:648:	Potential violation of Law of Demeter (object not created locally)
-src/chess/Main.java:649:	Avoid excessively long variable names like otherPlayerIterator
-src/chess/Main.java:649:	Local variable 'otherPlayerIterator' could be declared final
-src/chess/Main.java:649:	Potential violation of Law of Demeter (object not created locally)
-src/chess/Main.java:651:	Local variable 'player' could be declared final
-src/chess/Main.java:652:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:652:	Potential violation of Law of Demeter (object not created locally)
-src/chess/Main.java:653:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:659:	Avoid variables with short names like p
-src/chess/Main.java:659:	Local variable 'p' could be declared final
-src/chess/Main.java:660:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:660:	Potential violation of Law of Demeter (object not created locally)
-src/chess/Main.java:661:	Potential violation of Law of Demeter (object not created locally)
-src/chess/Main.java:666:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:666:	Avoid using if statements without curly braces
-src/chess/Main.java:670:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:670:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:670:	Avoid using if...else statements without curly braces
-src/chess/Main.java:672:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:672:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:672:	Avoid using if...else statements without curly braces
-src/chess/Main.java:674:	Potential violation of Law of Demeter (object not created locally)
-src/chess/Main.java:675:	Avoid using for statements without curly braces
-src/chess/Main.java:675:	Local variable 's' could be declared final
-src/chess/Main.java:676:	Potential violation of Law of Demeter (object not created locally)
-src/chess/Main.java:678:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:678:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:679:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:679:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:649:	A method should have only one exit point, and that should be the last statement in the method
+src/chess/Main.java:651:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:651:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:651:	Found 'DU'-anomaly for variable 'playerDetails' (lines '651'-'696').
+src/chess/Main.java:651:	Local variable 'playerDetails' could be declared final
+src/chess/Main.java:652:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:652:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:652:	Avoid declaring a variable if it is unreferenced before a possible exit point.
+src/chess/Main.java:652:	Found 'DU'-anomaly for variable 'playerPanel' (lines '652'-'696').
+src/chess/Main.java:652:	Local variable 'playerPanel' could be declared final
+src/chess/Main.java:654:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:654:	Avoid unnecessary comparisons in boolean expressions
+src/chess/Main.java:654:	Avoid using if statements without curly braces
+src/chess/Main.java:655:	Potential violation of Law of Demeter (object not created locally)
+src/chess/Main.java:657:	Found 'DU'-anomaly for variable 'playerName' (lines '657'-'696').
+src/chess/Main.java:657:	Local variable 'playerName' could be declared final
+src/chess/Main.java:657:	Potential violation of Law of Demeter (object not created locally)
+src/chess/Main.java:658:	Avoid excessively long variable names like currentPlayerIterator
+src/chess/Main.java:658:	Local variable 'currentPlayerIterator' could be declared final
+src/chess/Main.java:658:	Potential violation of Law of Demeter (object not created locally)
+src/chess/Main.java:659:	Avoid excessively long variable names like otherPlayerIterator
+src/chess/Main.java:659:	Local variable 'otherPlayerIterator' could be declared final
+src/chess/Main.java:659:	Potential violation of Law of Demeter (object not created locally)
+src/chess/Main.java:661:	Local variable 'player' could be declared final
+src/chess/Main.java:662:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:662:	Potential violation of Law of Demeter (object not created locally)
+src/chess/Main.java:663:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:669:	Avoid variables with short names like p
+src/chess/Main.java:669:	Local variable 'p' could be declared final
+src/chess/Main.java:670:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:670:	Potential violation of Law of Demeter (object not created locally)
+src/chess/Main.java:671:	Potential violation of Law of Demeter (object not created locally)
+src/chess/Main.java:676:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:676:	Avoid using if statements without curly braces
 src/chess/Main.java:680:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:680:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:682:	Potential violation of Law of Demeter (object not created locally)
-src/chess/Main.java:683:	Potential violation of Law of Demeter (object not created locally)
+src/chess/Main.java:680:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:680:	Avoid using if...else statements without curly braces
+src/chess/Main.java:682:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:682:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:682:	Avoid using if...else statements without curly braces
 src/chess/Main.java:684:	Potential violation of Law of Demeter (object not created locally)
-src/chess/Main.java:685:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:690:	To avoid mistakes add a comment at the beginning of the AddNewPlayerListener nested class if you want a default access modifier
-src/chess/Main.java:690:	headerCommentRequirement Required
-src/chess/Main.java:691:	Found non-transient, non-static member. Please mark as transient or provide accessors.
-src/chess/Main.java:691:	Private field 'color' could be made final; it is only initialized in the declaration or constructor.
-src/chess/Main.java:691:	fieldCommentRequirement Required
-src/chess/Main.java:693:	Avoid variables with short names like i
-src/chess/Main.java:693:	Parameter 'i' is not assigned and could be declared final
-src/chess/Main.java:698:	Avoid variables with short names like e
-src/chess/Main.java:698:	Parameter 'e' is not assigned and could be declared final
-src/chess/Main.java:698:	publicMethodCommentRequirement Required
-src/chess/Main.java:703:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:703:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:703:	Local variable 'playerPanel' could be declared final
-src/chess/Main.java:704:	Local variable 'playersList' could be declared final
-src/chess/Main.java:705:	Avoid declaring a variable if it is unreferenced before a possible exit point.
-src/chess/Main.java:705:	Avoid excessively long variable names like playersListIterator
-src/chess/Main.java:705:	Found 'DU'-anomaly for variable 'playersListIterator' (lines '705'-'729').
-src/chess/Main.java:705:	Local variable 'playersListIterator' could be declared final
-src/chess/Main.java:705:	Potential violation of Law of Demeter (object not created locally)
-src/chess/Main.java:707:	Local variable 'playerName' could be declared final
-src/chess/Main.java:709:	Potential violation of Law of Demeter (object not created locally)
-src/chess/Main.java:710:	A method should have only one exit point, and that should be the last statement in the method
-src/chess/Main.java:714:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:714:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Main.java:720:	Local variable 'newPlayer' could be declared final
-src/chess/Main.java:723:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:723:	Avoid using if...else statements without curly braces
-src/chess/Main.java:725:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:725:	Avoid using if...else statements without curly braces
-src/chess/Main.java:728:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:731:	Parameter 'newPlayer' is not assigned and could be declared final
-src/chess/Main.java:731:	Parameter 'playerPanel' is not assigned and could be declared final
-src/chess/Main.java:732:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:732:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
-src/chess/Main.java:732:	Local variable 'panelDetails' could be declared final
-src/chess/Main.java:733:	Potential violation of Law of Demeter (object not created locally)
-src/chess/Player.java:22:	The class 'Player' has a Cyclomatic Complexity of 3 (Highest = 13).
-src/chess/Player.java:22:	The class 'Player' has a Modified Cyclomatic Complexity of 3 (Highest = 13).
-src/chess/Player.java:22:	The class 'Player' has a Standard Cyclomatic Complexity of 3 (Highest = 13).
-src/chess/Player.java:25:	Found non-transient, non-static member. Please mark as transient or provide accessors.
-src/chess/Player.java:25:	Private field 'name' could be made final; it is only initialized in the declaration or constructor.
+src/chess/Main.java:685:	Avoid using for statements without curly braces
+src/chess/Main.java:685:	Local variable 's' could be declared final
+src/chess/Main.java:686:	Potential violation of Law of Demeter (object not created locally)
+src/chess/Main.java:688:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:688:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:689:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:689:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:690:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:690:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:692:	Potential violation of Law of Demeter (object not created locally)
+src/chess/Main.java:693:	Potential violation of Law of Demeter (object not created locally)
+src/chess/Main.java:694:	Potential violation of Law of Demeter (object not created locally)
+src/chess/Main.java:695:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:700:	To avoid mistakes add a comment at the beginning of the AddNewPlayerListener nested class if you want a default access modifier
+src/chess/Main.java:700:	headerCommentRequirement Required
+src/chess/Main.java:701:	Found non-transient, non-static member. Please mark as transient or provide accessors.
+src/chess/Main.java:701:	Private field 'color' could be made final; it is only initialized in the declaration or constructor.
+src/chess/Main.java:701:	fieldCommentRequirement Required
+src/chess/Main.java:703:	Avoid variables with short names like i
+src/chess/Main.java:703:	Parameter 'i' is not assigned and could be declared final
+src/chess/Main.java:708:	Avoid variables with short names like e
+src/chess/Main.java:708:	Parameter 'e' is not assigned and could be declared final
+src/chess/Main.java:708:	publicMethodCommentRequirement Required
+src/chess/Main.java:713:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:713:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:713:	Local variable 'playerPanel' could be declared final
+src/chess/Main.java:714:	Local variable 'playersList' could be declared final
+src/chess/Main.java:715:	Avoid declaring a variable if it is unreferenced before a possible exit point.
+src/chess/Main.java:715:	Avoid excessively long variable names like playersListIterator
+src/chess/Main.java:715:	Found 'DU'-anomaly for variable 'playersListIterator' (lines '715'-'739').
+src/chess/Main.java:715:	Local variable 'playersListIterator' could be declared final
+src/chess/Main.java:715:	Potential violation of Law of Demeter (object not created locally)
+src/chess/Main.java:717:	Local variable 'playerName' could be declared final
+src/chess/Main.java:719:	Potential violation of Law of Demeter (object not created locally)
+src/chess/Main.java:720:	A method should have only one exit point, and that should be the last statement in the method
+src/chess/Main.java:724:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:724:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Main.java:730:	Local variable 'newPlayer' could be declared final
+src/chess/Main.java:733:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:733:	Avoid using if...else statements without curly braces
+src/chess/Main.java:735:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:735:	Avoid using if...else statements without curly braces
+src/chess/Main.java:738:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:741:	Parameter 'newPlayer' is not assigned and could be declared final
+src/chess/Main.java:741:	Parameter 'playerPanel' is not assigned and could be declared final
+src/chess/Main.java:742:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:742:	Avoid autogenerated methods to access private fields and methods of inner / outer classes
+src/chess/Main.java:742:	Local variable 'panelDetails' could be declared final
+src/chess/Main.java:743:	Potential violation of Law of Demeter (object not created locally)
+src/chess/Player.java:22:	The class 'Player' has a Cyclomatic Complexity of 3 (Highest = 12).
+src/chess/Player.java:22:	The class 'Player' has a Modified Cyclomatic Complexity of 3 (Highest = 12).
+src/chess/Player.java:22:	The class 'Player' has a Standard Cyclomatic Complexity of 3 (Highest = 12).
+src/chess/Player.java:24:	Avoid excessively long variable names like TEMPORARY_DATA_FILE
+src/chess/Player.java:24:	fieldCommentRequirement Required
 src/chess/Player.java:25:	fieldCommentRequirement Required
-src/chess/Player.java:26:	Field gamesPlayed has the same name as a method
-src/chess/Player.java:26:	Found non-transient, non-static member. Please mark as transient or provide accessors.
-src/chess/Player.java:26:	fieldCommentRequirement Required
-src/chess/Player.java:27:	Field gamesWon has the same name as a method
 src/chess/Player.java:27:	Found non-transient, non-static member. Please mark as transient or provide accessors.
+src/chess/Player.java:27:	Private field 'name' could be made final; it is only initialized in the declaration or constructor.
 src/chess/Player.java:27:	fieldCommentRequirement Required
-src/chess/Player.java:29:	Parameter 'name' is not assigned and could be declared final
-src/chess/Player.java:29:	publicMethodCommentRequirement Required
-src/chess/Player.java:35:	publicMethodCommentRequirement Required
-src/chess/Player.java:39:	publicMethodCommentRequirement Required
-src/chess/Player.java:43:	publicMethodCommentRequirement Required
-src/chess/Player.java:47:	publicMethodCommentRequirement Required
-src/chess/Player.java:51:	publicMethodCommentRequirement Required
-src/chess/Player.java:55:	publicMethodCommentRequirement Required
-src/chess/Player.java:59:	Avoid using implementation types like 'ArrayList'; use the interface instead
-src/chess/Player.java:59:	publicMethodCommentRequirement Required
-src/chess/Player.java:61:	Found 'DD'-anomaly for variable 'input' (lines '61'-'65').
-src/chess/Player.java:62:	Local variable 'players' could be declared final
-src/chess/Player.java:64:	Local variable 'infile' could be declared final
-src/chess/Player.java:64:	The String literal "user.dir" appears 4 times in this file; the first occurrence is on line 64
-src/chess/Player.java:76:	A method should have only one exit point, and that should be the last statement in the method
-src/chess/Player.java:78:	Avoid printStackTrace(); use a logger call instead.
-src/chess/Player.java:81:	Avoid empty catch blocks
-src/chess/Player.java:85:	Avoid printStackTrace(); use a logger call instead.
-src/chess/Player.java:87:	Avoid catching generic exceptions such as NullPointerException, RuntimeException, Exception in try-catch block
-src/chess/Player.java:88:	Avoid printStackTrace(); use a logger call instead.
-src/chess/Player.java:93:	The method 'updatePlayersData' has a Cyclomatic Complexity of 13.
-src/chess/Player.java:93:	The method 'updatePlayersData' has a Modified Cyclomatic Complexity of 13.
-src/chess/Player.java:93:	The method 'updatePlayersData' has a Standard Cyclomatic Complexity of 13.
-src/chess/Player.java:93:	publicMethodCommentRequirement Required
-src/chess/Player.java:94:	Found 'DD'-anomaly for variable 'input' (lines '94'-'113').
-src/chess/Player.java:94:	Found 'DU'-anomaly for variable 'input' (lines '94'-'148').
-src/chess/Player.java:95:	Found 'DD'-anomaly for variable 'output' (lines '95'-'110').
-src/chess/Player.java:95:	Found 'DD'-anomaly for variable 'output' (lines '95'-'114').
-src/chess/Player.java:96:	Found 'DD'-anomaly for variable 'inputfile' (lines '96'-'99').
-src/chess/Player.java:97:	Found 'DD'-anomaly for variable 'outputfile' (lines '97'-'100').
-src/chess/Player.java:103:	System.exit() should not be used in J2EE/JEE apps
-src/chess/Player.java:107:	Avoid unnecessary comparisons in boolean expressions
-src/chess/Player.java:107:	Avoid using if statements without curly braces
-src/chess/Player.java:109:	Avoid unnecessary comparisons in boolean expressions
-src/chess/Player.java:110:	Unnecessary use of fully qualified name 'java.io.FileOutputStream' due to existing import 'java.io.FileOutputStream'
-src/chess/Player.java:115:	Found 'DD'-anomaly for variable 'playerdonotexist' (lines '115'-'121').
-src/chess/Player.java:118:	Local variable 'tempPlayer' could be declared final
-src/chess/Player.java:119:	Potential violation of Law of Demeter (method chain calls)
-src/chess/Player.java:119:	Potential violation of Law of Demeter (object not created locally)
-src/chess/Player.java:121:	Found 'DD'-anomaly for variable 'playerdonotexist' (lines '121'-'121').
-src/chess/Player.java:129:	Avoid using if statements without curly braces
-src/chess/Player.java:134:	Local variable 'newf' could be declared final
-src/chess/Player.java:135:	Avoid unnecessary comparisons in boolean expressions
-src/chess/Player.java:135:	Avoid using if statements without curly braces
-src/chess/Player.java:136:	System.out.println is used
-src/chess/Player.java:138:	Avoid printStackTrace(); use a logger call instead.
-src/chess/Player.java:140:	Avoid printStackTrace(); use a logger call instead.
-src/chess/Player.java:143:	Avoid printStackTrace(); use a logger call instead.
-src/chess/Player.java:145:	Avoid catching generic exceptions such as NullPointerException, RuntimeException, Exception in try-catch block
-src/chess/Player.java:145:	Avoid empty catch blocks
+src/chess/Player.java:28:	Field gamesPlayed has the same name as a method
+src/chess/Player.java:28:	Found non-transient, non-static member. Please mark as transient or provide accessors.
+src/chess/Player.java:28:	fieldCommentRequirement Required
+src/chess/Player.java:29:	Field gamesWon has the same name as a method
+src/chess/Player.java:29:	Found non-transient, non-static member. Please mark as transient or provide accessors.
+src/chess/Player.java:29:	fieldCommentRequirement Required
+src/chess/Player.java:31:	Parameter 'name' is not assigned and could be declared final
+src/chess/Player.java:31:	publicMethodCommentRequirement Required
+src/chess/Player.java:37:	publicMethodCommentRequirement Required
+src/chess/Player.java:41:	publicMethodCommentRequirement Required
+src/chess/Player.java:45:	publicMethodCommentRequirement Required
+src/chess/Player.java:49:	publicMethodCommentRequirement Required
+src/chess/Player.java:53:	publicMethodCommentRequirement Required
+src/chess/Player.java:57:	publicMethodCommentRequirement Required
+src/chess/Player.java:61:	Avoid using implementation types like 'ArrayList'; use the interface instead
+src/chess/Player.java:61:	publicMethodCommentRequirement Required
+src/chess/Player.java:62:	Found 'DD'-anomaly for variable 'inputStream' (lines '62'-'66').
+src/chess/Player.java:63:	Local variable 'playersList' could be declared final
+src/chess/Player.java:65:	Local variable 'inputfile' could be declared final
+src/chess/Player.java:65:	The String literal "user.dir" appears 4 times in this file; the first occurrence is on line 65
+src/chess/Player.java:69:	Local variable 'player' could be declared final
+src/chess/Player.java:78:	A method should have only one exit point, and that should be the last statement in the method
+src/chess/Player.java:80:	Avoid printStackTrace(); use a logger call instead.
+src/chess/Player.java:85:	Avoid empty catch blocks
+src/chess/Player.java:90:	Avoid printStackTrace(); use a logger call instead.
+src/chess/Player.java:92:	Avoid catching generic exceptions such as NullPointerException, RuntimeException, Exception in try-catch block
+src/chess/Player.java:93:	Avoid printStackTrace(); use a logger call instead.
+src/chess/Player.java:98:	The method 'updatePlayersData' has a Cyclomatic Complexity of 12.
+src/chess/Player.java:98:	The method 'updatePlayersData' has a Modified Cyclomatic Complexity of 12.
+src/chess/Player.java:98:	The method 'updatePlayersData' has a Standard Cyclomatic Complexity of 12.
+src/chess/Player.java:98:	publicMethodCommentRequirement Required
+src/chess/Player.java:99:	Found 'DD'-anomaly for variable 'inputStream' (lines '99'-'118').
+src/chess/Player.java:99:	Found 'DU'-anomaly for variable 'inputStream' (lines '99'-'152').
+src/chess/Player.java:100:	Found 'DD'-anomaly for variable 'outputStream' (lines '100'-'115').
+src/chess/Player.java:100:	Found 'DD'-anomaly for variable 'outputStream' (lines '100'-'119').
+src/chess/Player.java:101:	Found 'DD'-anomaly for variable 'inputFile' (lines '101'-'104').
+src/chess/Player.java:102:	Found 'DD'-anomaly for variable 'outputFile' (lines '102'-'105').
+src/chess/Player.java:108:	System.exit() should not be used in J2EE/JEE apps
+src/chess/Player.java:112:	Avoid unnecessary comparisons in boolean expressions
+src/chess/Player.java:112:	Avoid using if statements without curly braces
+src/chess/Player.java:114:	Avoid unnecessary comparisons in boolean expressions
+src/chess/Player.java:120:	Found 'DD'-anomaly for variable 'playerdonotexist' (lines '120'-'126').
+src/chess/Player.java:123:	Local variable 'player' could be declared final
+src/chess/Player.java:124:	Potential violation of Law of Demeter (method chain calls)
+src/chess/Player.java:124:	Potential violation of Law of Demeter (object not created locally)
+src/chess/Player.java:126:	Found 'DD'-anomaly for variable 'playerdonotexist' (lines '126'-'126').
+src/chess/Player.java:134:	Avoid using if statements without curly braces
+src/chess/Player.java:139:	Local variable 'newFile' could be declared final
+src/chess/Player.java:142:	Avoid printStackTrace(); use a logger call instead.
+src/chess/Player.java:144:	Avoid printStackTrace(); use a logger call instead.
+src/chess/Player.java:147:	Avoid printStackTrace(); use a logger call instead.
+src/chess/Player.java:149:	Avoid catching generic exceptions such as NullPointerException, RuntimeException, Exception in try-catch block
+src/chess/Player.java:149:	Avoid empty catch blocks
 src/chess/Time.java:15:	Avoid short class names like Time
 src/chess/Time.java:16:	Found non-transient, non-static member. Please mark as transient or provide accessors.
 src/chess/Time.java:16:	Private field 'timeLabel' could be made final; it is only initialized in the declaration or constructor.
