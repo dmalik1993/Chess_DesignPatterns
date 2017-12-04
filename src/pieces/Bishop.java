@@ -1,5 +1,6 @@
 package pieces;
 
+import java.io.Serializable;
 import java.util.List;
 
 import chess.Cell;
@@ -10,7 +11,9 @@ import chess.Cell;
  * 
  *
  */
-public class Bishop extends Piece {
+public class Bishop extends Piece implements Serializable{
+	private static final long serialVersionUID = -4211275853742637587L;
+
 
 	public Bishop(String i, String p, int c) {
 		setId(i);

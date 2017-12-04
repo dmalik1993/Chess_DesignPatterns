@@ -27,7 +27,19 @@ public class Player implements Serializable {
 	private String name;
 	private Integer gamesPlayed;
 	private Integer gamesWon;
+	private String selectedPlayer;
+	
+	public String getSelectedPlayer() {
+		return selectedPlayer;
+	}
 
+	public void setSelectedPlayer(String selectedPlayer) {
+		this.selectedPlayer = selectedPlayer;
+	}
+	
+	public Player(){
+	}
+	
 	public Player(String name) {
 		this.name = name.trim();
 		gamesPlayed = Integer.valueOf(0);

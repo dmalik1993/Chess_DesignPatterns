@@ -2,16 +2,23 @@ package chess;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.Transient;
+import java.io.Serializable;
+import java.util.List;
 
 import javax.swing.JPanel;
 
 import pieces.King;
 import pieces.Piece;
 
-public class BoardState implements MouseListener {
+public class BoardState implements MouseListener, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3491934661431520753L;
 	private Board chessBoard;
-
-	private Main mainClassRef;
+	private List<Player> playerDetail;
+	private static transient Main mainClassRef;
 
 	public BoardState(JPanel boardPanel, Main ref) {
 		mainClassRef = ref;
@@ -28,7 +35,24 @@ public class BoardState implements MouseListener {
 				}
 			}
 	}
+	
+	public BoardState(JPanel boardPanel, Cell[][] updatedBoard, Main ref) {
+		BoardState.mainClassRef = ref;
+		chessBoard = new Board();
+		chessBoard = chessBoard.updateBoardStatus(updatedBoard);
 
+		for (int i = 0; i < Board.ROWS; i++)
+			for (int j = 0; j < Board.COLUMNS; j++) {
+				Cell cell = chessBoard.getCell(i, j);
+				if (cell == null) {
+					System.out.println("Cell: " + i + " - " + j + " is NULL");
+				} else {
+					cell.addMouseListener(this);
+					boardPanel.add(cell);
+				}
+			}
+	}
+		
 	private BoardState(BoardState oldBoardState) {
 		chessBoard = new Board(oldBoardState.chessBoard);
 	}
@@ -91,6 +115,16 @@ public class BoardState implements MouseListener {
 
 	public Piece getPiece(Cell cell) {
 		return chessBoard.getPiece(cell.getXIndex(), cell.getYIndex());
+	}
+
+	
+	
+	public List<Player> getPlayerDetail() {
+		return playerDetail;
+	}
+
+	public void setPlayerDetail(List<Player> playerDetail) {
+		this.playerDetail = playerDetail;
 	}
 
 	@Override

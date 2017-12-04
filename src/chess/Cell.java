@@ -2,6 +2,7 @@ package chess;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.io.Serializable;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -15,9 +16,9 @@ import pieces.Piece;
  * 64 cells that together makes up the Chess Board
  *
  */
-public class Cell extends JPanel implements Cloneable {
+public class Cell extends JPanel implements Cloneable, Serializable{
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6785655684481256033L;
 	private boolean validDestination;
 	private JLabel contentLabel;
 	private Piece piece;

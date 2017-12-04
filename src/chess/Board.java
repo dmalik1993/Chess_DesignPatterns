@@ -1,5 +1,14 @@
 package chess;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+import javax.swing.JPanel;
+
 import pieces.Bishop;
 import pieces.King;
 import pieces.Knight;
@@ -8,18 +17,22 @@ import pieces.Piece;
 import pieces.Queen;
 import pieces.Rook;
 
-public class Board {
+public class Board implements Serializable{
+
+	private static final long serialVersionUID = -3344857819689605815L;
 	private Cell board[][];
 	public static final int ROWS = 8;
 	public static final int COLUMNS = 8;
 
-	private transient Rook whiteRook01, whiteRook02, blackRook01, blackRook02;
-	private transient Knight whiteKinght01, whiteKnight02, blackKnight01, blackKnight02;
-	private transient Bishop whiteBishop01, whiteBishop02, blackBishop01, blackBishop02;
+	private Rook whiteRook01, whiteRook02, blackRook01, blackRook02;
+	private Knight whiteKinght01, whiteKnight02, blackKnight01, blackKnight02;
+	private Bishop whiteBishop01, whiteBishop02, blackBishop01, blackBishop02;
 	private Pawn whitePawn[], blackPawn[];
 	private Queen whiteQueen, blackQueen;
 	private King whiteKing, blackKing;
-
+	private boolean flag = false;
+	
+	private String themeCode;
 	public Board() {
 
 		initializePieces();
@@ -27,7 +40,7 @@ public class Board {
 		initializeBoard();
 	}
 
-	private void initializeBoard() {
+	public void initializeBoard() {
 		board = new Cell[ROWS][COLUMNS];
 
 		for (int i = 0; i < ROWS; i++)
@@ -74,8 +87,26 @@ public class Board {
 				Cell cell = new Cell(i, j, piece);
 				board[i][j] = cell;
 			}
+		
+		//board = SavedGame.fetchSavedGamesData("fourth").getChessBoard();
+		
+		
 	}
 
+	public Board updateBoardStatus(Cell[][] updatedBoard){
+		Board boardObj = new Board();
+		try{
+			
+			boardObj.board = updatedBoard;
+
+		}catch(Exception e){
+			
+		}
+		
+				
+		return boardObj;
+	}
+	
 	public Board(Board oldBoard) {
 		initializePieces();
 		initializeBoard();
@@ -117,7 +148,19 @@ public class Board {
 		return board;
 	}
 
+	public void setBoard(Cell[][] board){
+		this.board = board;
+	}
+	
 	private void initializePieces() {
+		
+		themeCode = Main.gameThemeCode;
+		if(null == themeCode){
+			
+			themeCode = "";
+			
+		}
+		
 		initializeRooks();
 
 		initializeKnights();
@@ -135,40 +178,40 @@ public class Board {
 		whitePawn = new Pawn[8];
 		blackPawn = new Pawn[8];
 		for (int i = 0; i < 8; i++) {
-			whitePawn[i] = new Pawn("WP0" + (i + 1), "White_Pawn.png", 0);
-			blackPawn[i] = new Pawn("BP0" + (i + 1), "Black_Pawn.png", 1);
+			whitePawn[i] = new Pawn("WP0" + (i + 1), themeCode.concat("White_Pawn.png"), 0);
+			blackPawn[i] = new Pawn("BP0" + (i + 1), themeCode.concat("Black_Pawn.png"), 1);
 		}
 	}
 
 	private void initializeKings() {
-		whiteKing = new King("WK", "White_King.png", 0, 7, 3);
-		blackKing = new King("BK", "Black_King.png", 1, 0, 3);
+		whiteKing = new King("WK", themeCode.concat("White_King.png"), 0, 7, 3);
+		blackKing = new King("BK", themeCode.concat("Black_King.png"), 1, 0, 3);
 	}
 
 	private void initializeQueens() {
-		whiteQueen = new Queen("WQ", "White_Queen.png", 0);
-		blackQueen = new Queen("BQ", "Black_Queen.png", 1);
+		whiteQueen = new Queen("WQ", themeCode.concat("White_Queen.png"), 0);
+		blackQueen = new Queen("BQ", themeCode.concat("Black_Queen.png"), 1);
 	}
 
 	private void initializeBishops() {
-		whiteBishop01 = new Bishop("WB01", "White_Bishop.png", 0);
-		whiteBishop02 = new Bishop("WB02", "White_Bishop.png", 0);
-		blackBishop01 = new Bishop("BB01", "Black_Bishop.png", 1);
-		blackBishop02 = new Bishop("BB02", "Black_Bishop.png", 1);
+		whiteBishop01 = new Bishop("WB01", themeCode.concat("White_Bishop.png"), 0);
+		whiteBishop02 = new Bishop("WB02", themeCode.concat("White_Bishop.png"), 0);
+		blackBishop01 = new Bishop("BB01", themeCode.concat("Black_Bishop.png"), 1);
+		blackBishop02 = new Bishop("BB02", themeCode.concat("Black_Bishop.png"), 1);
 	}
 
 	private void initializeKnights() {
-		whiteKinght01 = new Knight("WK01", "White_Knight.png", 0);
-		whiteKnight02 = new Knight("WK02", "White_Knight.png", 0);
-		blackKnight01 = new Knight("BK01", "Black_Knight.png", 1);
-		blackKnight02 = new Knight("BK02", "Black_Knight.png", 1);
+		whiteKinght01 = new Knight("WK01", themeCode.concat("White_Knight.png"), 0);
+		whiteKnight02 = new Knight("WK02", themeCode.concat("White_Knight.png"), 0);
+		blackKnight01 = new Knight("BK01", themeCode.concat("Black_Knight.png"), 1);
+		blackKnight02 = new Knight("BK02", themeCode.concat("Black_Knight.png"), 1);
 	}
 
 	private void initializeRooks() {
-		whiteRook01 = new Rook("WR01", "White_Rook.png", 0);
-		whiteRook02 = new Rook("WR02", "White_Rook.png", 0);
-		blackRook01 = new Rook("BR01", "Black_Rook.png", 1);
-		blackRook02 = new Rook("BR02", "Black_Rook.png", 1);
+		whiteRook01 = new Rook("WR01", themeCode.concat("White_Rook.png"), 0);
+		whiteRook02 = new Rook("WR02", themeCode.concat("White_Rook.png"), 0);
+		blackRook01 = new Rook("BR01", themeCode.concat("Black_Rook.png"), 1);
+		blackRook02 = new Rook("BR02", themeCode.concat("Black_Rook.png"), 1);
 	}
 
 	public King getBlackKing() {

@@ -1,5 +1,6 @@
 package pieces;
 
+import java.io.Serializable;
 import java.util.List;
 
 import chess.Cell;
@@ -8,7 +9,9 @@ import chess.Cell;
  * This is the Queen Class inherited from the abstract Piece class
  *
  */
-public class Queen extends Piece {
+public class Queen extends Piece implements Serializable{
+
+	private static final long serialVersionUID = 3229077646533567816L;
 
 	public Queen(String i, String p, int c) {
 		setId(i);

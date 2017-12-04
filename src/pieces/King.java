@@ -1,11 +1,13 @@
 package pieces;
 
+import java.io.Serializable;
 import java.util.List;
 
 import chess.Cell;
 
-public class King extends Piece {
+public class King extends Piece implements Serializable{
 
+	private static final long serialVersionUID = 7919863136822806092L;
 	private int horizontalPos;
 	private int verticalPos;
 	private int tempHorizontalPos;

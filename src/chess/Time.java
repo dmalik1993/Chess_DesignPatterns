@@ -2,6 +2,7 @@ package chess;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 
 import javax.swing.JLabel;
 import javax.swing.Timer;
@@ -12,7 +13,7 @@ import javax.swing.Timer;
  *
  */
 
-public class Time {
+public class Time implements Serializable{
 	private JLabel timeLabel;
 	Timer countDownTimer;
 	int remainingTime;

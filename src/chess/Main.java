@@ -12,11 +12,17 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -33,8 +39,16 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import pieces.Bishop;
 import pieces.King;
+import pieces.Knight;
+import pieces.Pawn;
+import pieces.Piece;
+import pieces.Queen;
+import pieces.Rook;
 
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
 /**
  * @author Ashish Kedia and Adarsh Mohata
  *
@@ -47,7 +61,7 @@ import pieces.King;
  * 
  */
 
-public class Main extends JFrame {
+public class Main extends JFrame implements Serializable{
 	private static final String CHESS_TITLE = "Chess";
 	private static final String BLACK_PLAYER = "Black";
 	private static final String WHITE_PLAYER = "White";
@@ -66,34 +80,45 @@ public class Main extends JFrame {
 
 	private JPanel boardPanel, controlPanel, temporaryPanel, timeDisplayPanle, playerViewPanel, timePanel;
 	private JPanel whitePlayerDetailsPanel, whitePlayerComboPanel, whitePlayerPanel;
+	private JPanel themePanelDetail , themePanelCombo , themePanel;
+	private JPanel savedGamesDetailsPanel, savedGamesComboPanel, savedGamesPanel;
 	private JPanel blackPlayerDetailsPnale, blackPlayerComboPanel, blackPlayerPanel;
-
+	
+	private Player whitePlayerData = new Player();
+	private Player blackPlayerData = new Player();
+	
 	private JSplitPane splitPane;
 	private JLabel timeLabel, moveLabel, turnLabel;
 
 	private Time timer;
 
-	private boolean isSelected = false, end = false;
+	private boolean isSelected = false, end = false, isThemeSelected = false;;
 
 	private Container content;
-	private JComboBox<String> whitePlayerCombo, blackPlayerCombo;
+	private JComboBox<String> whitePlayerCombo, blackPlayerCombo, themeCombo;
+	private JComboBox<String> savedGameCombo;
 
 	private String move = WHITE_PLAYER;
 
-	private JScrollPane whitePlayerScrollPane, blackPlayerScrollPane;
+	private String gameTheme;
+	public static String gameThemeCode;
+	
+	private JScrollPane whitePlayerScrollPane, blackPlayerScrollPane, themeScrollPane;
+	private JScrollPane savedGameScrollPane;
 	private JSlider timeSlider;
 	private BufferedImage image;
 
 	private Button startButton, whitePlayerSelectButton, blackPlayerSelectButton, newWhitePlayerButton,
-			newBlackPlayerButton;
+			newBlackPlayerButton, savedGamesSelectButton, themeSelectButton;
 	public static int timeRemaining = TOTAL_TIME_FOR_TURN;
-
+	
+	private static Main chessBoard = new Main();
+	
 	public static void main(String[] args) {
-		Main chessBoard = new Main();
+		//Main chessBoard = new Main();
 		chessBoard.setVisible(true);
 		chessBoard.setResizable(false);
 	}
-
 	private Main() {
 		createContentLayout();
 		chessBoardState = new BoardState(boardPanel, this);
@@ -114,21 +139,60 @@ public class Main extends JFrame {
 
 		content.add(splitPane);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		        if (JOptionPane.showConfirmDialog(content, "You are about to exit. Do you want to save the current session of the game?", "Attention!", 
+		            JOptionPane.YES_NO_OPTION,
+		            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION)
+		        {
+		        	String gameName = JOptionPane.showInputDialog(content, "Enter game name");
+		        	
+		        	if(null != gameName && !gameName.isEmpty()){
+		        		SavedGame.updateSavedGamesList(gameName);
+		        	}
+		        	
+		        	List<Player> playersData = new ArrayList<Player>();
+		        	playersData.add(whitePlayerData);
+		        	playersData.add(blackPlayerData);
+		        	
+		        	chessBoardState.setPlayerDetail(playersData);
+		        	
+		        	SavedGame.saveGameData(gameName, chessBoardState);
+		        	
+		            System.exit(0);
+		        }
+		    }
+		});
 	}
 
 	private void createControlPanel() {
+		
+		String [] gamesList = SavedGame.fetchSavedGameList();
 		controlPanel = new JPanel();
 		content.setLayout(new BorderLayout());
-		controlPanel.setLayout(new GridLayout(3, 3));
+		
+		if(null != gamesList && gamesList.length > 0){
+			controlPanel.setLayout(new GridLayout(5, 3));
+			createSavedGamesPanel();
+			controlPanel.add(savedGamesPanel);
+		}else{
+			controlPanel.setLayout(new GridLayout(4, 3));
+		}
+		
+		
 		controlPanel.setBorder(BorderFactory.createTitledBorder(null, "Statistics", TitledBorder.TOP,
 				TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.ORANGE));
-
+		
 		createWhitePlayerPanel();
 		createBlackPlayerPanel();
-
+		createThemePanel();
+		
+		controlPanel.add(themePanel);
 		controlPanel.add(whitePlayerPanel);
 		controlPanel.add(blackPlayerPanel);
-
+		
 		initializeTimer();
 
 		createTimePanel();
@@ -239,11 +303,11 @@ public class Main extends JFrame {
 		whitePlayerStats.add(new JLabel("Won    :"));
 
 		whitePlayerCombo = new JComboBox<String>(getPlayerNames());
-
+		
 		whitePlayerScrollPane = new JScrollPane(whitePlayerCombo);
 		whitePlayerComboPanel.setLayout(new FlowLayout());
 
-		whitePlayerSelectButton = new Button("Select");
+		whitePlayerSelectButton = new Button("Select");		
 		whitePlayerSelectButton.addActionListener(new PlayerSelectionListener(0));
 		newWhitePlayerButton = new Button("New Player");
 		newWhitePlayerButton.addActionListener(new AddNewPlayerListener(0));
@@ -255,6 +319,67 @@ public class Main extends JFrame {
 		whitePlayerPanel.add(whitePlayerStats, BorderLayout.WEST);
 	}
 
+	private String[] getTheme() {
+		List<String> themeNames = new ArrayList<String>();
+		themeNames.add("Default");
+		themeNames.add("Leipzig");
+		themeNames.add("Merida");
+		themeNames.add("Cheq");
+		themeNames.add("Alpha");
+		
+		return themeNames.toArray(new String[themeNames.size()]);
+	}
+	
+	private void createThemePanel() {
+		themePanelDetail = new JPanel(new GridLayout(1, 3));
+		themePanel = new JPanel();
+		themePanelCombo = new JPanel();
+		themePanel.setBorder(BorderFactory.createTitledBorder(null, "Theme", TitledBorder.TOP,
+				TitledBorder.CENTER, new Font("times new roman", Font.BOLD, 18), Color.RED));
+		themePanel.setLayout(new BorderLayout());
+
+		JPanel themeStats = new JPanel(new GridLayout(1, 3));
+		themeStats.add(new JLabel("Theme   :"));
+	
+
+		themeCombo = new JComboBox<String>(getTheme());
+
+		themeScrollPane = new JScrollPane(themeCombo);
+		themePanelCombo.setLayout(new FlowLayout());
+
+		themeSelectButton = new Button("Select");
+		themeSelectButton.addActionListener(new ThemeSelectionListener());
+		
+		themePanelCombo.add(themeScrollPane);
+		themePanel.add(themePanelCombo, BorderLayout.NORTH);
+		themePanelCombo.add(themeSelectButton);
+		themePanel.add(themeStats, BorderLayout.WEST);
+	}
+	
+	private void createSavedGamesPanel() {
+		
+		savedGamesDetailsPanel = new JPanel(new GridLayout(3, 3));
+
+		savedGamesPanel = new JPanel();
+		savedGamesComboPanel = new JPanel();
+		savedGamesPanel.setBorder(BorderFactory.createTitledBorder(null, "Saved Games", TitledBorder.TOP,
+				TitledBorder.CENTER, new Font("times new roman", Font.BOLD, 18), Color.RED));
+		savedGamesPanel.setLayout(new BorderLayout());
+
+		savedGameCombo = new JComboBox<String>(SavedGame.fetchSavedGameList());
+		
+		savedGameScrollPane = new JScrollPane(savedGameCombo);
+		savedGamesComboPanel.setLayout(new FlowLayout());
+
+		savedGamesSelectButton = new Button("Select");
+		savedGamesSelectButton.addActionListener(new SavedGamesListener());
+		
+		savedGamesComboPanel.add(savedGameScrollPane);
+		savedGamesPanel.add(savedGamesComboPanel, BorderLayout.NORTH);
+		savedGamesComboPanel.add(savedGamesSelectButton);
+	}
+
+	
 	private void initializeTimer() {
 		timeSlider = new JSlider();
 		timeSlider.setMinimum(1);
@@ -417,6 +542,8 @@ public class Main extends JFrame {
 		newBlackPlayerButton.enable();
 		whitePlayerSelectButton.enable();
 		blackPlayerSelectButton.enable();
+		
+		themeSelectButton.enable();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -486,7 +613,7 @@ public class Main extends JFrame {
 			if (!showValidMoves(currentCell)) {
 				return;
 			}
-		}
+		}	
 	}
 
 	private void tryCheckOtherKing() {
@@ -508,8 +635,63 @@ public class Main extends JFrame {
 		if (previousCell.isCheck())
 			previousCell.removeCheck();
 		previousCell.removePiece();
+		
+		Piece piece = currentCell.getpiece() ;
+		this.playSound(piece);
 	}
 
+	private void playSound (Piece piece)
+	{
+		
+		try
+		  {
+			InputStream inputStream;
+			if(piece instanceof Pawn){
+				inputStream = getClass().getResourceAsStream("pawn.au");			
+				}
+			else if(piece instanceof Bishop){
+				
+				inputStream = getClass().getResourceAsStream("bishop.au");			
+				}
+            else if(piece instanceof Rook){
+				
+            	inputStream = getClass().getResourceAsStream("rook.au");
+            	}
+            else if(piece instanceof Knight){
+				
+            	inputStream = getClass().getResourceAsStream("knight.au");
+            	}
+            else if(piece instanceof King){
+				
+            	inputStream = getClass().getResourceAsStream("king.au");
+            	}
+            else if(piece instanceof Queen){
+				
+            	inputStream = getClass().getResourceAsStream("queen.au");
+            	}
+			
+			
+			
+			else
+			{
+				
+				inputStream = getClass().getResourceAsStream("pawn.au");
+			}
+		    
+		    
+
+			
+		    
+		    AudioStream audioStream = new AudioStream(inputStream);
+		    AudioPlayer.player.start(audioStream);
+		  }
+		  catch (Exception e)
+		  {
+		    // a special way i'm handling logging in this application
+		   // if (debugFileWriter!=null) e.printStackTrace(debugFileWriter);
+		  }
+	}
+	
 	private void deSelectCell(Cell currentCell) {
 		if (currentCell != null) {
 			currentCell.removeSelection();
@@ -611,6 +793,8 @@ public class Main extends JFrame {
 
 			whitePlayerSelectButton.disable();
 			blackPlayerSelectButton.disable();
+			
+			themeSelectButton.disable();
 		}
 
 		private void updatePlayersRecord() {
@@ -641,62 +825,151 @@ public class Main extends JFrame {
 			setSelectedPlayer(null);
 
 			JComboBox<String> currentPlayerNamesComboBox = (color == 0) ? whitePlayerCombo : blackPlayerCombo;
-			JComboBox<String> otherPlayerNamesComboBox = (color == 0) ? blackPlayerCombo : whitePlayerCombo;
+			
+			setPlayersComboBoxData(color, (String) currentPlayerNamesComboBox.getSelectedItem());
+			
+			if(color == 0){
+				whitePlayerData.setSelectedPlayer((String) currentPlayerNamesComboBox.getSelectedItem());
+			}else if (color == 1){
+				blackPlayerData.setSelectedPlayer((String) currentPlayerNamesComboBox.getSelectedItem());
+			}
+		}
+		
 
-			ArrayList<Player> otherPlayersList = Player.fetchPlayersData();
-			ArrayList<Player> currentPlayersList = Player.fetchPlayersData();
-			if (otherPlayersList.isEmpty())
-				return;
+	}
 
-			JPanel playerDetails = (color == 0) ? whitePlayerDetailsPanel : blackPlayerDetailsPnale;
-			JPanel playerPanel = (color == 0) ? whitePlayerPanel : blackPlayerPanel;
+	
+	private void setPlayersComboBoxData(int color, String selectedPlayer){
+		
+		JComboBox<String> otherPlayerNamesComboBox = (color == 0) ? blackPlayerCombo : whitePlayerCombo;
+		
+		
+		ArrayList<Player> otherPlayersList = Player.fetchPlayersData();
+		ArrayList<Player> currentPlayersList = Player.fetchPlayersData();
+		if (otherPlayersList.isEmpty())
+			return;
 
-			if (isSelected == true)
+		JPanel playerDetails = (color == 0) ? whitePlayerDetailsPanel : blackPlayerDetailsPnale;
+		JPanel playerPanel = (color == 0) ? whitePlayerPanel : blackPlayerPanel;
+
+		if (isSelected == true)
+			playerDetails.removeAll();
+
+		String playerName = selectedPlayer;
+		Iterator<Player> currentPlayerIterator = currentPlayersList.iterator();
+		Iterator<Player> otherPlayerIterator = otherPlayersList.iterator();
+		while (currentPlayerIterator.hasNext()) {
+			Player player = currentPlayerIterator.next();
+			if (player.getName().equals(playerName)) {
+				setSelectedPlayer(player);
+				break;
+			}
+		}
+
+		while (otherPlayerIterator.hasNext()) {
+			Player p = otherPlayerIterator.next();
+			if (p.getName().equals(playerName)) {
+				otherPlayersList.remove(p);
+				break;
+			}
+		}
+
+		if (getSelectedPlayer() == null)
+			return;
+
+		if (color == 0)
+			setWhitePlayer(getSelectedPlayer());
+		else
+			setBlackPlayer(getSelectedPlayer());
+
+		otherPlayerNamesComboBox.removeAllItems();
+		for (Player s : otherPlayersList)
+			otherPlayerNamesComboBox.addItem(s.getName());
+
+		playerDetails.add(new JLabel(" " + getSelectedPlayer().getName()));
+		playerDetails.add(new JLabel(" " + getSelectedPlayer().gamesPlayed()));
+		playerDetails.add(new JLabel(" " + getSelectedPlayer().gamesWon()));
+
+		playerPanel.revalidate();
+		playerPanel.repaint();
+		playerPanel.add(playerDetails);
+		isSelected = true;
+		
+		
+	}
+	
+	class SavedGamesListener implements ActionListener {
+		
+		SavedGamesListener(){
+			
+		}
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			
+			String savedGameName = (String) savedGameCombo.getSelectedItem();
+			createChessBoardPanel();
+			chessBoardState = new BoardState(boardPanel, SavedGame.fetchSavedGamesData(savedGameName).getChessBoard(), chessBoard);
+			
+			setPlayersComboBoxData(0, SavedGame.fetchSavedGamesData(savedGameName).getPlayerDetail().get(0).getSelectedPlayer());
+			setPlayersComboBoxData(1, SavedGame.fetchSavedGamesData(savedGameName).getPlayerDetail().get(1).getSelectedPlayer());
+			
+		}
+
+	}
+	
+	class ThemeSelectionListener implements ActionListener {
+
+		ThemeSelectionListener() {
+			
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			
+
+			JComboBox<String> currentPlayerNamesComboBox = themeCombo;
+
+			JPanel playerDetails = themePanelDetail;
+			JPanel playerPanel = themePanel;
+
+			
+			if (isThemeSelected == true)
 				playerDetails.removeAll();
-
-			String playerName = (String) currentPlayerNamesComboBox.getSelectedItem();
-			Iterator<Player> currentPlayerIterator = currentPlayersList.iterator();
-			Iterator<Player> otherPlayerIterator = otherPlayersList.iterator();
-			while (currentPlayerIterator.hasNext()) {
-				Player player = currentPlayerIterator.next();
-				if (player.getName().equals(playerName)) {
-					setSelectedPlayer(player);
-					break;
-				}
+			gameTheme = (String) currentPlayerNamesComboBox.getSelectedItem();
+			
+			if (gameTheme.equals("Leipzig"))
+			{
+				gameThemeCode = "2_";
+				
 			}
-
-			while (otherPlayerIterator.hasNext()) {
-				Player p = otherPlayerIterator.next();
-				if (p.getName().equals(playerName)) {
-					otherPlayersList.remove(p);
-					break;
-				}
+			else if (gameTheme.equals("Merida")){
+				
+				gameThemeCode = "3_";
+			}else if (gameTheme.equals("Cheq")){
+				
+				gameThemeCode = "4_";
+			}else if (gameTheme.equals("Alpha")){
+				
+				gameThemeCode = "5_";
 			}
-
-			if (getSelectedPlayer() == null)
-				return;
-
-			if (color == 0)
-				setWhitePlayer(getSelectedPlayer());
 			else
-				setBlackPlayer(getSelectedPlayer());
+			{
+			gameThemeCode = "";	
+			}
+			createChessBoardPanel();
+			chessBoardState = new BoardState(boardPanel, chessBoard);
 
-			otherPlayerNamesComboBox.removeAllItems();
-			for (Player s : otherPlayersList)
-				otherPlayerNamesComboBox.addItem(s.getName());
+			playerDetails.add(new JLabel(" " + gameTheme));
 
-			playerDetails.add(new JLabel(" " + getSelectedPlayer().getName()));
-			playerDetails.add(new JLabel(" " + getSelectedPlayer().gamesPlayed()));
-			playerDetails.add(new JLabel(" " + getSelectedPlayer().gamesWon()));
 
 			playerPanel.revalidate();
 			playerPanel.repaint();
 			playerPanel.add(playerDetails);
-			isSelected = true;
+			isThemeSelected = true;
 		}
 
 	}
-
+	
 	class AddNewPlayerListener implements ActionListener {
 		private int color;
 

@@ -1,5 +1,6 @@
 package pieces;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,12 @@ import chess.Cell;
  * inherited class It implements Cloneable interface as a copy of the piece is
  * required very often
  */
-public abstract class Piece implements Cloneable {
+public abstract class Piece implements Cloneable, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7992367302707280881L;
 	private int color;
 	private String id = null;
 	private String path;

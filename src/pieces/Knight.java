@@ -1,5 +1,6 @@
 package pieces;
 
+import java.io.Serializable;
 import java.util.List;
 
 import chess.Cell;
@@ -9,7 +10,9 @@ import chess.Cell;
  * 
  *
  */
-public class Knight extends Piece {
+public class Knight extends Piece implements Serializable{
+
+	private static final long serialVersionUID = 8528067482701744435L;
 
 	public Knight(String i, String p, int c) {
 		setId(i);
