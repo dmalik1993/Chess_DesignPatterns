@@ -2,7 +2,6 @@ package chess;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.beans.Transient;
 import java.io.Serializable;
 import java.util.List;
 
@@ -22,8 +21,11 @@ public class BoardState implements MouseListener, Serializable {
 
 	public BoardState(JPanel boardPanel, Main ref) {
 		mainClassRef = ref;
-		chessBoard = new Board();
-
+		if (mainClassRef.getSavedState() == null)
+			chessBoard = new Board(mainClassRef.getGameThemeCode());
+		else
+			chessBoard = new Board(mainClassRef.getSavedState().chessBoard);
+		
 		for (int i = 0; i < Board.ROWS; i++)
 			for (int j = 0; j < Board.COLUMNS; j++) {
 				Cell cell = chessBoard.getCell(i, j);
@@ -36,21 +38,6 @@ public class BoardState implements MouseListener, Serializable {
 			}
 	}
 	
-	public BoardState(JPanel boardPanel, Main ref, BoardState savedState) {
-		BoardState.mainClassRef = ref;
-		chessBoard = new Board(savedState.chessBoard);
-
-		for (int i = 0; i < Board.ROWS; i++)
-			for (int j = 0; j < Board.COLUMNS; j++) {
-				Cell cell = chessBoard.getCell(i, j);
-				if (cell == null) {
-					System.out.println("Cell: " + i + " - " + j + " is NULL");
-				} else {
-					cell.addMouseListener(this);
-					boardPanel.add(cell);
-				}
-			}
-	}
 		
 	private BoardState(BoardState oldBoardState) {
 		chessBoard = new Board(oldBoardState.chessBoard);

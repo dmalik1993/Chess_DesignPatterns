@@ -97,7 +97,7 @@ public class Main extends JFrame implements Serializable {
 	private String move = WHITE_PLAYER;
 
 	private String gameTheme;
-	public static String gameThemeCode;
+	private String gameThemeCode;
 
 	private JScrollPane whitePlayerScrollPane, blackPlayerScrollPane, themeScrollPane;
 	private JScrollPane savedGameScrollPane;
@@ -108,17 +108,16 @@ public class Main extends JFrame implements Serializable {
 			newBlackPlayerButton, savedGamesSelectButton, themeSelectButton;
 	public static int timeRemaining = TOTAL_TIME_FOR_TURN;
 
-	private static Main chessBoard = new Main();
+	private BoardState savedState = null;
 
 	public static void main(String[] args) {
-		// Main chessBoard = new Main();
+		Main chessBoard = new Main();
 		chessBoard.setVisible(true);
 		chessBoard.setResizable(false);
 	}
 
 	private Main() {
 		createContentLayout();
-		chessBoardState = new BoardState(boardPanel, this);
 	}
 
 	private void createContentLayout() {
@@ -148,7 +147,7 @@ public class Main extends JFrame implements Serializable {
 					if (null == gameName || gameName.isEmpty()) {
 						return;
 					}
-					
+
 					SavedGame.updateSavedGamesList(gameName);
 					List<Player> playersData = new ArrayList<Player>();
 					playersData.add(whitePlayerData);
@@ -235,7 +234,7 @@ public class Main extends JFrame implements Serializable {
 		startButton = new Button("Start");
 		startButton.setBackground(Color.black);
 		startButton.setForeground(Color.white);
-		startButton.addActionListener(new StartButtonListener());
+		startButton.addActionListener(new StartButtonListener(this));
 		startButton.setPreferredSize(new Dimension(120, 40));
 
 		setTime.setFont(new Font("Arial", Font.BOLD, 16));
@@ -637,7 +636,7 @@ public class Main extends JFrame implements Serializable {
 	private void playSound(Piece piece) {
 
 		try {
-			InputStream inputStream;
+			InputStream inputStream = null;
 			if (piece instanceof Pawn) {
 				inputStream = getClass().getResourceAsStream("pawn.au");
 			} else if (piece instanceof Bishop) {
@@ -655,9 +654,7 @@ public class Main extends JFrame implements Serializable {
 			} else if (piece instanceof Queen) {
 
 				inputStream = getClass().getResourceAsStream("queen.au");
-			}
-
-			else {
+			} else {
 
 				inputStream = getClass().getResourceAsStream("pawn.au");
 			}
@@ -727,6 +724,12 @@ public class Main extends JFrame implements Serializable {
 
 	class StartButtonListener implements ActionListener {
 
+		Main mainClassRef;
+
+		public StartButtonListener(Main ref) {
+			mainClassRef = ref;
+		}
+
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 
@@ -744,6 +747,8 @@ public class Main extends JFrame implements Serializable {
 
 			addNewMoveLabel();
 			addNewTurnLabel();
+
+			chessBoardState = new BoardState(boardPanel, mainClassRef);
 
 			timeDisplayPanle.remove(startButton);
 			timeDisplayPanle.add(timeLabel);
@@ -872,6 +877,25 @@ public class Main extends JFrame implements Serializable {
 
 	}
 
+	public BoardState getSavedState() {
+		return savedState;
+	}
+
+	public void setSavedState(BoardState savedState) {
+		this.savedState = savedState;
+	}
+
+	public String getGameThemeCode() {
+		if (gameThemeCode == null || gameThemeCode.isEmpty())
+			return "";
+
+		return gameThemeCode;
+	}
+
+	public void setGameThemeCode(String themeCode) {
+		this.gameThemeCode = themeCode;
+	}
+
 	class SavedGamesListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -879,17 +903,16 @@ public class Main extends JFrame implements Serializable {
 			String savedGameName = (String) savedGameCombo.getSelectedItem();
 			createChessBoardPanel();
 			try {
-				BoardState savedState = (BoardState) SavedGame.fetchSavedGamesData(savedGameName).clone();
-				chessBoardState = new BoardState(boardPanel, chessBoard, savedState);
+				setSavedState((BoardState) SavedGame.fetchSavedGamesData(savedGameName).clone());
 			} catch (CloneNotSupportedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
-			setPlayersComboBoxData(0,
-					SavedGame.fetchSavedGamesData(savedGameName).getPlayerDetail().get(0).getSelectedPlayer());
-			setPlayersComboBoxData(1,
-					SavedGame.fetchSavedGamesData(savedGameName).getPlayerDetail().get(1).getSelectedPlayer());
+			List<Player> playersList = SavedGame.fetchSavedGamesData(savedGameName).getPlayerDetail();
+			setPlayersComboBoxData(0, playersList.get(0).getSelectedPlayer());
+			whitePlayerData = playersList.get(0);
+			setPlayersComboBoxData(1, playersList.get(1).getSelectedPlayer());
+			blackPlayerData = playersList.get(1);
 
 		}
 
@@ -910,18 +933,16 @@ public class Main extends JFrame implements Serializable {
 			gameTheme = (String) currentPlayerNamesComboBox.getSelectedItem();
 
 			if (gameTheme.equals("Leipzig")) {
-				gameThemeCode = "2_";
+				setGameThemeCode("2_");
 			} else if (gameTheme.equals("Merida")) {
-				gameThemeCode = "3_";
+				setGameThemeCode("3_");
 			} else if (gameTheme.equals("Cheq")) {
-				gameThemeCode = "4_";
+				setGameThemeCode("4_");
 			} else if (gameTheme.equals("Alpha")) {
-				gameThemeCode = "5_";
+				setGameThemeCode("5_");
 			} else {
-				gameThemeCode = "";
+				setGameThemeCode("");
 			}
-			createChessBoardPanel();
-			chessBoardState = new BoardState(boardPanel, chessBoard);
 
 			playerDetails.add(new JLabel(" " + gameTheme));
 

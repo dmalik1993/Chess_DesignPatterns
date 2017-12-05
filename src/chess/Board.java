@@ -1,13 +1,6 @@
 package chess;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
-import javax.swing.JPanel;
 
 import pieces.Bishop;
 import pieces.King;
@@ -17,7 +10,7 @@ import pieces.Piece;
 import pieces.Queen;
 import pieces.Rook;
 
-public class Board implements Serializable{
+public class Board implements Serializable {
 
 	private static final long serialVersionUID = -3344857819689605815L;
 	private Cell board[][];
@@ -30,13 +23,11 @@ public class Board implements Serializable{
 	private Pawn whitePawn[], blackPawn[];
 	private Queen whiteQueen, blackQueen;
 	private King whiteKing, blackKing;
-	private boolean flag = false;
-	
 	private String themeCode;
-	public Board() {
 
+	public Board(String theme) {
+		themeCode = theme == null ? "" : theme;
 		initializePieces();
-
 		initializeBoard();
 	}
 
@@ -87,27 +78,10 @@ public class Board implements Serializable{
 				Cell cell = new Cell(i, j, piece);
 				board[i][j] = cell;
 			}
-		
-		//board = SavedGame.fetchSavedGamesData("fourth").getChessBoard();
-		
-		
 	}
 
-	public Board updateBoardStatus(Cell[][] updatedBoard){
-		Board boardObj = new Board();
-		try{
-			
-			boardObj.board = updatedBoard;
-
-		}catch(Exception e){
-			
-		}
-		
-				
-		return boardObj;
-	}
-	
 	public Board(Board oldBoard) {
+		themeCode = oldBoard.themeCode;
 		initializePieces();
 		initializeBoard();
 
@@ -148,19 +122,12 @@ public class Board implements Serializable{
 		return board;
 	}
 
-	public void setBoard(Cell[][] board){
+	public void setBoard(Cell[][] board) {
 		this.board = board;
 	}
-	
+
 	private void initializePieces() {
-		
-		themeCode = Main.gameThemeCode;
-		if(null == themeCode){
-			
-			themeCode = "";
-			
-		}
-		
+
 		initializeRooks();
 
 		initializeKnights();
