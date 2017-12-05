@@ -36,10 +36,9 @@ public class BoardState implements MouseListener, Serializable {
 			}
 	}
 	
-	public BoardState(JPanel boardPanel, Cell[][] updatedBoard, Main ref) {
+	public BoardState(JPanel boardPanel, Main ref, BoardState savedState) {
 		BoardState.mainClassRef = ref;
-		chessBoard = new Board();
-		chessBoard = chessBoard.updateBoardStatus(updatedBoard);
+		chessBoard = new Board(savedState.chessBoard);
 
 		for (int i = 0; i < Board.ROWS; i++)
 			for (int j = 0; j < Board.COLUMNS; j++) {

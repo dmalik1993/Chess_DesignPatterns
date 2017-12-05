@@ -69,7 +69,7 @@ public class SavedGame {
 	         
 	         out.close();
 	         fileOut.close();
-	         System.out.printf("Serialized data is saved in E:/employee.ser");
+	         System.out.printf("Serialized data is saved in " + fileName +".ser");
 	      } catch (IOException i) {
 	         i.printStackTrace();
 	      }

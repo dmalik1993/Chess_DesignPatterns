@@ -12,17 +12,13 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -119,6 +115,7 @@ public class Main extends JFrame implements Serializable{
 		chessBoard.setVisible(true);
 		chessBoard.setResizable(false);
 	}
+	
 	private Main() {
 		createContentLayout();
 		chessBoardState = new BoardState(boardPanel, this);
@@ -908,7 +905,13 @@ public class Main extends JFrame implements Serializable{
 			
 			String savedGameName = (String) savedGameCombo.getSelectedItem();
 			createChessBoardPanel();
-			chessBoardState = new BoardState(boardPanel, SavedGame.fetchSavedGamesData(savedGameName).getChessBoard(), chessBoard);
+			try {
+				BoardState savedState = (BoardState) SavedGame.fetchSavedGamesData(savedGameName).clone();
+				chessBoardState = new BoardState(boardPanel, chessBoard, savedState);
+			} catch (CloneNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			setPlayersComboBoxData(0, SavedGame.fetchSavedGamesData(savedGameName).getPlayerDetail().get(0).getSelectedPlayer());
 			setPlayersComboBoxData(1, SavedGame.fetchSavedGamesData(savedGameName).getPlayerDetail().get(1).getSelectedPlayer());
