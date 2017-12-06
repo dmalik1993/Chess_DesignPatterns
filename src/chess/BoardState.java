@@ -14,17 +14,25 @@ public class BoardState implements MouseListener, Serializable {
 	/**
 	 * 
 	 */
+
+	private static final String BLACK_PLAYER = "Black";
+	private static final String WHITE_PLAYER = "White";
 	private static final long serialVersionUID = -3491934661431520753L;
 	private Board chessBoard;
 	private List<Player> playerDetail;
 	private static transient Main mainClassRef;
-
+	private int currentTurn;
+	
 	public BoardState(JPanel boardPanel, Main ref) {
 		mainClassRef = ref;
-		if (mainClassRef.getSavedState() == null)
+		BoardState savedState = mainClassRef.getSavedState();
+		if (savedState == null) {
 			chessBoard = new Board(mainClassRef.getGameThemeCode());
-		else
-			chessBoard = new Board(mainClassRef.getSavedState().chessBoard);
+			currentTurn = 0;
+		} else {
+			chessBoard = new Board(savedState.chessBoard);
+			currentTurn = savedState.getCurrentTurn();
+		}
 		
 		for (int i = 0; i < Board.ROWS; i++)
 			for (int j = 0; j < Board.COLUMNS; j++) {
@@ -38,9 +46,11 @@ public class BoardState implements MouseListener, Serializable {
 			}
 	}
 	
-		
 	private BoardState(BoardState oldBoardState) {
 		chessBoard = new Board(oldBoardState.chessBoard);
+		currentTurn = oldBoardState.getCurrentTurn();
+		playerDetail = oldBoardState.getPlayerDetail();
+		mainClassRef = oldBoardState.mainClassRef;
 	}
 
 	@Override
@@ -49,13 +59,18 @@ public class BoardState implements MouseListener, Serializable {
 		return newBoardState;
 	}
 
-	public King getKing(int color) {
-		if (color == 0)
-			return chessBoard.getWhiteKing();
-		else
-			return chessBoard.getBlackKing();
+	public King getAlternateKing() {
+		return (currentTurn == 1) ? chessBoard.getWhiteKing() : chessBoard.getBlackKing();
+	}
+	
+	public King getCurrentKing() {
+		return (currentTurn == 0) ? chessBoard.getWhiteKing() : chessBoard.getBlackKing();
 	}
 
+	public King getKingByTurn(int turn) {
+		return (turn == 0) ? chessBoard.getWhiteKing() : chessBoard.getBlackKing();
+	}
+	
 	public void updateKing(int color, int x, int y) {
 		if (color == 0)
 			chessBoard.updateWhiteKingLocation(x, y);
@@ -103,8 +118,6 @@ public class BoardState implements MouseListener, Serializable {
 		return chessBoard.getPiece(cell.getXIndex(), cell.getYIndex());
 	}
 
-	
-	
 	public List<Player> getPlayerDetail() {
 		return playerDetail;
 	}
@@ -134,4 +147,15 @@ public class BoardState implements MouseListener, Serializable {
 	public void mouseReleased(MouseEvent arg0) {
 	}
 
+	public int getCurrentTurn() {
+		return currentTurn;
+	}
+
+	public void switchTurn() {
+		this.currentTurn ^= 1;
+	}
+
+	public String getTurnLabel() {
+		return currentTurn == 0 ? WHITE_PLAYER : BLACK_PLAYER;
+	}
 }
