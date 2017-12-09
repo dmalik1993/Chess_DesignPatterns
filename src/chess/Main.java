@@ -109,9 +109,11 @@ public class Main extends JFrame implements Serializable {
 	public static int timeRemaining = TOTAL_TIME_FOR_TURN;
 
 	private BoardState savedState = null;
+	private static Main chessBoard;
 
 	public static void main(String[] args) {
-		Main chessBoard = new Main();
+		
+	    chessBoard = Main.getSingleTonMainInstance();
 		chessBoard.setVisible(true);
 		chessBoard.setResizable(false);
 	}
@@ -120,6 +122,14 @@ public class Main extends JFrame implements Serializable {
 		createContentLayout();
 	}
 
+	public static Main getSingleTonMainInstance() {
+				if(chessBoard == null) {
+					chessBoard = new Main();
+				}
+				return chessBoard;
+			}
+
+	
 	private void createContentLayout() {
 
 		createChessBoardPanel();
@@ -490,7 +500,7 @@ public class Main extends JFrame implements Serializable {
 				if (chessBoardState.getPiece(i, j) != null && chessBoardState.getPiece(i, j).getcolor() == color) {
 					possibleMovesForKing.clear();
 					possibleMovesForKing = chessBoardState.getPiece(i, j)
-							.getPossibleMoves(chessBoardState.getChessBoard(), i, j);
+							.calculatePossibleMoves(chessBoardState.getChessBoard(), i, j);
 					possibleMovesForKing = allowedCheckMoves(possibleMovesForKing, chessBoardState.getCell(i, j),
 							color);
 					if (possibleMovesForKing.size() != 0)
@@ -682,7 +692,7 @@ public class Main extends JFrame implements Serializable {
 			currentCell.select();
 			previousCell = currentCell;
 			possibleDestinations.clear();
-			possibleDestinations = currentCell.getpiece().getPossibleMoves(chessBoardState.getChessBoard(),
+			possibleDestinations = currentCell.getpiece().calculatePossibleMoves(chessBoardState.getChessBoard(),
 					currentCell.getXIndex(), currentCell.getYIndex());
 			if (currentCell.getpiece() instanceof King) {
 				possibleDestinations = filterAllowedMoves(possibleDestinations, currentCell);

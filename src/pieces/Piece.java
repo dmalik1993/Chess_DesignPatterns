@@ -24,7 +24,13 @@ public abstract class Piece implements Cloneable, Serializable {
 	private String path;
 	
 	protected List<Cell> possibleMoves = new ArrayList<Cell>(); 
-	public abstract List<Cell> getPossibleMoves(Cell[][] pos, int x, int y);
+//	public abstract List<Cell> getPossibleMoves(Cell[][] pos, int x, int y);
+	
+	CalculatePossibleMoves calculatePossibleMoves;
+	public List<Cell> calculatePossibleMoves(Cell[][] pos, int x, int y)
+	{		
+	return	calculatePossibleMoves.getPossibleMoves( pos,  x, y);
+	}
 
 	public void setId(String id) {
 		this.id = id;
