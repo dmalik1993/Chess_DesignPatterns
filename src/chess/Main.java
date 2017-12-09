@@ -43,8 +43,8 @@ import pieces.Piece;
 import pieces.Queen;
 import pieces.Rook;
 
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
+//import sun.audio.AudioPlayer;
+//import sun.audio.AudioStream;
 /**
  * @author Ashish Kedia and Adarsh Mohata
  *
@@ -59,15 +59,12 @@ import sun.audio.AudioStream;
 
 public class Main extends JFrame implements Serializable {
 	private static final String CHESS_TITLE = "Chess";
-	private static final String BLACK_PLAYER = "Black";
-	private static final String WHITE_PLAYER = "White";
 	private static final int TOTAL_TIME_FOR_TURN = 60;
 	private static final long serialVersionUID = 1L;
 	private static final int HEIGHT = 700;
 	private static final int WIDTH = 1110;
 
 	private Cell previousCell;
-	private int currentTurn = 0;
 
 	private BoardState chessBoardState;
 	private List<Cell> possibleDestinations = new ArrayList<Cell>();
@@ -93,8 +90,6 @@ public class Main extends JFrame implements Serializable {
 	private Container content;
 	private JComboBox<String> whitePlayerCombo, blackPlayerCombo, themeCombo;
 	private JComboBox<String> savedGameCombo;
-
-	private String move = WHITE_PLAYER;
 
 	private String gameTheme;
 	private String gameThemeCode;
@@ -405,10 +400,10 @@ public class Main extends JFrame implements Serializable {
 	}
 
 	public void changeTurn() {
-		King king = chessBoardState.getKing(currentTurn);
+		King king = chessBoardState.getCurrentKing();
 		Cell kingsCell = chessBoardState.getCell(king);
 		if (kingsCell.isCheck()) {
-			currentTurn ^= 1;
+			chessBoardState.switchTurn();
 			endGame();
 		}
 
@@ -421,17 +416,13 @@ public class Main extends JFrame implements Serializable {
 			previousCell = null;
 		}
 
-		currentTurn ^= 1;
+		chessBoardState.switchTurn();
 		if (!end && timer != null) {
 			timer.resetTimer();
 			timer.startTimer();
 			playerViewPanel.remove(turnLabel);
-			if (move == WHITE_PLAYER)
-				move = BLACK_PLAYER;
-			else
-				move = WHITE_PLAYER;
 
-			turnLabel.setText(move);
+			turnLabel.setText(chessBoardState.getTurnLabel());
 			playerViewPanel.add(turnLabel);
 		}
 	}
@@ -449,7 +440,7 @@ public class Main extends JFrame implements Serializable {
 	}
 
 	private boolean isCheckAfetrMove(Cell source, Cell target) {
-		return isMoveAllowed(source, target, currentTurn);
+		return isMoveAllowed(source, target, chessBoardState.getCurrentTurn());
 	}
 
 	private boolean isMoveAllowed(Cell source, Cell target, final int turn) {
@@ -469,14 +460,14 @@ public class Main extends JFrame implements Serializable {
 		}
 
 		newboardstate.getCell(source).removePiece();
-		if (newboardstate.getKing(turn).isindanger(newboardstate.getChessBoard()) == true)
+		if (newboardstate.getKingByTurn(turn).isindanger(newboardstate.getChessBoard()) == true)
 			return true;
 		else
 			return false;
 	}
 
 	private List<Cell> filterAllowedMoves(List<Cell> possibleMovesList, final Cell source) {
-		return allowedCheckMoves(possibleMovesList, source, currentTurn);
+		return allowedCheckMoves(possibleMovesList, source, chessBoardState.getCurrentTurn());
 	}
 
 	private List<Cell> allowedCheckMoves(List<Cell> possibleMovesList, final Cell source, final int turn) {
@@ -559,7 +550,7 @@ public class Main extends JFrame implements Serializable {
 		String winner = null;
 		if (previousCell != null)
 			previousCell.removePiece();
-		if (currentTurn == 0) {
+		if (chessBoardState.getCurrentTurn() == 0) {
 			getWhitePlayer().updateGamesWon();
 			getWhitePlayer().updatePlayersData();
 			winner = getWhitePlayer().getName();
@@ -597,12 +588,12 @@ public class Main extends JFrame implements Serializable {
 				movePiece(currentCell);
 				tryCheckOtherKing();
 
-				if (chessBoardState.getKing(currentTurn).isindanger(chessBoardState.getChessBoard()) == false) {
-					chessBoardState.getCell(chessBoardState.getKing(currentTurn)).removeCheck();
+				if (chessBoardState.getCurrentKing().isindanger(chessBoardState.getChessBoard()) == false) {
+					chessBoardState.getCell(chessBoardState.getCurrentKing()).removeCheck();
 				}
 
 				if (currentCell.getpiece() instanceof King) {
-					chessBoardState.updateKing(currentTurn, currentCell);
+					chessBoardState.updateKing(chessBoardState.getCurrentTurn(), currentCell);
 				}
 
 				changeTurn();
@@ -620,9 +611,9 @@ public class Main extends JFrame implements Serializable {
 	}
 
 	private void tryCheckOtherKing() {
-		if (chessBoardState.getKing(currentTurn ^ 1).isindanger(chessBoardState.getChessBoard())) {
-			chessBoardState.getCell(chessBoardState.getKing(currentTurn ^ 1)).setCheck();
-			if (isCheckMate(chessBoardState.getKing(currentTurn ^ 1).getcolor())) {
+		if (chessBoardState.getAlternateKing().isindanger(chessBoardState.getChessBoard())) {
+			chessBoardState.getCell(chessBoardState.getAlternateKing()).setCheck();
+			if (isCheckMate(chessBoardState.getAlternateKing().getcolor())) {
 				previousCell.removeSelection();
 				if (previousCell.getpiece() != null)
 					previousCell.removePiece();
@@ -669,8 +660,8 @@ public class Main extends JFrame implements Serializable {
 				inputStream = getClass().getResourceAsStream("pawn.au");
 			}
 
-		    AudioStream audioStream = new AudioStream(inputStream);
-		    AudioPlayer.player.start(audioStream);
+//		    AudioStream audioStream = new AudioStream(inputStream);
+//		    AudioPlayer.player.start(audioStream);
 		} catch (Exception e) {
 			// a special way i'm handling logging in this application
 			// if (debugFileWriter!=null) e.printStackTrace(debugFileWriter);
@@ -687,7 +678,7 @@ public class Main extends JFrame implements Serializable {
 
 	private boolean showValidMoves(Cell currentCell) {
 		if (currentCell.getpiece() != null) {
-			if (currentCell.getpiece().getcolor() != currentTurn)
+			if (currentCell.getpiece().getcolor() != chessBoardState.getCurrentTurn())
 				return false;
 			currentCell.select();
 			previousCell = currentCell;
@@ -697,7 +688,7 @@ public class Main extends JFrame implements Serializable {
 			if (currentCell.getpiece() instanceof King) {
 				possibleDestinations = filterAllowedMoves(possibleDestinations, currentCell);
 			} else {
-				if (chessBoardState.getCell(chessBoardState.getKing(currentTurn)).isCheck())
+				if (chessBoardState.getCell(chessBoardState.getCurrentKing()).isCheck())
 					possibleDestinations = new ArrayList<Cell>(filterAllowedMoves(possibleDestinations, currentCell));
 				else if (possibleDestinations.isEmpty() == false
 						&& isCheckAfetrMove(currentCell, possibleDestinations.get(0)))
@@ -755,10 +746,10 @@ public class Main extends JFrame implements Serializable {
 			splitPane.add(boardPanel);
 			playerViewPanel.remove(timeSlider);
 
+			chessBoardState = new BoardState(boardPanel, mainClassRef);
+			
 			addNewMoveLabel();
 			addNewTurnLabel();
-
-			chessBoardState = new BoardState(boardPanel, mainClassRef);
 
 			timeDisplayPanle.remove(startButton);
 			timeDisplayPanle.add(timeLabel);
@@ -766,7 +757,7 @@ public class Main extends JFrame implements Serializable {
 		}
 
 		private void addNewTurnLabel() {
-			turnLabel = new JLabel(move);
+			turnLabel = new JLabel(chessBoardState.getTurnLabel());
 			turnLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
 			turnLabel.setForeground(Color.blue);
 			playerViewPanel.add(turnLabel);
@@ -912,11 +903,7 @@ public class Main extends JFrame implements Serializable {
 
 			String savedGameName = (String) savedGameCombo.getSelectedItem();
 			createChessBoardPanel();
-			try {
-				setSavedState((BoardState) SavedGame.fetchSavedGamesData(savedGameName).clone());
-			} catch (CloneNotSupportedException e) {
-				e.printStackTrace();
-			}
+			setSavedState((BoardState) SavedGame.fetchSavedGamesData(savedGameName));
 
 			List<Player> playersList = SavedGame.fetchSavedGamesData(savedGameName).getPlayerDetail();
 			setPlayersComboBoxData(0, playersList.get(0).getSelectedPlayer());

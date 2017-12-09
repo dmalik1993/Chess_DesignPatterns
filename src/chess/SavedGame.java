@@ -11,40 +11,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class SavedGame {
 	
 	@SuppressWarnings("unchecked")
 	public static BoardState fetchSavedGamesData(String fileName){
-		//ArrayList<Object> obj = new ArrayList<Object>();
-		
-		//Object abc = new Object();
 		 BoardState chessBoardState;
-		//Map<String, Object> objectMap = new ConcurrentHashMap<String, Object>();
 		try {
 	         FileInputStream fileIn = new FileInputStream(fileName +".ser");
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
-
-	         //obj = (ArrayList<Object>)in.readObject();  
-//	         Cell[][] board;
-//	         Player whitePlayer;
-//	         Player blackPlayer;
-//	         
-//	         
-//	         whitePlayer = (Player)in.readObject();
-//	         blackPlayer = (Player)in.readObject();
-//	         board = (Cell[][])in.readObject();
-//	        
-	        
-	         
 	         chessBoardState = (BoardState)in.readObject();
-	         
-	         
-	        // objectMap.putAll(in.readObject());
 	         in.close();
 	         fileIn.close();
 	      } catch (IOException i) {
@@ -79,15 +56,12 @@ public class SavedGame {
 		List<String> savedGamesList = new ArrayList<String>();
 		String fileName = "temp.txt";
 
-		// This will reference one line at a time
 		String line = null;
 		BufferedReader bufferedReader = null;
 		
 		try {
-			// FileReader reads text files in the default encoding.
 			FileReader fileReader = new FileReader(fileName);
 
-			// Always wrap FileReader in BufferedReader.
 			bufferedReader = new BufferedReader(fileReader);
 			
 			while ((line = bufferedReader.readLine()) != null) {
