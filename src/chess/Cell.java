@@ -26,6 +26,7 @@ public class Cell extends JPanel implements Cloneable, Serializable{
 	private int yCoordinate;
 	private boolean selected;
 	private boolean isChecked;
+	private SoundClass gameSound;
 
 	public Cell(final int xVlaue, final int yValue, final Piece piece) {
 		super();
@@ -113,6 +114,8 @@ public class Cell extends JPanel implements Cloneable, Serializable{
 	public void setCheck() {
 		this.setBackground(Color.RED);
 		this.isChecked = true;
+		gameSound = new SoundClass();
+		gameSound.playWinSound(false);
 	}
 
 	public void removeCheck() {

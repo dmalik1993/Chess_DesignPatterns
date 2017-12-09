@@ -43,8 +43,9 @@ import pieces.Piece;
 import pieces.Queen;
 import pieces.Rook;
 
-//import sun.audio.AudioPlayer;
-//import sun.audio.AudioStream;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+
 /**
  * @author Ashish Kedia and Adarsh Mohata
  *
@@ -68,14 +69,19 @@ public class Main extends JFrame implements Serializable {
 
 	private BoardState chessBoardState;
 	private List<Cell> possibleDestinations = new ArrayList<Cell>();
+	private SoundClass gameSound;
 
 	private Player whitePlayer, blackPlayer, selectedPlayer;
 
-	private JPanel boardPanel, controlPanel, temporaryPanel, timeDisplayPanle, playerViewPanel, timePanel;
-	private JPanel whitePlayerDetailsPanel, whitePlayerComboPanel, whitePlayerPanel;
+	private JPanel boardPanel, controlPanel, temporaryPanel, timeDisplayPanle,
+			playerViewPanel, timePanel;
+	private JPanel whitePlayerDetailsPanel, whitePlayerComboPanel,
+			whitePlayerPanel;
 	private JPanel themePanelDetail, themePanelCombo, themePanel;
-	private JPanel savedGamesDetailsPanel, savedGamesComboPanel, savedGamesPanel;
-	private JPanel blackPlayerDetailsPnale, blackPlayerComboPanel, blackPlayerPanel;
+	private JPanel savedGamesDetailsPanel, savedGamesComboPanel,
+			savedGamesPanel;
+	private JPanel blackPlayerDetailsPnale, blackPlayerComboPanel,
+			blackPlayerPanel;
 
 	private Player whitePlayerData = new Player();
 	private Player blackPlayerData = new Player();
@@ -94,12 +100,14 @@ public class Main extends JFrame implements Serializable {
 	private String gameTheme;
 	private String gameThemeCode;
 
-	private JScrollPane whitePlayerScrollPane, blackPlayerScrollPane, themeScrollPane;
+	private JScrollPane whitePlayerScrollPane, blackPlayerScrollPane,
+			themeScrollPane;
 	private JScrollPane savedGameScrollPane;
 	private JSlider timeSlider;
 	private BufferedImage image;
 
-	private Button startButton, whitePlayerSelectButton, blackPlayerSelectButton, newWhitePlayerButton,
+	private Button startButton, whitePlayerSelectButton,
+			blackPlayerSelectButton, newWhitePlayerButton,
 			newBlackPlayerButton, savedGamesSelectButton, themeSelectButton;
 	public static int timeRemaining = TOTAL_TIME_FOR_TURN;
 
@@ -107,8 +115,8 @@ public class Main extends JFrame implements Serializable {
 	private static Main chessBoard;
 
 	public static void main(String[] args) {
-		
-	    chessBoard = Main.getSingleTonMainInstance();
+
+		chessBoard = Main.getSingleTonMainInstance();
 		chessBoard.setVisible(true);
 		chessBoard.setResizable(false);
 	}
@@ -118,13 +126,12 @@ public class Main extends JFrame implements Serializable {
 	}
 
 	public static Main getSingleTonMainInstance() {
-				if(chessBoard == null) {
-					chessBoard = new Main();
-				}
-				return chessBoard;
-			}
+		if (chessBoard == null) {
+			chessBoard = new Main();
+		}
+		return chessBoard;
+	}
 
-	
 	private void createContentLayout() {
 
 		createChessBoardPanel();
@@ -136,7 +143,8 @@ public class Main extends JFrame implements Serializable {
 
 		createControlPanel();
 
-		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, temporaryPanel, controlPanel);
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, temporaryPanel,
+				controlPanel);
 
 		content.add(splitPane);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -144,10 +152,14 @@ public class Main extends JFrame implements Serializable {
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				if (JOptionPane.showConfirmDialog(content,
-						"You are about to exit. Do you want to save the current session of the game?", "Attention!",
-						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-					String gameName = JOptionPane.showInputDialog(content, "Enter game name");
+				if (JOptionPane
+						.showConfirmDialog(
+								content,
+								"You are about to exit. Do you want to save the current session of the game?",
+								"Attention!", JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+					String gameName = JOptionPane.showInputDialog(content,
+							"Enter game name");
 
 					if (null == gameName || gameName.isEmpty()) {
 						return;
@@ -182,8 +194,9 @@ public class Main extends JFrame implements Serializable {
 			controlPanel.setLayout(new GridLayout(4, 3));
 		}
 
-		controlPanel.setBorder(BorderFactory.createTitledBorder(null, "Statistics", TitledBorder.TOP,
-				TitledBorder.CENTER, new Font("Lucida Calligraphy", Font.PLAIN, 20), Color.ORANGE));
+		controlPanel.setBorder(BorderFactory.createTitledBorder(null,
+				"Statistics", TitledBorder.TOP, TitledBorder.CENTER, new Font(
+						"Lucida Calligraphy", Font.PLAIN, 20), Color.ORANGE));
 
 		createWhitePlayerPanel();
 		createBlackPlayerPanel();
@@ -220,7 +233,8 @@ public class Main extends JFrame implements Serializable {
 			@Override
 			public void paintComponent(Graphics g) {
 				try {
-					image = ImageIO.read(this.getClass().getResource("clash.jpg"));
+					image = ImageIO.read(this.getClass().getResource(
+							"clash.jpg"));
 				} catch (IOException ex) {
 				}
 
@@ -259,8 +273,9 @@ public class Main extends JFrame implements Serializable {
 		blackPlayerDetailsPnale = new JPanel(new GridLayout(3, 3));
 		blackPlayerComboPanel = new JPanel();
 
-		blackPlayerPanel.setBorder(BorderFactory.createTitledBorder(null, "Black Player", TitledBorder.TOP,
-				TitledBorder.CENTER, new Font("times new roman", Font.BOLD, 18), Color.BLUE));
+		blackPlayerPanel.setBorder(BorderFactory.createTitledBorder(null,
+				"Black Player", TitledBorder.TOP, TitledBorder.CENTER,
+				new Font("times new roman", Font.BOLD, 18), Color.BLUE));
 		blackPlayerPanel.setLayout(new BorderLayout());
 
 		blackPlayerCombo = new JComboBox<String>(getPlayerNames());
@@ -269,7 +284,8 @@ public class Main extends JFrame implements Serializable {
 
 		blackPlayerSelectButton = new Button("Select");
 
-		blackPlayerSelectButton.addActionListener(new PlayerSelectionListener(1));
+		blackPlayerSelectButton
+				.addActionListener(new PlayerSelectionListener(1));
 
 		newBlackPlayerButton = new Button("New Player");
 
@@ -293,8 +309,9 @@ public class Main extends JFrame implements Serializable {
 
 		whitePlayerPanel = new JPanel();
 		whitePlayerComboPanel = new JPanel();
-		whitePlayerPanel.setBorder(BorderFactory.createTitledBorder(null, "White Player", TitledBorder.TOP,
-				TitledBorder.CENTER, new Font("times new roman", Font.BOLD, 18), Color.RED));
+		whitePlayerPanel.setBorder(BorderFactory.createTitledBorder(null,
+				"White Player", TitledBorder.TOP, TitledBorder.CENTER,
+				new Font("times new roman", Font.BOLD, 18), Color.RED));
 		whitePlayerPanel.setLayout(new BorderLayout());
 
 		JPanel whitePlayerStats = new JPanel(new GridLayout(3, 3));
@@ -308,7 +325,8 @@ public class Main extends JFrame implements Serializable {
 		whitePlayerComboPanel.setLayout(new FlowLayout());
 
 		whitePlayerSelectButton = new Button("Select");
-		whitePlayerSelectButton.addActionListener(new PlayerSelectionListener(0));
+		whitePlayerSelectButton
+				.addActionListener(new PlayerSelectionListener(0));
 		newWhitePlayerButton = new Button("New Player");
 		newWhitePlayerButton.addActionListener(new AddNewPlayerListener(0));
 
@@ -334,8 +352,9 @@ public class Main extends JFrame implements Serializable {
 		themePanelDetail = new JPanel(new GridLayout(1, 3));
 		themePanel = new JPanel();
 		themePanelCombo = new JPanel();
-		themePanel.setBorder(BorderFactory.createTitledBorder(null, "Theme", TitledBorder.TOP, TitledBorder.CENTER,
-				new Font("times new roman", Font.BOLD, 18), Color.RED));
+		themePanel.setBorder(BorderFactory.createTitledBorder(null, "Theme",
+				TitledBorder.TOP, TitledBorder.CENTER, new Font(
+						"times new roman", Font.BOLD, 18), Color.RED));
 		themePanel.setLayout(new BorderLayout());
 
 		JPanel themeStats = new JPanel(new GridLayout(1, 3));
@@ -361,8 +380,9 @@ public class Main extends JFrame implements Serializable {
 
 		savedGamesPanel = new JPanel();
 		savedGamesComboPanel = new JPanel();
-		savedGamesPanel.setBorder(BorderFactory.createTitledBorder(null, "Saved Games", TitledBorder.TOP,
-				TitledBorder.CENTER, new Font("times new roman", Font.BOLD, 18), Color.RED));
+		savedGamesPanel.setBorder(BorderFactory.createTitledBorder(null,
+				"Saved Games", TitledBorder.TOP, TitledBorder.CENTER, new Font(
+						"times new roman", Font.BOLD, 18), Color.RED));
 		savedGamesPanel.setLayout(new BorderLayout());
 
 		savedGameCombo = new JComboBox<String>(SavedGame.fetchSavedGameList());
@@ -460,19 +480,24 @@ public class Main extends JFrame implements Serializable {
 		}
 
 		newboardstate.getCell(source).removePiece();
-		if (newboardstate.getKingByTurn(turn).isindanger(newboardstate.getChessBoard()) == true)
+		if (newboardstate.getKingByTurn(turn).isindanger(
+				newboardstate.getChessBoard()) == true)
 			return true;
 		else
 			return false;
 	}
 
-	private List<Cell> filterAllowedMoves(List<Cell> possibleMovesList, final Cell source) {
-		return allowedCheckMoves(possibleMovesList, source, chessBoardState.getCurrentTurn());
+	private List<Cell> filterAllowedMoves(List<Cell> possibleMovesList,
+			final Cell source) {
+		return allowedCheckMoves(possibleMovesList, source,
+				chessBoardState.getCurrentTurn());
 	}
 
-	private List<Cell> allowedCheckMoves(List<Cell> possibleMovesList, final Cell source, final int turn) {
+	private List<Cell> allowedCheckMoves(List<Cell> possibleMovesList,
+			final Cell source, final int turn) {
 		List<Cell> allowedMoves = new ArrayList<Cell>();
-		ListIterator<Cell> possibleMovesIterator = possibleMovesList.listIterator();
+		ListIterator<Cell> possibleMovesIterator = possibleMovesList
+				.listIterator();
 
 		while (possibleMovesIterator.hasNext()) {
 			Cell target = possibleMovesIterator.next();
@@ -488,12 +513,15 @@ public class Main extends JFrame implements Serializable {
 		List<Cell> possibleMovesForKing = new ArrayList<Cell>();
 		for (int i = 0; i < Board.ROWS; i++) {
 			for (int j = 0; j < Board.COLUMNS; j++) {
-				if (chessBoardState.getPiece(i, j) != null && chessBoardState.getPiece(i, j).getcolor() == color) {
+				if (chessBoardState.getPiece(i, j) != null
+						&& chessBoardState.getPiece(i, j).getcolor() == color) {
 					possibleMovesForKing.clear();
 					possibleMovesForKing = chessBoardState.getPiece(i, j)
-							.calculatePossibleMoves(chessBoardState.getChessBoard(), i, j);
-					possibleMovesForKing = allowedCheckMoves(possibleMovesForKing, chessBoardState.getCell(i, j),
-							color);
+							.calculatePossibleMoves(
+									chessBoardState.getChessBoard(), i, j);
+					possibleMovesForKing = allowedCheckMoves(
+							possibleMovesForKing,
+							chessBoardState.getCell(i, j), color);
 					if (possibleMovesForKing.size() != 0)
 						return false;
 				}
@@ -513,6 +541,7 @@ public class Main extends JFrame implements Serializable {
 
 		createContentLayout();
 		chessBoardState = new BoardState(boardPanel, this);
+		gameSound = new SoundClass();
 
 		setVisible(true);
 		setResizable(false);
@@ -559,8 +588,9 @@ public class Main extends JFrame implements Serializable {
 			getBlackPlayer().updatePlayersData();
 			winner = getBlackPlayer().getName();
 		}
-
-		JOptionPane.showMessageDialog(boardPanel, "Checkmate!!!\n" + winner + " wins");
+		gameSound.playWinSound(true);
+		JOptionPane.showMessageDialog(boardPanel, "Checkmate!!!\n" + winner
+				+ " wins");
 	}
 
 	public void performAction(Cell currentCell) {
@@ -572,8 +602,10 @@ public class Main extends JFrame implements Serializable {
 			performMove(currentCell);
 		}
 
-		if (currentCell.getpiece() != null && currentCell.getpiece() instanceof King) {
-			chessBoardState.updateKing(((King) currentCell.getpiece()), currentCell);
+		if (currentCell.getpiece() != null
+				&& currentCell.getpiece() instanceof King) {
+			chessBoardState.updateKing(((King) currentCell.getpiece()),
+					currentCell);
 		}
 	}
 
@@ -583,17 +615,21 @@ public class Main extends JFrame implements Serializable {
 			deSelectCell(currentCell);
 			previousCell = null;
 		} else if (currentCell.getpiece() == null
-				|| previousCell.getpiece().getcolor() != currentCell.getpiece().getcolor()) {
+				|| previousCell.getpiece().getcolor() != currentCell.getpiece()
+						.getcolor()) {
 			if (currentCell.isValidDestination()) {
 				movePiece(currentCell);
 				tryCheckOtherKing();
 
-				if (chessBoardState.getCurrentKing().isindanger(chessBoardState.getChessBoard()) == false) {
-					chessBoardState.getCell(chessBoardState.getCurrentKing()).removeCheck();
+				if (chessBoardState.getCurrentKing().isindanger(
+						chessBoardState.getChessBoard()) == false) {
+					chessBoardState.getCell(chessBoardState.getCurrentKing())
+							.removeCheck();
 				}
 
 				if (currentCell.getpiece() instanceof King) {
-					chessBoardState.updateKing(chessBoardState.getCurrentTurn(), currentCell);
+					chessBoardState.updateKing(
+							chessBoardState.getCurrentTurn(), currentCell);
 				}
 
 				changeTurn();
@@ -602,7 +638,8 @@ public class Main extends JFrame implements Serializable {
 			deSelectCell(previousCell);
 			previousCell = null;
 
-		} else if (previousCell.getpiece().getcolor() == currentCell.getpiece().getcolor()) {
+		} else if (previousCell.getpiece().getcolor() == currentCell.getpiece()
+				.getcolor()) {
 			deSelectCell(previousCell);
 			if (!showValidMoves(currentCell)) {
 				return;
@@ -611,8 +648,10 @@ public class Main extends JFrame implements Serializable {
 	}
 
 	private void tryCheckOtherKing() {
-		if (chessBoardState.getAlternateKing().isindanger(chessBoardState.getChessBoard())) {
-			chessBoardState.getCell(chessBoardState.getAlternateKing()).setCheck();
+		if (chessBoardState.getAlternateKing().isindanger(
+				chessBoardState.getChessBoard())) {
+			chessBoardState.getCell(chessBoardState.getAlternateKing())
+					.setCheck();
 			if (isCheckMate(chessBoardState.getAlternateKing().getcolor())) {
 				previousCell.removeSelection();
 				if (previousCell.getpiece() != null)
@@ -631,41 +670,7 @@ public class Main extends JFrame implements Serializable {
 		previousCell.removePiece();
 
 		Piece piece = currentCell.getpiece();
-		this.playSound(piece);
-	}
-
-	private void playSound(Piece piece) {
-
-		try {
-			InputStream inputStream = null;
-			if (piece instanceof Pawn) {
-				inputStream = getClass().getResourceAsStream("pawn.au");
-			} else if (piece instanceof Bishop) {
-
-				inputStream = getClass().getResourceAsStream("bishop.au");
-			} else if (piece instanceof Rook) {
-
-				inputStream = getClass().getResourceAsStream("rook.au");
-			} else if (piece instanceof Knight) {
-
-				inputStream = getClass().getResourceAsStream("knight.au");
-			} else if (piece instanceof King) {
-
-				inputStream = getClass().getResourceAsStream("king.au");
-			} else if (piece instanceof Queen) {
-
-				inputStream = getClass().getResourceAsStream("queen.au");
-			} else {
-
-				inputStream = getClass().getResourceAsStream("pawn.au");
-			}
-
-//		    AudioStream audioStream = new AudioStream(inputStream);
-//		    AudioPlayer.player.start(audioStream);
-		} catch (Exception e) {
-			// a special way i'm handling logging in this application
-			// if (debugFileWriter!=null) e.printStackTrace(debugFileWriter);
-		}
+		gameSound.playSound(piece);
 	}
 
 	private void deSelectCell(Cell currentCell) {
@@ -678,20 +683,27 @@ public class Main extends JFrame implements Serializable {
 
 	private boolean showValidMoves(Cell currentCell) {
 		if (currentCell.getpiece() != null) {
-			if (currentCell.getpiece().getcolor() != chessBoardState.getCurrentTurn())
+			if (currentCell.getpiece().getcolor() != chessBoardState
+					.getCurrentTurn())
 				return false;
 			currentCell.select();
 			previousCell = currentCell;
 			possibleDestinations.clear();
-			possibleDestinations = currentCell.getpiece().calculatePossibleMoves(chessBoardState.getChessBoard(),
-					currentCell.getXIndex(), currentCell.getYIndex());
+			possibleDestinations = currentCell.getpiece()
+					.calculatePossibleMoves(chessBoardState.getChessBoard(),
+							currentCell.getXIndex(), currentCell.getYIndex());
 			if (currentCell.getpiece() instanceof King) {
-				possibleDestinations = filterAllowedMoves(possibleDestinations, currentCell);
+				possibleDestinations = filterAllowedMoves(possibleDestinations,
+						currentCell);
 			} else {
-				if (chessBoardState.getCell(chessBoardState.getCurrentKing()).isCheck())
-					possibleDestinations = new ArrayList<Cell>(filterAllowedMoves(possibleDestinations, currentCell));
+				if (chessBoardState.getCell(chessBoardState.getCurrentKing())
+						.isCheck())
+					possibleDestinations = new ArrayList<Cell>(
+							filterAllowedMoves(possibleDestinations,
+									currentCell));
 				else if (possibleDestinations.isEmpty() == false
-						&& isCheckAfetrMove(currentCell, possibleDestinations.get(0)))
+						&& isCheckAfetrMove(currentCell,
+								possibleDestinations.get(0)))
 					possibleDestinations.clear();
 			}
 			highlightDestinations(possibleDestinations);
@@ -735,7 +747,8 @@ public class Main extends JFrame implements Serializable {
 		public void actionPerformed(ActionEvent arg0) {
 
 			if (getWhitePlayer() == null || getBlackPlayer() == null) {
-				JOptionPane.showMessageDialog(controlPanel, "Fill in the details");
+				JOptionPane.showMessageDialog(controlPanel,
+						"Fill in the details");
 				return;
 			}
 
@@ -747,7 +760,8 @@ public class Main extends JFrame implements Serializable {
 			playerViewPanel.remove(timeSlider);
 
 			chessBoardState = new BoardState(boardPanel, mainClassRef);
-			
+			gameSound = new SoundClass();
+
 			addNewMoveLabel();
 			addNewTurnLabel();
 
@@ -808,14 +822,20 @@ public class Main extends JFrame implements Serializable {
 		public void actionPerformed(ActionEvent arg0) {
 			setSelectedPlayer(null);
 
-			JComboBox<String> currentPlayerNamesComboBox = (color == 0) ? whitePlayerCombo : blackPlayerCombo;
+			JComboBox<String> currentPlayerNamesComboBox = (color == 0) ? whitePlayerCombo
+					: blackPlayerCombo;
 
-			setPlayersComboBoxData(color, (String) currentPlayerNamesComboBox.getSelectedItem());
+			setPlayersComboBoxData(color,
+					(String) currentPlayerNamesComboBox.getSelectedItem());
 
 			if (color == 0) {
-				whitePlayerData.setSelectedPlayer((String) currentPlayerNamesComboBox.getSelectedItem());
+				whitePlayerData
+						.setSelectedPlayer((String) currentPlayerNamesComboBox
+								.getSelectedItem());
 			} else if (color == 1) {
-				blackPlayerData.setSelectedPlayer((String) currentPlayerNamesComboBox.getSelectedItem());
+				blackPlayerData
+						.setSelectedPlayer((String) currentPlayerNamesComboBox
+								.getSelectedItem());
 			}
 		}
 
@@ -823,14 +843,16 @@ public class Main extends JFrame implements Serializable {
 
 	private void setPlayersComboBoxData(int color, String selectedPlayer) {
 
-		JComboBox<String> otherPlayerNamesComboBox = (color == 0) ? blackPlayerCombo : whitePlayerCombo;
+		JComboBox<String> otherPlayerNamesComboBox = (color == 0) ? blackPlayerCombo
+				: whitePlayerCombo;
 
 		ArrayList<Player> otherPlayersList = Player.fetchPlayersData();
 		ArrayList<Player> currentPlayersList = Player.fetchPlayersData();
 		if (otherPlayersList.isEmpty())
 			return;
 
-		JPanel playerDetails = (color == 0) ? whitePlayerDetailsPanel : blackPlayerDetailsPnale;
+		JPanel playerDetails = (color == 0) ? whitePlayerDetailsPanel
+				: blackPlayerDetailsPnale;
 		JPanel playerPanel = (color == 0) ? whitePlayerPanel : blackPlayerPanel;
 
 		if (isSelected == true)
@@ -903,9 +925,11 @@ public class Main extends JFrame implements Serializable {
 
 			String savedGameName = (String) savedGameCombo.getSelectedItem();
 			createChessBoardPanel();
-			setSavedState((BoardState) SavedGame.fetchSavedGamesData(savedGameName));
+			setSavedState((BoardState) SavedGame
+					.fetchSavedGamesData(savedGameName));
 
-			List<Player> playersList = SavedGame.fetchSavedGamesData(savedGameName).getPlayerDetail();
+			List<Player> playersList = SavedGame.fetchSavedGamesData(
+					savedGameName).getPlayerDetail();
 			setPlayersComboBoxData(0, playersList.get(0).getSelectedPlayer());
 			whitePlayerData = playersList.get(0);
 			setPlayersComboBoxData(1, playersList.get(1).getSelectedPlayer());
@@ -963,11 +987,13 @@ public class Main extends JFrame implements Serializable {
 		}
 
 		private void addNewPlayer() {
-			JPanel playerPanel = (color == 0) ? whitePlayerPanel : blackPlayerPanel;
+			JPanel playerPanel = (color == 0) ? whitePlayerPanel
+					: blackPlayerPanel;
 			ArrayList<Player> playersList = Player.fetchPlayersData();
 			Iterator<Player> playersListIterator = playersList.iterator();
 
-			String playerName = JOptionPane.showInputDialog(playerPanel, "Enter your name");
+			String playerName = JOptionPane.showInputDialog(playerPanel,
+					"Enter your name");
 
 			if (playerName == null || playerName.isEmpty()) {
 				return;
@@ -992,7 +1018,8 @@ public class Main extends JFrame implements Serializable {
 		}
 
 		private void updatePlayerPanel(JPanel playerPanel, Player newPlayer) {
-			JPanel panelDetails = (color == 0) ? whitePlayerDetailsPanel : blackPlayerDetailsPnale;
+			JPanel panelDetails = (color == 0) ? whitePlayerDetailsPanel
+					: blackPlayerDetailsPnale;
 			panelDetails.removeAll();
 			panelDetails.add(new JLabel(" " + newPlayer.getName()));
 			panelDetails.add(new JLabel(" " + newPlayer.gamesPlayed()));
