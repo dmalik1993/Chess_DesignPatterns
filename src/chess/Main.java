@@ -13,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -35,16 +34,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import pieces.Bishop;
 import pieces.King;
-import pieces.Knight;
-import pieces.Pawn;
 import pieces.Piece;
-import pieces.Queen;
-import pieces.Rook;
-
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 
 /**
  * @author Ashish Kedia and Adarsh Mohata
@@ -73,10 +64,10 @@ public class Main extends JFrame implements Serializable {
 
 	private Player whitePlayer, blackPlayer, selectedPlayer;
 
-	private JPanel boardPanel, controlPanel, temporaryPanel, timeDisplayPanle,
-			playerViewPanel, timePanel;
-	private JPanel whitePlayerDetailsPanel, whitePlayerComboPanel,
-			whitePlayerPanel;
+	private JPanel boardPanel, controlPanel, temporaryPanel, timeDisplayPanle, playerViewPanel, timePanel;
+
+	private JPanel whitePlayerDetailsPanel, whitePlayerComboPanel, whitePlayerPanel;
+
 	private JPanel themePanelDetail, themePanelCombo, themePanel;
 	private JPanel savedGamesDetailsPanel, savedGamesComboPanel,
 			savedGamesPanel;
@@ -711,7 +702,7 @@ public class Main extends JFrame implements Serializable {
 		return true;
 	}
 
-	private Player getWhitePlayer() {
+	public Player getWhitePlayer() {
 		return whitePlayer;
 	}
 
@@ -719,7 +710,7 @@ public class Main extends JFrame implements Serializable {
 		this.whitePlayer = whitePlayer;
 	}
 
-	private Player getBlackPlayer() {
+	public Player getBlackPlayer() {
 		return blackPlayer;
 	}
 
@@ -735,74 +726,6 @@ public class Main extends JFrame implements Serializable {
 		this.selectedPlayer = selectedPlayer;
 	}
 
-	class StartButtonListener implements ActionListener {
-
-		Main mainClassRef;
-
-		public StartButtonListener(Main ref) {
-			mainClassRef = ref;
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-
-			if (getWhitePlayer() == null || getBlackPlayer() == null) {
-				JOptionPane.showMessageDialog(controlPanel,
-						"Fill in the details");
-				return;
-			}
-
-			updatePlayersRecord();
-			disablePlayerButtons();
-
-			splitPane.remove(temporaryPanel);
-			splitPane.add(boardPanel);
-			playerViewPanel.remove(timeSlider);
-
-			chessBoardState = new BoardState(boardPanel, mainClassRef);
-			gameSound = new SoundClass();
-
-			addNewMoveLabel();
-			addNewTurnLabel();
-
-			timeDisplayPanle.remove(startButton);
-			timeDisplayPanle.add(timeLabel);
-			timer.startTimer();
-		}
-
-		private void addNewTurnLabel() {
-			turnLabel = new JLabel(chessBoardState.getTurnLabel());
-			turnLabel.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-			turnLabel.setForeground(Color.blue);
-			playerViewPanel.add(turnLabel);
-		}
-
-		private void addNewMoveLabel() {
-			moveLabel = new JLabel("Move:");
-			moveLabel.setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-			moveLabel.setForeground(Color.red);
-			playerViewPanel.add(moveLabel);
-		}
-
-		@SuppressWarnings("deprecation")
-		private void disablePlayerButtons() {
-			newWhitePlayerButton.disable();
-			newBlackPlayerButton.disable();
-
-			whitePlayerSelectButton.disable();
-			blackPlayerSelectButton.disable();
-
-			themeSelectButton.disable();
-		}
-
-		private void updatePlayersRecord() {
-			getWhitePlayer().updateGamesPlayed();
-			getWhitePlayer().updatePlayersData();
-
-			getBlackPlayer().updateGamesPlayed();
-			getBlackPlayer().updatePlayersData();
-		}
-	}
 
 	class TimeChangeListener implements ChangeListener {
 		@Override
@@ -1029,4 +952,431 @@ public class Main extends JFrame implements Serializable {
 			playerPanel.add(panelDetails);
 		}
 	}
+	
+	public JPanel getControlPanel() {
+		return controlPanel;
+	}
+
+	public void setControlPanel(JPanel controlPanel) {
+		this.controlPanel = controlPanel;
+	}
+
+	public JSplitPane getSplitPane() {
+		return splitPane;
+	}
+
+	public void setSplitPane(JSplitPane splitPane) {
+		this.splitPane = splitPane;
+	}
+
+	public JPanel getTemporaryPanel() {
+		return temporaryPanel;
+	}
+
+	public void setTemporaryPanel(JPanel temporaryPanel) {
+		this.temporaryPanel = temporaryPanel;
+	}
+
+	public JPanel getBoardPanel() {
+		return boardPanel;
+	}
+
+	public JPanel getPlayerViewPanel() {
+		return playerViewPanel;
+	}
+
+	public BoardState getChessBoardState() {
+		return chessBoardState;
+	}
+
+	public JSlider getTimeSlider() {
+		return timeSlider;
+	}
+
+	public void setChessBoardState(BoardState chessBoardState) {
+		this.chessBoardState = chessBoardState;
+	}
+
+	public Cell getPreviousCell() {
+		return previousCell;
+	}
+
+	public void setPreviousCell(Cell previousCell) {
+		this.previousCell = previousCell;
+	}
+
+	public List<Cell> getPossibleDestinations() {
+		return possibleDestinations;
+	}
+
+	public void setPossibleDestinations(List<Cell> possibleDestinations) {
+		this.possibleDestinations = possibleDestinations;
+	}
+
+	public JPanel getTimeDisplayPanle() {
+		return timeDisplayPanle;
+	}
+
+	public void setTimeDisplayPanle(JPanel timeDisplayPanle) {
+		this.timeDisplayPanle = timeDisplayPanle;
+	}
+
+	public JPanel getTimePanel() {
+		return timePanel;
+	}
+
+	public void setTimePanel(JPanel timePanel) {
+		this.timePanel = timePanel;
+	}
+
+	public JPanel getWhitePlayerDetailsPanel() {
+		return whitePlayerDetailsPanel;
+	}
+
+	public void setWhitePlayerDetailsPanel(JPanel whitePlayerDetailsPanel) {
+		this.whitePlayerDetailsPanel = whitePlayerDetailsPanel;
+	}
+
+	public JPanel getWhitePlayerComboPanel() {
+		return whitePlayerComboPanel;
+	}
+
+	public void setWhitePlayerComboPanel(JPanel whitePlayerComboPanel) {
+		this.whitePlayerComboPanel = whitePlayerComboPanel;
+	}
+
+	public JPanel getWhitePlayerPanel() {
+		return whitePlayerPanel;
+	}
+
+	public void setWhitePlayerPanel(JPanel whitePlayerPanel) {
+		this.whitePlayerPanel = whitePlayerPanel;
+	}
+
+	public JPanel getThemePanelDetail() {
+		return themePanelDetail;
+	}
+
+	public void setThemePanelDetail(JPanel themePanelDetail) {
+		this.themePanelDetail = themePanelDetail;
+	}
+
+	public JPanel getThemePanelCombo() {
+		return themePanelCombo;
+	}
+
+	public void setThemePanelCombo(JPanel themePanelCombo) {
+		this.themePanelCombo = themePanelCombo;
+	}
+
+	public JPanel getThemePanel() {
+		return themePanel;
+	}
+
+	public void setThemePanel(JPanel themePanel) {
+		this.themePanel = themePanel;
+	}
+
+	public JPanel getSavedGamesDetailsPanel() {
+		return savedGamesDetailsPanel;
+	}
+
+	public void setSavedGamesDetailsPanel(JPanel savedGamesDetailsPanel) {
+		this.savedGamesDetailsPanel = savedGamesDetailsPanel;
+	}
+
+	public JPanel getSavedGamesComboPanel() {
+		return savedGamesComboPanel;
+	}
+
+	public void setSavedGamesComboPanel(JPanel savedGamesComboPanel) {
+		this.savedGamesComboPanel = savedGamesComboPanel;
+	}
+
+	public JPanel getSavedGamesPanel() {
+		return savedGamesPanel;
+	}
+
+	public void setSavedGamesPanel(JPanel savedGamesPanel) {
+		this.savedGamesPanel = savedGamesPanel;
+	}
+
+	public JPanel getBlackPlayerDetailsPnale() {
+		return blackPlayerDetailsPnale;
+	}
+
+	public void setBlackPlayerDetailsPnale(JPanel blackPlayerDetailsPnale) {
+		this.blackPlayerDetailsPnale = blackPlayerDetailsPnale;
+	}
+
+	public JPanel getBlackPlayerComboPanel() {
+		return blackPlayerComboPanel;
+	}
+
+	public void setBlackPlayerComboPanel(JPanel blackPlayerComboPanel) {
+		this.blackPlayerComboPanel = blackPlayerComboPanel;
+	}
+
+	public JPanel getBlackPlayerPanel() {
+		return blackPlayerPanel;
+	}
+
+	public void setBlackPlayerPanel(JPanel blackPlayerPanel) {
+		this.blackPlayerPanel = blackPlayerPanel;
+	}
+
+	public Player getWhitePlayerData() {
+		return whitePlayerData;
+	}
+
+	public void setWhitePlayerData(Player whitePlayerData) {
+		this.whitePlayerData = whitePlayerData;
+	}
+
+	public Player getBlackPlayerData() {
+		return blackPlayerData;
+	}
+
+	public void setBlackPlayerData(Player blackPlayerData) {
+		this.blackPlayerData = blackPlayerData;
+	}
+
+	public JLabel getTimeLabel() {
+		return timeLabel;
+	}
+
+	public void setTimeLabel(JLabel timeLabel) {
+		this.timeLabel = timeLabel;
+	}
+
+	public JLabel getMoveLabel() {
+		return moveLabel;
+	}
+
+	public void setMoveLabel(JLabel moveLabel) {
+		this.moveLabel = moveLabel;
+	}
+
+	public JLabel getTurnLabel() {
+		return turnLabel;
+	}
+
+	public void setTurnLabel(JLabel turnLabel) {
+		this.turnLabel = turnLabel;
+	}
+
+	public Time getTimer() {
+		return timer;
+	}
+
+	public void setTimer(Time timer) {
+		this.timer = timer;
+	}
+
+	public boolean isSelected() {
+		return isSelected;
+	}
+
+	public void setSelected(boolean isSelected) {
+		this.isSelected = isSelected;
+	}
+
+	public boolean isEnd() {
+		return end;
+	}
+
+	public void setEnd(boolean end) {
+		this.end = end;
+	}
+
+	public boolean isThemeSelected() {
+		return isThemeSelected;
+	}
+
+	public void setThemeSelected(boolean isThemeSelected) {
+		this.isThemeSelected = isThemeSelected;
+	}
+
+	public Container getContent() {
+		return content;
+	}
+
+	public void setContent(Container content) {
+		this.content = content;
+	}
+
+	public JComboBox<String> getWhitePlayerCombo() {
+		return whitePlayerCombo;
+	}
+
+	public void setWhitePlayerCombo(JComboBox<String> whitePlayerCombo) {
+		this.whitePlayerCombo = whitePlayerCombo;
+	}
+
+	public JComboBox<String> getBlackPlayerCombo() {
+		return blackPlayerCombo;
+	}
+
+	public void setBlackPlayerCombo(JComboBox<String> blackPlayerCombo) {
+		this.blackPlayerCombo = blackPlayerCombo;
+	}
+
+	public JComboBox<String> getThemeCombo() {
+		return themeCombo;
+	}
+
+	public void setThemeCombo(JComboBox<String> themeCombo) {
+		this.themeCombo = themeCombo;
+	}
+
+	public JComboBox<String> getSavedGameCombo() {
+		return savedGameCombo;
+	}
+
+	public void setSavedGameCombo(JComboBox<String> savedGameCombo) {
+		this.savedGameCombo = savedGameCombo;
+	}
+
+	public String getGameTheme() {
+		return gameTheme;
+	}
+
+	public void setGameTheme(String gameTheme) {
+		this.gameTheme = gameTheme;
+	}
+
+	public JScrollPane getWhitePlayerScrollPane() {
+		return whitePlayerScrollPane;
+	}
+
+	public void setWhitePlayerScrollPane(JScrollPane whitePlayerScrollPane) {
+		this.whitePlayerScrollPane = whitePlayerScrollPane;
+	}
+
+	public JScrollPane getBlackPlayerScrollPane() {
+		return blackPlayerScrollPane;
+	}
+
+	public void setBlackPlayerScrollPane(JScrollPane blackPlayerScrollPane) {
+		this.blackPlayerScrollPane = blackPlayerScrollPane;
+	}
+
+	public JScrollPane getThemeScrollPane() {
+		return themeScrollPane;
+	}
+
+	public void setThemeScrollPane(JScrollPane themeScrollPane) {
+		this.themeScrollPane = themeScrollPane;
+	}
+
+	public JScrollPane getSavedGameScrollPane() {
+		return savedGameScrollPane;
+	}
+
+	public void setSavedGameScrollPane(JScrollPane savedGameScrollPane) {
+		this.savedGameScrollPane = savedGameScrollPane;
+	}
+
+	public BufferedImage getImage() {
+		return image;
+	}
+
+	public void setImage(BufferedImage image) {
+		this.image = image;
+	}
+
+	public Button getStartButton() {
+		return startButton;
+	}
+
+	public void setStartButton(Button startButton) {
+		this.startButton = startButton;
+	}
+
+	public Button getWhitePlayerSelectButton() {
+		return whitePlayerSelectButton;
+	}
+
+	public void setWhitePlayerSelectButton(Button whitePlayerSelectButton) {
+		this.whitePlayerSelectButton = whitePlayerSelectButton;
+	}
+
+	public Button getBlackPlayerSelectButton() {
+		return blackPlayerSelectButton;
+	}
+
+	public void setBlackPlayerSelectButton(Button blackPlayerSelectButton) {
+		this.blackPlayerSelectButton = blackPlayerSelectButton;
+	}
+
+	public Button getNewWhitePlayerButton() {
+		return newWhitePlayerButton;
+	}
+
+	public void setNewWhitePlayerButton(Button newWhitePlayerButton) {
+		this.newWhitePlayerButton = newWhitePlayerButton;
+	}
+
+	public Button getNewBlackPlayerButton() {
+		return newBlackPlayerButton;
+	}
+
+	public void setNewBlackPlayerButton(Button newBlackPlayerButton) {
+		this.newBlackPlayerButton = newBlackPlayerButton;
+	}
+
+	public Button getSavedGamesSelectButton() {
+		return savedGamesSelectButton;
+	}
+
+	public void setSavedGamesSelectButton(Button savedGamesSelectButton) {
+		this.savedGamesSelectButton = savedGamesSelectButton;
+	}
+
+	public Button getThemeSelectButton() {
+		return themeSelectButton;
+	}
+
+	public void setThemeSelectButton(Button themeSelectButton) {
+		this.themeSelectButton = themeSelectButton;
+	}
+
+	public static int getTimeRemaining() {
+		return timeRemaining;
+	}
+
+	public static void setTimeRemaining(int timeRemaining) {
+		Main.timeRemaining = timeRemaining;
+	}
+
+	public static Main getChessBoard() {
+		return chessBoard;
+	}
+
+	public static void setChessBoard(Main chessBoard) {
+		Main.chessBoard = chessBoard;
+	}
+
+	public void setBoardPanel(JPanel boardPanel) {
+		this.boardPanel = boardPanel;
+	}
+
+	public void setPlayerViewPanel(JPanel playerViewPanel) {
+		this.playerViewPanel = playerViewPanel;
+	}
+
+	public void setTimeSlider(JSlider timeSlider) {
+		this.timeSlider = timeSlider;
+	}
+
+	public SoundClass getGameSound() {
+		return gameSound;
+	}
+
+	public void setGameSound(SoundClass gameSound) {
+		this.gameSound = gameSound;
+	}
+	
+	
+	
 }
