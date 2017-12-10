@@ -9,6 +9,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import chess.sound.DangerSound;
+import chess.sound.SoundClass;
 import pieces.Piece;
 
 /**
@@ -114,8 +116,8 @@ public class Cell extends JPanel implements Cloneable, Serializable{
 	public void setCheck() {
 		this.setBackground(Color.RED);
 		this.isChecked = true;
-		gameSound = new SoundClass();
-		gameSound.playWinSound(false);
+		gameSound = new DangerSound();
+		gameSound.playWinDangerSound();
 	}
 
 	public void removeCheck() {

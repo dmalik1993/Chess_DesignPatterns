@@ -29,6 +29,8 @@ import javax.swing.JSlider;
 import javax.swing.JSplitPane;
 import javax.swing.border.TitledBorder;
 
+import chess.sound.SoundClass;
+import chess.sound.WinSound;
 import pieces.King;
 import pieces.Piece;
 import utils.Constants;
@@ -86,7 +88,7 @@ public class ContentLayout extends JFrame {
 		//contentLayout = ref;
 	}
 	
-	public void createGame() {
+	public void createContentLayout() {
 
 		createChessBoardPanel();
 
@@ -511,26 +513,7 @@ public class ContentLayout extends JFrame {
 
 		return allowedMoves;
 	}
-	
-//	Iterator pattern used..
-	
-//	private List<Cell> allowedCheckMoves(List<Cell> possibleMovesList,
-//			final Cell source, final int turn) {
-//		List<Cell> allowedMoves = new ArrayList<Cell>();
-//		ListIterator<Cell> possibleMovesIterator = possibleMovesList
-//				.listIterator();
-//
-//		while (possibleMovesIterator.hasNext()) {
-//			Cell target = possibleMovesIterator.next();
-//			if (!isMoveAllowed(source, target, turn)) {
-//				allowedMoves.add(target);
-//			}
-//		}
-//
-//		return allowedMoves;
-//	}
 
-	
 	public boolean isCheckMate(int color) {
 		List<Cell> possibleMovesForKing = new ArrayList<Cell>();
 		for (int i = 0; i < Board.ROWS; i++) {
@@ -561,9 +544,9 @@ public class ContentLayout extends JFrame {
 		disposeGameLayout();
 		end = true;
 
-		createGame();
+		createContentLayout();
 		chessBoardState = new BoardState(boardPanel, this);
-		gameSound = new SoundClass();
+		gameSound = new WinSound();
 
 		setVisible(true);
 		setResizable(false);
@@ -610,7 +593,7 @@ public class ContentLayout extends JFrame {
 			getBlackPlayer().updatePlayersData();
 			winner = getBlackPlayer().getName();
 		}
-		gameSound.playWinSound(true);
+		gameSound.playWinDangerSound();
 		JOptionPane.showMessageDialog(boardPanel, "Checkmate!!!\n" + winner
 				+ " wins");
 	}

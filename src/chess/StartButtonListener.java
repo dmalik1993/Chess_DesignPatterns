@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import chess.sound.SoundClass;
+import chess.sound.WinSound;
+
 public class StartButtonListener implements ActionListener{
 		ContentLayout contentLayout;
 
@@ -31,7 +34,7 @@ public class StartButtonListener implements ActionListener{
 			contentLayout.getPlayerViewPanel().remove(contentLayout.getTimeSlider());
 
 			contentLayout.setChessBoardState(new BoardState(contentLayout.getBoardPanel(), contentLayout));
-			contentLayout.setGameSound(new SoundClass());
+			contentLayout.setGameSound(new WinSound());
 			addNewMoveLabel();
 			addNewTurnLabel();
 
