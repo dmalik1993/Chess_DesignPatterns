@@ -17,13 +17,13 @@ public class Time implements Serializable{
 	private JLabel timeLabel;
 	Timer countDownTimer;
 	int remainingTime;
-	Main mainClassRef;
+	ContentLayout contLayoutRef;
 
-	public Time(JLabel passedLabel, Main ref) {
+	public Time(JLabel passedLabel, ContentLayout ref) {
 		countDownTimer = new Timer(1000, new CountdownTimerListener());
 		this.timeLabel = passedLabel;
-		remainingTime = Main.timeRemaining;
-		mainClassRef = ref;
+		remainingTime = ref.timeRemaining;
+		contLayoutRef = ref;
 	}
 
 	public void startTimer() {
@@ -31,7 +31,7 @@ public class Time implements Serializable{
 	}
 
 	public void resetTimer() {
-		remainingTime = Main.timeRemaining;
+		remainingTime = ContentLayout.timeRemaining;
 	}
 
 	class CountdownTimerListener implements ActionListener {
@@ -47,7 +47,7 @@ public class Time implements Serializable{
 				timeLabel.setText("Time's up!");
 				resetTimer();
 				startTimer();
-				mainClassRef.changeTurn();
+				contLayoutRef.changeTurn();
 			}
 		}
 	}

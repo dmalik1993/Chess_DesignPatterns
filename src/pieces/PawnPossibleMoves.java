@@ -1,11 +1,12 @@
 package pieces;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import chess.Cell;
 
-public class PawnPossibleMoves implements CalculatePossibleMoves {
+public class PawnPossibleMoves implements CalculatePossibleMoves, Serializable {
 
 	public PawnPossibleMoves (Piece piece){
 		this.piece = piece;

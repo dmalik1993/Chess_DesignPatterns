@@ -20,14 +20,15 @@ public class BoardState implements MouseListener, Serializable {
 	private static final long serialVersionUID = -3491934661431520753L;
 	private Board chessBoard;
 	private List<Player> playerDetail;
-	private static transient Main mainClassRef;
+	//private static transient Main contentLayout;
+	private static transient ContentLayout contLayoutRef;
 	private int currentTurn;
 	
-	public BoardState(JPanel boardPanel, Main ref) {
-		mainClassRef = ref;
-		BoardState savedState = mainClassRef.getSavedState();
+	public BoardState(JPanel boardPanel, ContentLayout ref) {
+		contLayoutRef = ref;
+		BoardState savedState = contLayoutRef.getSavedState();
 		if (savedState == null) {
-			chessBoard = new Board(mainClassRef.getGameThemeCode());
+			chessBoard = new Board(contLayoutRef.getGameThemeCode());
 			currentTurn = 0;
 		} else {
 			chessBoard = new Board(savedState.chessBoard);
@@ -50,7 +51,7 @@ public class BoardState implements MouseListener, Serializable {
 		chessBoard = new Board(oldBoardState.chessBoard);
 		currentTurn = oldBoardState.getCurrentTurn();
 		playerDetail = oldBoardState.getPlayerDetail();
-		mainClassRef = oldBoardState.mainClassRef;
+		contLayoutRef = oldBoardState.contLayoutRef;
 	}
 
 	@Override
@@ -128,7 +129,7 @@ public class BoardState implements MouseListener, Serializable {
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		mainClassRef.performAction((Cell) arg0.getSource());
+		contLayoutRef.performAction((Cell) arg0.getSource());
 	}
 
 	@Override

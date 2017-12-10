@@ -9,67 +9,67 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class StartButtonListener implements ActionListener{
-		Main mainClassRef;
+		ContentLayout contentLayout;
 
-		public StartButtonListener(Main ref) {
-			mainClassRef = ref;
+		public StartButtonListener(ContentLayout ref) {
+			contentLayout = ref;
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 
-			if (mainClassRef.getWhitePlayer() == null || mainClassRef.getBlackPlayer() == null) {
-				JOptionPane.showMessageDialog(mainClassRef.getControlPanel(), "Fill in the details");
+			if (contentLayout.getWhitePlayer() == null || contentLayout.getBlackPlayer() == null) {
+				JOptionPane.showMessageDialog(contentLayout.getControlPanel(), "Fill in the details");
 				return;
 			}
 
 			updatePlayersRecord();
 			disablePlayerButtons();
 
-			mainClassRef.getSplitPane().remove(mainClassRef.getTemporaryPanel());
-			mainClassRef.getSplitPane().add(mainClassRef.getBoardPanel());
-			mainClassRef.getPlayerViewPanel().remove(mainClassRef.getTimeSlider());
+			contentLayout.getSplitPane().remove(contentLayout.getTemporaryPanel());
+			contentLayout.getSplitPane().add(contentLayout.getBoardPanel());
+			contentLayout.getPlayerViewPanel().remove(contentLayout.getTimeSlider());
 
-			mainClassRef.setChessBoardState(new BoardState(mainClassRef.getBoardPanel(), mainClassRef));
-			mainClassRef.setGameSound(new SoundClass());
+			contentLayout.setChessBoardState(new BoardState(contentLayout.getBoardPanel(), contentLayout));
+			contentLayout.setGameSound(new SoundClass());
 			addNewMoveLabel();
 			addNewTurnLabel();
 
-			mainClassRef.getTimeDisplayPanle().remove(mainClassRef.getStartButton());
-			mainClassRef.getTimeDisplayPanle().add(mainClassRef.getTimeLabel());
-			mainClassRef.getTimer().startTimer();
+			contentLayout.getTimeDisplayPanle().remove(contentLayout.getStartButton());
+			contentLayout.getTimeDisplayPanle().add(contentLayout.getTimeLabel());
+			contentLayout.getTimer().startTimer();
 		}
 
 		private void addNewTurnLabel() {
-			mainClassRef.setTurnLabel(new JLabel(mainClassRef.getChessBoardState().getTurnLabel()));
-			mainClassRef.getTurnLabel().setFont(new Font("Comic Sans MS", Font.BOLD, 20));
-			mainClassRef.getTurnLabel().setForeground(Color.blue);
-			mainClassRef.getPlayerViewPanel().add(mainClassRef.getTurnLabel());
+			contentLayout.setTurnLabel(new JLabel(contentLayout.getChessBoardState().getTurnLabel()));
+			contentLayout.getTurnLabel().setFont(new Font("Comic Sans MS", Font.BOLD, 20));
+			contentLayout.getTurnLabel().setForeground(Color.blue);
+			contentLayout.getPlayerViewPanel().add(contentLayout.getTurnLabel());
 		}
 
 		private void addNewMoveLabel() {
-			mainClassRef.setMoveLabel(new JLabel("Move:"));
-			mainClassRef.getMoveLabel().setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
-			mainClassRef.getMoveLabel().setForeground(Color.red);
-			mainClassRef.getPlayerViewPanel().add(mainClassRef.getMoveLabel());
+			contentLayout.setMoveLabel(new JLabel("Move:"));
+			contentLayout.getMoveLabel().setFont(new Font("Comic Sans MS", Font.PLAIN, 20));
+			contentLayout.getMoveLabel().setForeground(Color.red);
+			contentLayout.getPlayerViewPanel().add(contentLayout.getMoveLabel());
 		}
 
 		@SuppressWarnings("deprecation")
 		private void disablePlayerButtons() {
-			mainClassRef.getNewWhitePlayerButton().disable();
-			mainClassRef.getNewBlackPlayerButton().disable();
+			contentLayout.getNewWhitePlayerButton().disable();
+			contentLayout.getNewBlackPlayerButton().disable();
 
-			mainClassRef.getWhitePlayerSelectButton().disable();
-			mainClassRef.getBlackPlayerSelectButton().disable();
+			contentLayout.getWhitePlayerSelectButton().disable();
+			contentLayout.getBlackPlayerSelectButton().disable();
 
-			mainClassRef.getThemeSelectButton().disable();
+			contentLayout.getThemeSelectButton().disable();
 		}
 
 		private void updatePlayersRecord() {
-			mainClassRef.getWhitePlayer().updateGamesPlayed();
-			mainClassRef.getWhitePlayer().updatePlayersData();
+			contentLayout.getWhitePlayer().updateGamesPlayed();
+			contentLayout.getWhitePlayer().updatePlayersData();
 
-			mainClassRef.getBlackPlayer().updateGamesPlayed();
-			mainClassRef.getBlackPlayer().updatePlayersData();
+			contentLayout.getBlackPlayer().updateGamesPlayed();
+			contentLayout.getBlackPlayer().updatePlayersData();
 		}
 }
