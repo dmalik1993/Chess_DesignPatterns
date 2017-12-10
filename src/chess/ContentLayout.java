@@ -86,7 +86,7 @@ public class ContentLayout extends JFrame {
 		//contentLayout = ref;
 	}
 	
-	public void createContentLayout() {
+	public void createGame() {
 
 		createChessBoardPanel();
 
@@ -511,7 +511,26 @@ public class ContentLayout extends JFrame {
 
 		return allowedMoves;
 	}
+	
+//	Iterator pattern used..
+	
+//	private List<Cell> allowedCheckMoves(List<Cell> possibleMovesList,
+//			final Cell source, final int turn) {
+//		List<Cell> allowedMoves = new ArrayList<Cell>();
+//		ListIterator<Cell> possibleMovesIterator = possibleMovesList
+//				.listIterator();
+//
+//		while (possibleMovesIterator.hasNext()) {
+//			Cell target = possibleMovesIterator.next();
+//			if (!isMoveAllowed(source, target, turn)) {
+//				allowedMoves.add(target);
+//			}
+//		}
+//
+//		return allowedMoves;
+//	}
 
+	
 	public boolean isCheckMate(int color) {
 		List<Cell> possibleMovesForKing = new ArrayList<Cell>();
 		for (int i = 0; i < Board.ROWS; i++) {
@@ -542,7 +561,7 @@ public class ContentLayout extends JFrame {
 		disposeGameLayout();
 		end = true;
 
-		createContentLayout();
+		createGame();
 		chessBoardState = new BoardState(boardPanel, this);
 		gameSound = new SoundClass();
 
